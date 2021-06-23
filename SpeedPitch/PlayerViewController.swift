@@ -9,11 +9,12 @@
 import UIKit
 import MediaPlayer
 
-class PlayerViewController: UIViewController, MPMediaPickerControllerDelegate, UIDocumentPickerDelegate {
+class PlayerViewController: UIViewController, MediaDelegate, MPMediaPickerControllerDelegate, UIDocumentPickerDelegate {
 
+	@IBOutlet weak var dashboardView: DashboardView!
 	@IBOutlet weak var controlsView: ControlsView!
 
-	var player: AVPlayer? = nil
+	var player: SongMedia? = nil
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -45,13 +46,25 @@ class PlayerViewController: UIViewController, MPMediaPickerControllerDelegate, U
 		present(controller, animated: true)
 	}
 
-	/// show documents picker
+	/// show documents picker, opens:
+	/// * audio files
+	/// * projects: directories with a speedpitch.json file or the json file directly
 	@IBAction func selectDocuments(_ sender: Any) {
 		printDebug("PlayerViewController: selectDocuments")
-		let controller = UIDocumentPickerViewController(documentTypes: [], in: .open)
-		controller.allowsMultipleSelection = true
+		var controller: UIDocumentPickerViewController
+		if #available(iOS 14.0, *) {
+			controller = UIDocumentPickerViewController(forOpeningContentTypes: [UTType.audio, UTType.directory, UTType.json])
+		}
+		else {
+			controller = UIDocumentPickerViewController(documentTypes: ["public.audio"], in: .open)
+		}
+		controller.allowsMultipleSelection = false
 		controller.popoverPresentationController?.sourceView = sender as? UIView
 		controller.delegate = self
+		if #available(iOS 13.0, *) {
+			controller.shouldShowFileExtensions = true
+			controller.directoryURL = URL.documents // start in Documents
+		}
 		present(controller, animated: true)
 	}
 
@@ -98,44 +111,107 @@ class PlayerViewController: UIViewController, MPMediaPickerControllerDelegate, U
 		}
 	}
 
+	// MARK: MediaDelegate
+
+	func mediaDidStartPlaying(_ media: Media) {
+		printDebug("started playing")
+		controlsView.update()
+	}
+
+	func mediaDidPausePlaying(_ media: Media) {
+		printDebug("paused")
+		controlsView.update()
+	}
+
+	func mediaDidFinishPlaying(_ media: Media) {
+		printDebug("finished played")
+		controlsView.update()
+		player?.rewind()
+	}
+
 	// MARK: MPMediaPickerControllerDelegate
 
 	func mediaPicker(_ mediaPicker: MPMediaPickerController,
 					 didPickMediaItems mediaItemCollection: MPMediaItemCollection) {
 		printDebug("PlayerViewController: media picker picked \(mediaItemCollection.count) items")
 		mediaPicker.dismiss(animated: true)
-
 		if mediaItemCollection.items.count == 0 {
 			return
 		}
-		let item = mediaItemCollection.items.first
-		if let url = item?.value(forProperty: MPMediaItemPropertyAssetURL) as? URL {
-			printDebug("PlayerViewController: media assetURL \(url)")
-			let playerItem = AVPlayerItem(url: url)
-			if self.player == nil {
-				self.player = AVPlayer(playerItem: playerItem)
+		if let item = mediaItemCollection.items.first {
+			self.player = SongMedia(mediaItem: item)
+			if self.player != nil {
+				printDebug("PlayerViewController: media assetURL \(String(describing: self.player?.url))")
+				self.player?.delegate = self
 				self.controlsView.player = self.player
+				self.player?.play()
+				return
+
 			}
 			else {
-				self.player?.replaceCurrentItem(with: playerItem)
+				print("PlayerViewController: media assetURL nil")
+				return
 			}
-			self.player?.currentItem?.audioTimePitchAlgorithm = .varispeed
-			self.player?.play()
-			self.player?.rate = 1.0
-			self.controlsView.isPlaying = true
-
-			let title = item?.value(forProperty: MPMediaItemPropertyArtist) as? String ?? "unknown"
-			let artist = item?.value(forProperty: MPMediaItemPropertyTitle) as? String ?? "unknown"
-			self.controlsView.titleAndArtistLabel.text = "\(title) - \(artist)"
-		}
-		else {
-			print("PlayerViewController: media assetURL nil")
 		}
 	}
 
 	func mediaPickerDidCancel(_ mediaPicker: MPMediaPickerController) {
 		printDebug("PlayerViewController: media picker dismissed")
 		mediaPicker.dismiss(animated: true)
+	}
+
+	// MARK: UIDocumentPickerDelegate
+
+	func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+		printDebug("PlayerViewController: document picker picked \(urls.count) items")
+		controller.dismiss(animated: true, completion: nil)
+		if urls.count == 0 {
+			return
+		}
+		if let url = urls.first {
+			printDebug("PlayerViewController: document assetURL \(url)")
+			if url.hasDirectoryPath {
+				print("PlayerViewController: directory")
+				do {
+					let contents = try FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: [], options: [])
+					contents.forEach {suburl in
+						if suburl.lastPathComponent == "speedpitch.json" {
+							print("PlayerViewController: speedpitch directory")
+							return
+						}
+					}
+					print("PlayerViewController: ignoring, non-speedpitch directory")
+				}
+				catch {
+					print("PlayerViewController: unable to read directory")
+				}
+				return
+			}
+			else if url.lastPathComponent == "speedpitch.json" {
+				print("PlayerViewController: speedpitch file")
+				return
+			}
+			else { // assume audio file
+				print("PlayerViewController: audio file")
+				self.player = SongMedia(url: url)
+				if self.player != nil {
+					self.player?.delegate = self
+					self.controlsView.player = self.player
+					self.player?.play()
+				}
+				else {
+					print("PlayerViewController: unable to open audio file")
+				}
+			}
+		}
+		else {
+			print("PlayerViewController: document assetURL nil")
+		}
+	}
+
+	func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+		printDebug("PlayerViewController: document picker cancelled")
+		controller.dismiss(animated: true, completion: nil)
 	}
 
 }

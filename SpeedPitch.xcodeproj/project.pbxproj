@@ -19,6 +19,9 @@
 		7EC838FF26823A4300AA8D06 /* ControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC838FE26823A4300AA8D06 /* ControlsView.swift */; };
 		7ED22864268256C200960593 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ED22863268256C200960593 /* CoreLocation.framework */; };
 		7ED2286626833C7E00960593 /* UserDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7ED2286526833C7E00960593 /* UserDefaults.plist */; };
+		7ED2286826837D4700960593 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED2286726837D4600960593 /* DashboardView.swift */; };
+		7EF44C9926839317004BA79D /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF44C9626839317004BA79D /* Media.swift */; };
+		7EF44C9B26839317004BA79D /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF44C9826839317004BA79D /* Playlist.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +39,9 @@
 		7EC838FE26823A4300AA8D06 /* ControlsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlsView.swift; sourceTree = "<group>"; };
 		7ED22863268256C200960593 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		7ED2286526833C7E00960593 /* UserDefaults.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = UserDefaults.plist; sourceTree = "<group>"; };
+		7ED2286726837D4600960593 /* DashboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		7EF44C9626839317004BA79D /* Media.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
+		7EF44C9826839317004BA79D /* Playlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,9 +80,12 @@
 				7EC838F82681395D00AA8D06 /* InfoViewController.swift */,
 				7EC838F1267F451300AA8D06 /* Util.swift */,
 				7EC838FE26823A4300AA8D06 /* ControlsView.swift */,
+				7ED2286726837D4600960593 /* DashboardView.swift */,
 				7EC838FA2681507A00AA8D06 /* PlayerViewController.swift */,
 				7EC838F52680E18200AA8D06 /* PlaylistViewController.swift */,
 				7EC838F42680E18200AA8D06 /* SettingsViewController.swift */,
+				7EF44C9626839317004BA79D /* Media.swift */,
+				7EF44C9826839317004BA79D /* Playlist.swift */,
 				7E570A60267F4146002598A0 /* Main.storyboard */,
 				7E570A63267F4147002598A0 /* Assets.xcassets */,
 				7E570A65267F4147002598A0 /* LaunchScreen.storyboard */,
@@ -166,11 +175,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				7EC838F72680E18200AA8D06 /* PlaylistViewController.swift in Sources */,
+				7ED2286826837D4700960593 /* DashboardView.swift in Sources */,
 				7EC838FF26823A4300AA8D06 /* ControlsView.swift in Sources */,
 				7E570A5B267F4146002598A0 /* AppDelegate.swift in Sources */,
 				7EC838FB2681507A00AA8D06 /* PlayerViewController.swift in Sources */,
+				7EF44C9926839317004BA79D /* Media.swift in Sources */,
 				7EC838F2267F451300AA8D06 /* Util.swift in Sources */,
 				7EC838F92681395D00AA8D06 /* InfoViewController.swift in Sources */,
+				7EF44C9B26839317004BA79D /* Playlist.swift in Sources */,
 				7EC838F62680E18200AA8D06 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

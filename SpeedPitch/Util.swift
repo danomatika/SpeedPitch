@@ -19,6 +19,16 @@ func printDebug(_ msg: String) {
 
 // MARK: Class Extensions
 
+extension URL {
+
+	/// app Documents url getter
+	static var documents: URL {
+		return FileManager
+			.default
+			.urls(for: .documentDirectory, in: .userDomainMask)[0]
+	}
+}
+
 extension Comparable {
 
 	/// clamp to range: number.clamped(to: 0...10)

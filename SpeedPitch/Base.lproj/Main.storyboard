@@ -236,10 +236,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bAl-Yl-nJn" userLabel="Live Values Container">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bAl-Yl-nJn" customClass="DashboardView" customModule="SpeedPitch" customModuleProvider="target">
                                 <rect key="frame" x="20" y="148" width="374" height="400"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12 kph" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="100" translatesAutoresizingMaskIntoConstraints="NO" id="UiW-29-lTP">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12 km/h" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="100" translatesAutoresizingMaskIntoConstraints="NO" id="UiW-29-lTP">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="320"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="320" id="JU0-tI-2Vg"/>
@@ -268,6 +268,10 @@
                                     <constraint firstItem="UiW-29-lTP" firstAttribute="leading" secondItem="bAl-Yl-nJn" secondAttribute="leading" id="fUK-4i-OPr"/>
                                     <constraint firstAttribute="bottom" secondItem="9gL-JN-Mqv" secondAttribute="bottom" id="scY-B1-gxV"/>
                                 </constraints>
+                                <connections>
+                                    <outlet property="rateLabel" destination="9gL-JN-Mqv" id="Yui-tu-rge"/>
+                                    <outlet property="speedLabel" destination="UiW-29-lTP" id="koq-pe-JQW"/>
+                                </connections>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H1o-ds-rBj" customClass="ControlsView" customModule="SpeedPitch" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="636" width="414" height="100"/>
@@ -335,7 +339,7 @@
                                     <outlet property="playPauseButton" destination="RnA-MA-Xtl" id="goc-7V-51o"/>
                                     <outlet property="prevButton" destination="W1I-48-BGa" id="DiS-b2-Qqw"/>
                                     <outlet property="routePickerView" destination="qbn-Do-vI7" id="1PE-4H-KdS"/>
-                                    <outlet property="titleAndArtistLabel" destination="av2-sB-HhY" id="Unk-mi-yLi"/>
+                                    <outlet property="titleAndArtistLabel" destination="av2-sB-HhY" id="lrN-fV-wKR"/>
                                 </connections>
                             </view>
                         </subviews>
@@ -383,6 +387,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="controlsView" destination="H1o-ds-rBj" id="H1j-Xb-jDi"/>
+                        <outlet property="dashboardView" destination="bAl-Yl-nJn" id="hfg-zI-ZcW"/>
                         <segue destination="och-5t-mrT" kind="presentation" identifier="ShowInfo" id="pH4-bN-qZH"/>
                         <segue destination="NAy-Ak-gZa" kind="presentation" identifier="ShowSettings" id="XNW-5Q-6Ip"/>
                         <segue destination="omI-sK-sqS" kind="presentation" identifier="ShowAudioRoute" id="YP6-dK-gVl"/>
