@@ -162,6 +162,7 @@ class PlayerViewController: UIViewController, PickerDelegate, MediaDelegate, Loc
 	}
 
 	func locationDidUpdateSpeed(_ location: Location, speed: Double, accuracy: Double) {
-		print("PlayerViewController: speed \(speed) accuracy \(accuracy)")
+		printDebug("PlayerViewController: speed \(speed) accuracy \(accuracy)")
+		dashboardView.update(speed: speed, rate: 1.0)
 	}
 }

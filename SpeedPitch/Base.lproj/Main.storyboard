@@ -248,7 +248,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1.25" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9gL-JN-Mqv">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1.25x" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9gL-JN-Mqv">
                                         <rect key="frame" x="0.0" y="336" width="374" height="64"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="64" id="qre-6L-VEP"/>
@@ -335,11 +335,11 @@
                                     <constraint firstItem="av2-sB-HhY" firstAttribute="leading" secondItem="H1o-ds-rBj" secondAttribute="leading" constant="10" id="rLg-BV-ASk"/>
                                 </constraints>
                                 <connections>
+                                    <outlet property="artistAndTitleLabel" destination="av2-sB-HhY" id="lrN-fV-wKR"/>
                                     <outlet property="nextButton" destination="mpC-5R-FM1" id="X1q-ap-fky"/>
                                     <outlet property="playPauseButton" destination="RnA-MA-Xtl" id="goc-7V-51o"/>
                                     <outlet property="prevButton" destination="W1I-48-BGa" id="DiS-b2-Qqw"/>
                                     <outlet property="routePickerView" destination="qbn-Do-vI7" id="1PE-4H-KdS"/>
-                                    <outlet property="titleAndArtistLabel" destination="av2-sB-HhY" id="lrN-fV-wKR"/>
                                 </connections>
                             </view>
                         </subviews>

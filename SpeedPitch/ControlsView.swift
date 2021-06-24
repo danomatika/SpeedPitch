@@ -11,7 +11,7 @@ import AVKit
 
 class ControlsView: UIView {
 
-	@IBOutlet weak var titleAndArtistLabel: UILabel!
+	@IBOutlet weak var artistAndTitleLabel: UILabel!
 	@IBOutlet weak var playPauseButton: UIButton!
 	@IBOutlet weak var prevButton: UIButton!
 	@IBOutlet weak var nextButton: UIButton!
@@ -21,16 +21,17 @@ class ControlsView: UIView {
 		didSet {
 			if player != nil {
 				playPauseButton.isEnabled = true
-				titleAndArtistLabel.text = player?.description
+				artistAndTitleLabel.text = player?.description
 			}
 			else {
 				playPauseButton.isEnabled = false
-				titleAndArtistLabel.text = ""
+				artistAndTitleLabel.text = ""
 			}
 		}
 	}
 
 	override func awakeFromNib() {
+		artistAndTitleLabel.text = "" // empty on start
 
 		// set up audio route picker view
 		self.routePickerView.addSubview(AVRoutePickerView(frame: self.routePickerView.bounds))
