@@ -7,7 +7,6 @@
 //
 
 import AVKit
-import MediaPlayer
 
 /// media event delegate
 protocol MediaDelegate {
@@ -30,6 +29,19 @@ class Media: NSObject {
 	var loop: Bool = false
 
 	var delegate: MediaDelegate?
+
+	override var description: String {
+		get {
+			if artist == "unknown" && title == "unknown" && (url?.isFileURL ?? false) {
+				// show filename if no metadata
+				return url!.lastPathComponent
+			}
+			else {
+				return "\(artist) - \(title)"
+			}
+		}
+		set {}
+	}
 
 	func play() {}
 
@@ -62,19 +74,6 @@ class SongMedia : Media, AVAudioPlayerDelegate {
 		if !self.open(url: url) {return nil}
 		self.title = title
 		self.artist = artist
-		self.setupObservers()
-	}
-
-	init?(mediaItem: MPMediaItem) {
-		super.init()
-		guard let url = mediaItem.value(forProperty: MPMediaItemPropertyAssetURL) as? URL else {return nil}
-		if !self.open(url: url) {return nil}
-		if let title = mediaItem.value(forProperty: MPMediaItemPropertyTitle) as? String {
-			self.title = title
-		}
-		if let artist = mediaItem.value(forProperty: MPMediaItemPropertyArtist) as? String {
-			self.artist = artist
-		}
 		self.setupObservers()
 	}
 
@@ -189,7 +188,7 @@ class SongMedia : Media, AVAudioPlayerDelegate {
 				}
 				else if(item.commonKey == AVMetadataKey.commonKeyArtist) {
 					if let artist = item.value as? String {
-						self.title = artist
+						self.artist = artist
 					}
 				}
 			}

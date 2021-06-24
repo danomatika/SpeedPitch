@@ -21,13 +21,7 @@ class ControlsView: UIView {
 		didSet {
 			if player != nil {
 				playPauseButton.isEnabled = true
-				if player!.artist == "unknown" && player!.title == "unknown" && player!.url!.isFileURL {
-					// show filename if no metadata
-					titleAndArtistLabel.text = player!.url!.lastPathComponent
-				}
-				else {
-					titleAndArtistLabel.text = "\(player!.artist) - \(player!.title)"
-				}
+				titleAndArtistLabel.text = player?.description
 			}
 			else {
 				playPauseButton.isEnabled = false

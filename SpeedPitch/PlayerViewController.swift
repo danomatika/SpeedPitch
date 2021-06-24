@@ -165,8 +165,9 @@ class PlayerViewController: UIViewController, MediaDelegate, LocationDelegate, M
 		if mediaItemCollection.items.count == 0 {
 			return
 		}
-		if let item = mediaItemCollection.items.first {
-			self.player = SongMedia(mediaItem: item)
+		if let mediaItem = mediaItemCollection.items.first {
+			guard let url = mediaItem.value(forProperty: MPMediaItemPropertyAssetURL) as? URL else {return}
+			self.player = SongMedia(url: url)
 			if self.player != nil {
 				printDebug("PlayerViewController: media assetURL \(String(describing: self.player?.url))")
 				self.player?.delegate = self
