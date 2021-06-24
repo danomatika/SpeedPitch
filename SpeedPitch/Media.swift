@@ -180,7 +180,7 @@ class SongMedia : Media, AVAudioPlayerDelegate {
 
 	private func readMetadata() {
 		if let metadata = self.player?.currentItem?.asset.commonMetadata {
-			metadata.forEach { item in
+			for item in metadata {
 				if(item.commonKey == AVMetadataKey.commonKeyTitle) {
 					if let title = item.value as? String {
 						self.title = title

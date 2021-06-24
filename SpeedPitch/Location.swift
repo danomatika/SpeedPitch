@@ -96,7 +96,7 @@ class Location : NSObject,  CLLocationManagerDelegate {
 			}
 		}
 		if self.delegate != nil {
-			locations.forEach { location in
+			for location in locations {
 				self.delegate?.locationDidUpdateSpeed(
 					self,
 					speed: location.speed,
