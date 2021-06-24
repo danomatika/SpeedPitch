@@ -9,16 +9,19 @@
 import UIKit
 import MediaPlayer
 
-class PlayerViewController: UIViewController, MediaDelegate, MPMediaPickerControllerDelegate, UIDocumentPickerDelegate {
+class PlayerViewController: UIViewController, MediaDelegate, LocationDelegate, MPMediaPickerControllerDelegate, UIDocumentPickerDelegate {
 
 	@IBOutlet weak var dashboardView: DashboardView!
 	@IBOutlet weak var controlsView: ControlsView!
 
 	var player: SongMedia? = nil
+	let location = Location()
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Do any additional setup after loading the view.
+
+		location.enable()
 	}
 
 	// toggle nav & controls visibility
@@ -127,6 +130,30 @@ class PlayerViewController: UIViewController, MediaDelegate, MPMediaPickerContro
 		printDebug("finished played")
 		controlsView.update()
 		player?.rewind()
+	}
+
+	// MARK: LocationDelegate
+
+	func locationAuthorizationRestricted(_ location: Location) {
+		let alert = UIAlertController(
+			title: "Location Service Access Restricted",
+			message: "To enable, please go to Settings and turn on Location Service for SpeedPitch.",
+			preferredStyle: .alert
+		)
+		show(alert, sender: nil)
+	}
+
+	func locationAuthorizationDenied(_ location: Location) {
+		let alert = UIAlertController(
+			title: "Location Service Access Denied",
+			message: "To enable, please go to Settings and turn on Location Service for SpeedPitch.",
+			preferredStyle: .alert
+		)
+		show(alert, sender: nil)
+	}
+
+	func locationDidUpdateSpeed(_ location: Location, speed: Double, accuracy: Double) {
+		print("PlayerViewController: speed \(speed)")
 	}
 
 	// MARK: MPMediaPickerControllerDelegate

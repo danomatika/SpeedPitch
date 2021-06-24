@@ -117,8 +117,11 @@ class SongMedia : Media, AVAudioPlayerDelegate {
 												 options: [.new, .old],
 												 changeHandler: { (player, change) in
 			 if player.rate == 0  {
+				let wasPlaying = self._isPlaying
 				self._isPlaying = false
-				self.delegate?.mediaDidPausePlaying(self)
+				if wasPlaying {
+					self.delegate?.mediaDidPausePlaying(self)
+				}
 			}
 			else {
 				let wasPlaying = self._isPlaying
@@ -140,11 +143,12 @@ class SongMedia : Media, AVAudioPlayerDelegate {
 		}
 	}
 
+	// FIXME: will this break for sources without a set duration, ie. stream URLs?
 	private func setupEndObserver() {
 		guard let player = self.player else { return }
 		guard let duration = player.currentItem?.duration, duration.value != 0 else {
-			// wait a moment in for buffer, etc
-			// TODO: replace this with observing readyToPlay status
+			// wait a moment for buffering, etc
+			// TODO: replace this with observing readyToPlay status?
 			DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [weak self] in
 				self?.setupEndObserver()
 			})

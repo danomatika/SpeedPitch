@@ -59,6 +59,8 @@
 	<true/>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>SpeedPitch can play songs from your media library.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>SpeedPitch needs precise location access to estimate realtime speed.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
