@@ -62,6 +62,13 @@ class SongMedia : Media, AVAudioPlayerDelegate {
 	override var isPlaying: Bool { get { return _isPlaying } set {}}
 	private var _isPlaying: Bool = false
 
+	override var rate: Double {
+		get {return Double(self.player?.rate ?? 0)}
+		set {
+			self.player?.rate = Float(newValue)
+		}
+	}
+
 	init?(url: URL) {
 		super.init()
 		if !self.open(url: url) {return nil}

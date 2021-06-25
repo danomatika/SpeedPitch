@@ -32,6 +32,9 @@ class Location : NSObject,  CLLocationManagerDelegate {
 		super.init()
 		manager.delegate = self
 		manager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+		manager.distanceFilter = kCLDistanceFilterNone;
+		manager.pausesLocationUpdatesAutomatically = false
+		manager.allowsBackgroundLocationUpdates = true
 	}
 
 	@discardableResult func enable() -> Bool {
@@ -99,7 +102,7 @@ class Location : NSObject,  CLLocationManagerDelegate {
 			for location in locations {
 				self.delegate?.locationDidUpdateSpeed(
 					self,
-					speed: location.speed,
+					speed: location.speed * 3.6, // convert m/s -> km/h
 					accuracy: location.speedAccuracy
 				)
 			}

@@ -22,10 +22,11 @@ class DashboardView: UIView {
 	func update(speed: Double, rate: Double) {
 		if speed < 0 {
 			speedLabel.text = "?\nkm/h"
+			rateLabel.text = ""
 		}
 		else {
 			speedLabel.text = "\(Int(speed.rounded()))\nkm/h"
+			rateLabel.text = (rateFormatter.string(for: rate) ?? "1") + "x"
 		}
-		rateLabel.text = (rateFormatter.string(for: rate) ?? "1") + "x"
 	}
 }

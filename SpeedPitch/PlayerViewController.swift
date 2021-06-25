@@ -17,6 +17,8 @@ class PlayerViewController: UIViewController, PickerDelegate, MediaDelegate, Loc
 	let picker = Picker()
 	let location = Location()
 
+	var rate: Double = 0 // current playback rate
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Do any additional setup after loading the view.
@@ -24,6 +26,9 @@ class PlayerViewController: UIViewController, PickerDelegate, MediaDelegate, Loc
 		picker.delegate = self
 		location.delegate = self
 		location.enable()
+
+		// keep screen awake
+		UIApplication.shared.isIdleTimerDisabled = true
 	}
 
 	// toggle nav & controls visibility
@@ -115,7 +120,9 @@ class PlayerViewController: UIViewController, PickerDelegate, MediaDelegate, Loc
 				printDebug("PlayerViewController: media url \(url)")
 				self.player?.delegate = self
 				self.controlsView.player = self.player
+				self.player?.loop = true
 				self.player?.play()
+				self.player?.rate = rate
 			}
 			else {
 				print("PlayerViewController: media url nil")
@@ -163,6 +170,8 @@ class PlayerViewController: UIViewController, PickerDelegate, MediaDelegate, Loc
 
 	func locationDidUpdateSpeed(_ location: Location, speed: Double, accuracy: Double) {
 		printDebug("PlayerViewController: speed \(speed) accuracy \(accuracy)")
-		dashboardView.update(speed: speed, rate: 1.0)
+		rate = speed.mapped(from: 0...20.25, to: 0.05...1)
+		self.player?.rate = rate
+		dashboardView.update(speed: speed, rate: rate)
 	}
 }
