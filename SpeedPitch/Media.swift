@@ -15,7 +15,7 @@ protocol MediaDelegate {
 	func mediaDidFinishPlaying(_ media: Media)
 }
 
-/// media item base class
+/// media item base class, do not use directly
 class Media: NSObject {
 
 	var title: String = "unknown"
@@ -85,6 +85,7 @@ class SongMedia : Media, AVAudioPlayerDelegate {
 	}
 
 	deinit {
+		self.player?.pause()
 		self.clearObservers()
 	}
 

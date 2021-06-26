@@ -17,7 +17,8 @@ class PlayerViewController: UIViewController, PickerDelegate, MediaDelegate, Loc
 	let picker = Picker()
 	let location = Location()
 
-	var rate: Double = 0 // current playback rate
+	var rate: Double = 2 // current playback rate
+	let line = Line(value: 0.05)
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -29,6 +30,9 @@ class PlayerViewController: UIViewController, PickerDelegate, MediaDelegate, Loc
 
 		// keep screen awake
 		UIApplication.shared.isIdleTimerDisabled = true
+
+		// start background clock
+		Scheduler.shared.start()
 	}
 
 	// toggle nav & controls visibility
@@ -115,6 +119,8 @@ class PlayerViewController: UIViewController, PickerDelegate, MediaDelegate, Loc
 		}
 		else {
 			// audio file
+			player = nil
+			self.controlsView.player = nil
 			player = SongMedia(url: url)
 			if self.player != nil {
 				printDebug("PlayerViewController: media url \(url)")
@@ -170,8 +176,17 @@ class PlayerViewController: UIViewController, PickerDelegate, MediaDelegate, Loc
 
 	func locationDidUpdateSpeed(_ location: Location, speed: Double, accuracy: Double) {
 		printDebug("PlayerViewController: speed \(speed) accuracy \(accuracy)")
-		rate = speed.mapped(from: 0...20.25, to: 0.05...1)
-		self.player?.rate = rate
-		dashboardView.update(speed: speed, rate: rate)
+		//if accuracy >= 1 {return}
+		var newRate = max(speed.mapped(from: 0...20.25, to: 0.05...1), 0.05)
+		//var newRate = Double.random(in: 0.05...1)
+		newRate = Double.mavg(old:rate, new: newRate, windowSize: 5)
+		line.set(newRate, duration: 0.5) { value in
+			self.rate = value
+			if self.rate > 0 && self.player?.isPlaying ?? false {
+				self.player?.rate = self.rate
+			}
+			self.dashboardView.update(speed: speed, rate: self.rate)
+			//printDebug("rate \(self.rate)")
+		}
 	}
 }

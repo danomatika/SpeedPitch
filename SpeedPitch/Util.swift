@@ -48,4 +48,13 @@ extension Double {
 					(to.upperBound - to.lowerBound) + to.lowerBound)
 	}
 
+	/// linear interpolation between from & to, t is normalized pos in range 0.0 - 1.0
+	static func lerp(from: Double, to: Double, t: Double) -> Double {
+		return from + (to - from) * t
+	}
+
+	/// moving average
+	static func mavg(old: Double, new: Double, windowSize: UInt) -> Double {
+		return old * ((Double(windowSize) - 1.0) / Double(windowSize)) + new * (1.0 / Double(windowSize))
+	}
 }

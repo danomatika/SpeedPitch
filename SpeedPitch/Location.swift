@@ -73,20 +73,31 @@ class Location : NSObject,  CLLocationManagerDelegate {
 	// MARK: CLLocationManagerDelegate
 
 	func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+		var statusString: String
 		switch status {
-		case .restricted: fallthrough
+		case .restricted:
+			statusString = "restricted"
+			break
 		case .denied:
+			statusString = "denied"
 			if CLLocationManager.locationServicesEnabled() {
 				manager.stopUpdatingLocation()
 			}
-			break;
-		case .authorizedWhenInUse: fallthrough
-		case .authorizedAlways: fallthrough
-		case .notDetermined: fallthrough
+			break
+		case .authorizedWhenInUse:
+			statusString = "when in use"
+			break
+		case .authorizedAlways:
+			statusString = "always"
+			break
+		case .notDetermined:
+			statusString = "not determined"
+			break
 		default:
-			break;
+			statusString = "unknown"
+			break
 		}
-		print("Location: authorization \(status)")
+		print("Location: authorization \(statusString)")
 	}
 
 	func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -102,7 +113,7 @@ class Location : NSObject,  CLLocationManagerDelegate {
 			for location in locations {
 				self.delegate?.locationDidUpdateSpeed(
 					self,
-					speed: location.speed * 3.6, // convert m/s -> km/h
+					speed: max(location.speed * 3.6, -1.0), // convert m/s -> km/h
 					accuracy: location.speedAccuracy
 				)
 			}
