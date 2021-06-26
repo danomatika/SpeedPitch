@@ -36,9 +36,9 @@ class ScheduledEvent {
 		setTime(start: Clock.now(), duration: duration)
 	}
 
-	/// set start time as now + delay in the future and event duration
-	func setTime(delay: TimeInterval, duration: TimeInterval) {
-		setTime(start: Clock.now() + delay, duration: duration)
+	/// set start time as now + after in the future and event duration
+	func setTime(after: TimeInterval, duration: TimeInterval) {
+		setTime(start: Clock.now() + after, duration: duration)
 	}
 
 	// MARK: Subclassing

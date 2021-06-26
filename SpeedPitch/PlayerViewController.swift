@@ -18,7 +18,7 @@ class PlayerViewController: UIViewController, PickerDelegate, MediaDelegate, Loc
 	let location = Location()
 
 	var rate: Double = 2 // current playback rate
-	let line = Line(value: 0.05)
+	let rateLine = Line(0.05)
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -180,7 +180,7 @@ class PlayerViewController: UIViewController, PickerDelegate, MediaDelegate, Loc
 		var newRate = max(speed.mapped(from: 0...20.25, to: 0.05...1), 0.05)
 		//var newRate = Double.random(in: 0.05...1)
 		newRate = Double.mavg(old:rate, new: newRate, windowSize: 5)
-		line.set(target: newRate, duration: 0.5) { value in
+		rateLine.set(target: newRate, duration: 0.5) { value in
 			self.rate = value
 			if self.rate > 0 && self.player?.isPlaying ?? false {
 				self.player?.rate = self.rate

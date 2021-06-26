@@ -19,11 +19,7 @@ class Line: ScheduledEvent {
 
 	fileprivate var _value: Double = 0
 
-	override init() {
-		super.init()
-	}
-
-	init(value: Double) {
+	init(_ value: Double) {
 		super.init()
 		set(value)
 	}
