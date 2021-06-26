@@ -39,12 +39,23 @@ extension Comparable {
 
 extension Double {
 
-	/// map from range to new range: number.mapped(from: 0...100, to: 0...1)
+	/// map from range to new range linearly:
+	/// number.mapped(from: 0...100, to: 0...1)
 	func mapped(from: ClosedRange<Double>, to: ClosedRange<Double>) -> Double {
 		if(abs(from.lowerBound - from.upperBound) < Double.ulpOfOne) {
 			return to.lowerBound
 		}
 		return ((self - from.lowerBound) / (from.upperBound - from.lowerBound) *
+					(to.upperBound - to.lowerBound) + to.lowerBound)
+	}
+
+	/// map from range to new range along a sin curve 0 - pi/4:
+	/// number.mapped(from: 0...100, to: 0...1)
+	func mappedSin(from: ClosedRange<Double>, to: ClosedRange<Double>) -> Double {
+		if(abs(from.lowerBound - from.upperBound) < Double.ulpOfOne) {
+			return to.lowerBound
+		}
+		return (sin((self - from.lowerBound) / (from.upperBound - from.lowerBound) * Double.pi * 0.25) *
 					(to.upperBound - to.lowerBound) + to.lowerBound)
 	}
 

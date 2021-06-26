@@ -10,49 +10,57 @@ import Foundation
 
 /// clock event delegate
 protocol ClockDelegate {
-	func clockDidTick(_ clock: Clock, time: TimeInterval, delta: TimeInterval)
 	func clockStarted(_ clock: Clock)
 	func clockStopped(_ clock: Clock)
+	func clockDidTick(_ clock: Clock, time: TimeInterval, delta: TimeInterval)
 }
 
 /// repeating timer events
 /// ref: https://stackoverflow.com/a/43746977
 class Clock {
-	static let defaultGrain = 0.002
-	var delegate: ClockDelegate?
-
-	private var timer: DispatchSourceTimer!
-	private var timestamp: TimeInterval = 0
-
-	fileprivate var _isRunning = false
-	var isRunning: Bool {
+	var delegate: ClockDelegate? //< event delegate
+	var time: TimeInterval {     //< current time
+		get {return _time}
+	}
+	var isRunning: Bool {        //< is the clock running?
 		get {return _isRunning}
 		set {}
 	}
+
+	static let queueLabel = "com.danomatika.SpeedPitch.clock"
+	static let defaultGrain = 0.002 //< 20 ms tick duration
+
+	fileprivate var _timer: DispatchSourceTimer! //< source timer
+	fileprivate var _time: TimeInterval = 0 //< last tick timestamp
+	fileprivate var _isRunning = false
 
 	deinit {
 		stop()
 	}
 
+	/// start the clock
 	func start() {
 		if _isRunning {return}
-		let queue = DispatchQueue(label: "com.danomatika.SpeedPitch.clock", qos: .userInteractive)
-		timer = DispatchSource.makeTimerSource(flags: .strict, queue: queue)
-		timer.schedule(deadline: .now(), repeating: Clock.defaultGrain, leeway: .milliseconds(2))
-		timer.setEventHandler {
-			let then = self.timestamp
+		let queue = DispatchQueue(label: Clock.queueLabel,
+								  qos: .userInteractive)
+		_timer = DispatchSource.makeTimerSource(flags: .strict, queue: queue)
+		_timer.schedule(deadline: .now(), repeating: Clock.defaultGrain,
+						leeway: .milliseconds(2))
+		_timer.setEventHandler {
+			let then = self._time
 			let now = NSDate().timeIntervalSince1970
-			self.timestamp = now
+			self._time = now
 			self.tick(now, delta: now - then)
 		}
-		timer.resume()
+		_timer.resume()
 		started()
 	}
 
+	/// stop the clock
 	func stop() {
 		if !_isRunning {return}
-		timer.suspend()
-		timer = nil
+		_timer.suspend()
+		_timer = nil
 		_isRunning = false
 		stopped()
 	}
@@ -64,14 +72,17 @@ class Clock {
 
 	// MARK: Subclass
 
+	/// clock has started
 	func started() {
 		self.delegate?.clockStarted(self)
 	}
 
+	/// lock has stopped
 	func stopped() {
 		self.delegate?.clockStopped(self)
 	}
 
+	/// clock has ticked
 	func tick(_ time: TimeInterval, delta: TimeInterval) {
 		self.delegate?.clockDidTick(self, time: time, delta: delta)
 	}
