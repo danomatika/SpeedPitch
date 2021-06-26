@@ -18,14 +18,14 @@ protocol LocationDelegate {
 
 /// location manager
 class Location : NSObject,  CLLocationManagerDelegate {
+
 	let manager = CLLocationManager()
 	var delegate: LocationDelegate?
-
-	fileprivate var _isEnabled: Bool = false
 	var isEnabled: Bool {
 		get {return _isEnabled}
 	}
 
+	fileprivate var _isEnabled: Bool = false
 	fileprivate var _initialLocation: Bool = false
 
 	override init() {
@@ -131,4 +131,5 @@ class Location : NSObject,  CLLocationManagerDelegate {
 	func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
 		print("Location: failed with error \(error)")
 	}
+
 }

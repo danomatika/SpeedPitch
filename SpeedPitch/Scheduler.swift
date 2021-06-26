@@ -10,6 +10,7 @@ import Foundation
 
 /// scheduler event baseclass, do not use directly
 class ScheduledEvent {
+
 	var start: TimeInterval {    //< start timestamp in seconds
 		get {return _start}
 	}

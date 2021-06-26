@@ -209,4 +209,5 @@ class SongMedia : Media, AVAudioPlayerDelegate {
 class ProjectMedia : Media {
 
 	var players: [AVPlayer] = []
+
 }

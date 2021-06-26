@@ -10,15 +10,15 @@ import UIKit
 
 class PlayerViewController: UIViewController, PickerDelegate, MediaDelegate, LocationDelegate {
 
-	@IBOutlet weak var dashboardView: DashboardView!
-	@IBOutlet weak var controlsView: ControlsView!
-
 	var player: SongMedia? = nil
 	let picker = Picker()
 	let location = Location()
 
 	var rate: Double = 2 // current playback rate
 	let rateLine = Line(0.05)
+
+	@IBOutlet weak var dashboardView: DashboardView!
+	@IBOutlet weak var controlsView: ControlsView!
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -189,4 +189,5 @@ class PlayerViewController: UIViewController, PickerDelegate, MediaDelegate, Loc
 			//printDebug("rate \(self.rate)")
 		}
 	}
+
 }

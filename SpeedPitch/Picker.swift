@@ -16,6 +16,7 @@ protocol PickerDelegate {
 
 /// media & document picker manager
 class Picker: NSObject, MPMediaPickerControllerDelegate, UIDocumentPickerDelegate {
+
 	var delegate: PickerDelegate?
 
 	/// present media picker from a view controller

@@ -9,6 +9,7 @@
 import UIKit
 
 class DashboardView: UIView {
+
 	let rateFormatter = NumberFormatter()
 
 	@IBOutlet weak var speedLabel: UILabel! //< speed over ground
@@ -29,4 +30,5 @@ class DashboardView: UIView {
 			rateLabel.text = (rateFormatter.string(for: rate) ?? "1") + "x"
 		}
 	}
+
 }

@@ -11,6 +11,7 @@ class Playlist {
 
 	var playlist: [Media] = []
 	var currentIndex: Int = 0
+
 	var current: Media? {
 		get {
 			if(currentIndex < 0 || currentIndex > playlist.count) {
@@ -40,4 +41,5 @@ class Playlist {
 	func goto(index: Int) -> Media? {
 		return nil
 	}
+
 }

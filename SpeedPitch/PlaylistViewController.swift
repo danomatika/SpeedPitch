@@ -9,18 +9,19 @@
 import UIKit
 
 struct PlaylistItem {
+
 	var title: String = "unknown"
 	var artist: String = "unknown"
 	var url: URL? = nil
 	var image: UIImage? = nil
 	var meta: [String: AnyObject] = [:]
 	var isLocal: Bool = false
+
 }
 
 class PlaylistViewController: UITableViewController {
 
 	var playlist: [PlaylistItem] = []
-
 	var current: UInt = 0
 
 	override func viewDidLoad() {

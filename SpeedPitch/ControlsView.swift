@@ -74,4 +74,5 @@ class ControlsView: UIView {
 			self.playPauseButton.setImage(image, for: .normal)
 		}
 	}
+
 }

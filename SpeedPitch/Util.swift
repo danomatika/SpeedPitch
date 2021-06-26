@@ -27,6 +27,7 @@ extension URL {
 			.default
 			.urls(for: .documentDirectory, in: .userDomainMask)[0]
 	}
+
 }
 
 extension Comparable {
@@ -35,6 +36,7 @@ extension Comparable {
 	func clamped(to limits: ClosedRange<Self>) -> Self {
 		return min(max(self, limits.lowerBound), limits.upperBound)
 	}
+
 }
 
 extension Double {
@@ -68,4 +70,5 @@ extension Double {
 	static func mavg(old: Double, new: Double, windowSize: UInt) -> Double {
 		return old * ((Double(windowSize) - 1.0) / Double(windowSize)) + new * (1.0 / Double(windowSize))
 	}
+
 }

@@ -10,6 +10,7 @@ import Foundation
 
 /// linear ramp with interpolation, based on the [line] object in Pure Data
 class Line: ScheduledEvent {
+
 	var value: Double {            //< current value
 		get {return _value}
 	}

@@ -18,6 +18,7 @@ protocol ClockDelegate {
 /// repeating timer events
 /// ref: https://stackoverflow.com/a/43746977
 class Clock {
+
 	var delegate: ClockDelegate? //< event delegate
 	var time: TimeInterval {     //< current time
 		get {return _time}
@@ -86,4 +87,5 @@ class Clock {
 	func tick(_ time: TimeInterval, delta: TimeInterval) {
 		self.delegate?.clockDidTick(self, time: time, delta: delta)
 	}
+
 }
