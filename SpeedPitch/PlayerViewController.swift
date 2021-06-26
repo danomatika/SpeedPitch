@@ -177,7 +177,7 @@ class PlayerViewController: UIViewController, PickerDelegate, MediaDelegate, Loc
 	func locationDidUpdateSpeed(_ location: Location, speed: Double, accuracy: Double) {
 		printDebug("PlayerViewController: speed \(speed) accuracy \(accuracy)")
 		//if accuracy >= 1 {return}
-		var newRate = max(speed.mapped(from: 0...20.25, to: 0.05...1), 0.05)
+		var newRate = max(speed.mappedSin(from: 0...20.25, to: 0.05...1), 0.05)
 		//var newRate = Double.random(in: 0.05...1)
 		newRate = Double.mavg(old:rate, new: newRate, windowSize: 5)
 		rateLine.set(target: newRate, duration: 0.5) { value in
