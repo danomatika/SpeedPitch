@@ -83,7 +83,7 @@ class Scheduler: Clock {
 
 	/// reactivate events
 	override func started() {
-		for event in self.events {
+		for event in events {
 			if event.start <= time {
 				event.isActive = true
 			}
@@ -92,7 +92,7 @@ class Scheduler: Clock {
 
 	/// deactivate events
 	override func stopped() {
-		for event in self.events {
+		for event in events {
 			event.isActive = false
 		}
 	}

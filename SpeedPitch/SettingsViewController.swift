@@ -16,7 +16,7 @@ class SettingsViewController: UITableViewController {
 	}
 
 	@IBAction func cancel(_ sender: Any) {
-		self.dismiss(animated: true, completion: nil)
+		dismiss(animated: true, completion: nil)
 	}
 
 }

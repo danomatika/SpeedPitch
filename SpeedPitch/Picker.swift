@@ -68,7 +68,7 @@ class Picker: NSObject, MPMediaPickerControllerDelegate, UIDocumentPickerDelegat
 				printDebug("Picker: media item missing url: \(mediaItem)")
 			}
 		}
-		self.delegate?.pickerDidPick(_picker: self, urls: mediaUrls)
+		delegate?.pickerDidPick(_picker: self, urls: mediaUrls)
 	}
 
 	func mediaPickerDidCancel(_ mediaPicker: MPMediaPickerController) {
@@ -119,7 +119,7 @@ class Picker: NSObject, MPMediaPickerControllerDelegate, UIDocumentPickerDelegat
 				mediaUrls.append(url)
 			}
 		}
-		self.delegate?.pickerDidPick(_picker: self, urls: mediaUrls)
+		delegate?.pickerDidPick(_picker: self, urls: mediaUrls)
 	}
 
 	func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {

@@ -75,17 +75,17 @@ class Clock {
 
 	/// clock has started
 	func started() {
-		self.delegate?.clockStarted(self)
+		delegate?.clockStarted(self)
 	}
 
 	/// lock has stopped
 	func stopped() {
-		self.delegate?.clockStopped(self)
+		delegate?.clockStopped(self)
 	}
 
 	/// clock has ticked
 	func tick(_ time: TimeInterval, delta: TimeInterval) {
-		self.delegate?.clockDidTick(self, time: time, delta: delta)
+		delegate?.clockDidTick(self, time: time, delta: delta)
 	}
 
 }

@@ -29,24 +29,24 @@ class PlaylistViewController: UITableViewController {
 		// Do any additional setup after loading the view.
 
 		// test data
-		self.playlist.append(PlaylistItem(title: "Song1", artist: "Dire Straits", url: nil, image: nil, meta: [:], isLocal: false))
-		self.playlist.append(PlaylistItem(title: "Song2", artist: "Elvis Costello", url: nil, image: nil, meta: [:], isLocal: false))
-		printDebug("PlaylistViewController: count \(self.playlist.count)")
+		playlist.append(PlaylistItem(title: "Song1", artist: "Dire Straits", url: nil, image: nil, meta: [:], isLocal: false))
+		playlist.append(PlaylistItem(title: "Song2", artist: "Elvis Costello", url: nil, image: nil, meta: [:], isLocal: false))
+		printDebug("PlaylistViewController: count \(playlist.count)")
 	}
 
 	@IBAction func cancel(_ sender: Any) {
-		self.dismiss(animated: true, completion: nil)
+		dismiss(animated: true, completion: nil)
 	}
 
 	// MARK: UITableViewController
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return self.playlist.count
+		return playlist.count
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let item = self.playlist[indexPath.row]
-		let cell = self.tableView.dequeueReusableCell(withIdentifier: "PlaylistCell", for: indexPath)
+		let item = playlist[indexPath.row]
+		let cell = tableView.dequeueReusableCell(withIdentifier: "PlaylistCell", for: indexPath)
 		cell.textLabel?.text = item.title
 		cell.detailTextLabel?.text = item.artist
 		return cell

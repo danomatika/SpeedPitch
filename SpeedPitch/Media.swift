@@ -63,55 +63,53 @@ class SongMedia : Media, AVAudioPlayerDelegate {
 	private var _isPlaying: Bool = false
 
 	override var rate: Double {
-		get {return Double(self.player?.rate ?? 0)}
-		set {
-			self.player?.rate = Float(newValue)
-		}
+		get {return Double(player?.rate ?? 0)}
+		set {player?.rate = Float(newValue)}
 	}
 
 	init?(url: URL) {
 		super.init()
-		if !self.open(url: url) {return nil}
-		self.readMetadata()
-		self.setupObservers()
+		if !open(url: url) {return nil}
+		readMetadata()
+		setupObservers()
 	}
 
 	init?(url: URL, title: String, artist: String) {
 		super.init()
-		if !self.open(url: url) {return nil}
+		if !open(url: url) {return nil}
 		self.title = title
 		self.artist = artist
-		self.setupObservers()
+		setupObservers()
 	}
 
 	deinit {
-		self.player?.pause()
-		self.clearObservers()
+		player?.pause()
+		clearObservers()
 	}
 
 	override func play() {
-		self.player?.play()
+		player?.play()
 	}
 
 	override func pause() {
-		self.player?.pause()
+		player?.pause()
 	}
 
 	override func toggle() {
-		if self.isPlaying {
-			self.player?.pause()
+		if isPlaying {
+			player?.pause()
 		}
 		else {
-			self.player?.play()
+			player?.play()
 		}
 	}
 
 	override func rewind() {
-		self.player?.seek(to: CMTime.zero)
+		player?.seek(to: CMTime.zero)
 	}
 
 	override func setRate(_ rate: Double) {
-		self.player?.rate = Float(rate)
+		player?.rate = Float(rate)
 	}
 
 	// MARK: Notifications and KVO
@@ -120,9 +118,9 @@ class SongMedia : Media, AVAudioPlayerDelegate {
 	private var endObserver: Any?
 
 	private func setupObservers() {
-		self.rateObserver = self.player?.observe(\.rate,
-												 options: [.new, .old],
-												 changeHandler: { (player, change) in
+		rateObserver = player?.observe(\.rate,
+									   options: [.new, .old],
+									   changeHandler: { (player, change) in
 			 if player.rate == 0  {
 				let wasPlaying = self._isPlaying
 				self._isPlaying = false
@@ -142,17 +140,17 @@ class SongMedia : Media, AVAudioPlayerDelegate {
 	}
 
 	private func clearObservers() {
-		self.rateObserver?.invalidate()
-		self.rateObserver = nil
+		rateObserver?.invalidate()
+		rateObserver = nil
 		if let observer = endObserver {
-			self.player?.removeTimeObserver(observer)
+			player?.removeTimeObserver(observer)
 			endObserver = nil
 		}
 	}
 
 	// FIXME: will this break for sources without a set duration, ie. stream URLs?
 	private func setupEndObserver() {
-		guard let player = self.player else { return }
+		guard let player = player else { return }
 		guard let duration = player.currentItem?.duration, duration.value != 0 else {
 			// wait a moment for buffering, etc
 			// TODO: replace this with observing readyToPlay status?
@@ -179,24 +177,24 @@ class SongMedia : Media, AVAudioPlayerDelegate {
 	private func open(url: URL) -> Bool {
 		let playerItem = AVPlayerItem(url: url)
 		if playerItem.status == .failed {return false}
-		self.player	= AVPlayer(playerItem: playerItem)
+		player	= AVPlayer(playerItem: playerItem)
 		if player?.status == .failed {return false}
 		self.url = url
-		self.player?.currentItem?.audioTimePitchAlgorithm = .varispeed
+		player?.currentItem?.audioTimePitchAlgorithm = .varispeed
 		return true
 	}
 
 	private func readMetadata() {
-		if let metadata = self.player?.currentItem?.asset.commonMetadata {
+		if let metadata = player?.currentItem?.asset.commonMetadata {
 			for item in metadata {
 				if(item.commonKey == AVMetadataKey.commonKeyTitle) {
-					if let title = item.value as? String {
-						self.title = title
+					if let t = item.value as? String {
+						title = t
 					}
 				}
 				else if(item.commonKey == AVMetadataKey.commonKeyArtist) {
-					if let artist = item.value as? String {
-						self.artist = artist
+					if let a = item.value as? String {
+						artist = a
 					}
 				}
 			}

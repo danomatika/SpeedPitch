@@ -37,10 +37,10 @@ class PlayerViewController: UIViewController, PickerDelegate, MediaDelegate, Loc
 
 	// toggle nav & controls visibility
 	func toggleControlVisibility() {
-		if let navBar = self.navigationController?.navigationBar {
-			self.navigationController?.setNavigationBarHidden(!navBar.isHidden, animated: true)
+		if let navBar = navigationController?.navigationBar {
+			navigationController?.setNavigationBarHidden(!navBar.isHidden, animated: true)
 		}
-		UIView.transition(with: self.controlsView,
+		UIView.transition(with: controlsView,
 						  duration: TimeInterval(UINavigationController.hideShowBarDuration),
 						  options: .transitionCrossDissolve,
 						  animations: {
@@ -120,15 +120,15 @@ class PlayerViewController: UIViewController, PickerDelegate, MediaDelegate, Loc
 		else {
 			// audio file
 			player = nil
-			self.controlsView.player = nil
+			controlsView.player = nil
 			player = SongMedia(url: url)
-			if self.player != nil {
+			if player != nil {
 				printDebug("PlayerViewController: media url \(url)")
-				self.player?.delegate = self
-				self.controlsView.player = self.player
-				self.player?.loop = true
-				self.player?.play()
-				self.player?.rate = rate
+				player?.delegate = self
+				controlsView.player = player
+				player?.loop = true
+				player?.play()
+				player?.rate = rate
 			}
 			else {
 				print("PlayerViewController: media url nil")

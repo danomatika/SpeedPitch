@@ -109,9 +109,9 @@ class Location : NSObject,  CLLocationManagerDelegate {
 				}
 			}
 		}
-		if self.delegate != nil {
+		if delegate != nil {
 			for location in locations {
-				self.delegate?.locationDidUpdateSpeed(
+				delegate?.locationDidUpdateSpeed(
 					self,
 					speed: max(location.speed * 3.6, -1.0), // convert m/s -> km/h
 					accuracy: location.speedAccuracy

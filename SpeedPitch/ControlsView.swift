@@ -34,12 +34,12 @@ class ControlsView: UIView {
 		artistAndTitleLabel.text = "" // empty on start
 
 		// set up audio route picker view
-		self.routePickerView.addSubview(AVRoutePickerView(frame: self.routePickerView.bounds))
-		self.routePickerView.backgroundColor = UIColor.clear
+		routePickerView.addSubview(AVRoutePickerView(frame: routePickerView.bounds))
+		routePickerView.backgroundColor = UIColor.clear
 
-		self.prevButton.isEnabled = false
-		self.nextButton.isEnabled = false
-		self.playPauseButton.isEnabled = false
+		prevButton.isEnabled = false
+		nextButton.isEnabled = false
+		playPauseButton.isEnabled = false
 	}
 
 	@IBAction func prev(_ sender: Any) {
@@ -52,12 +52,12 @@ class ControlsView: UIView {
 
 	@IBAction func playPause(_ sender: Any) {
 		printDebug("ControlsView: playPause")
-		self.player?.toggle()
+		player?.toggle()
 	}
 
 	func update() {
 		// play/pause button
-		let playing = self.player?.isPlaying ?? false
+		let playing = player?.isPlaying ?? false
 		var name = "play.fill"
 		if playing {
 			name = "pause.fill"
@@ -71,7 +71,7 @@ class ControlsView: UIView {
 			image = UIImage(named: name)
 		}
 		if image != nil {
-			self.playPauseButton.setImage(image, for: .normal)
+			playPauseButton.setImage(image, for: .normal)
 		}
 	}
 
