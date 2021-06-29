@@ -100,24 +100,22 @@ class Scheduler: Clock {
 	/// (de)activate events based on start & end times
 	override func tick(_ time: TimeInterval, delta: TimeInterval) {
 		if events.isEmpty {return} // nothing to do
-		DispatchQueue.main.async {
-			var active: [ScheduledEvent] = []
-			for event in self.events {
-				if !event.isActive && event.start <= time {
-					event.isActive = true
-					event.started(time)
-				}
-				if !event.isActive {continue}
-				event.tick(time, delta: delta)
-				if event.end <= time {
-					event.isActive = false
-					event.stopped(time)
-					event.scheduler = nil
-				}
-				if event.isActive {active.append(event)}
+		var active: [ScheduledEvent] = []
+		for event in self.events {
+			if !event.isActive && event.start <= time {
+				event.isActive = true
+				event.started(time)
 			}
-			self.events = active
+			if !event.isActive {continue}
+			event.tick(time, delta: delta)
+			if event.end <= time {
+				event.isActive = false
+				event.stopped(time)
+				event.scheduler = nil
+			}
+			if event.isActive {active.append(event)}
 		}
+		self.events = active
 	}
 
 }

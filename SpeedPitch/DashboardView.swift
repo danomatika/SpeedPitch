@@ -20,13 +20,15 @@ class DashboardView: UIView {
 		rateFormatter.maximumSignificantDigits = 2
 	}
 
+	/// speed in m/s
 	func update(speed: Double, rate: Double) {
 		if speed < 0 {
 			speedLabel.text = "?\nkm/h"
 			rateLabel.text = ""
 		}
 		else {
-			speedLabel.text = "\(Int(speed.rounded()))\nkm/h"
+			let converted = speed * 3.6 // m/s -> km/h
+			speedLabel.text = "\(Int(converted.rounded()))\nkm/h"
 			rateLabel.text = (rateFormatter.string(for: rate) ?? "1") + "x"
 		}
 	}

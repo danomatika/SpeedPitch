@@ -9,7 +9,7 @@
 import UIKit
 import CoreLocation
 
-/// location manager event delegate
+/// location manager event delegate, speed is m/s
 protocol LocationDelegate {
 	func locationAuthorizationRestricted(_ location: Location)
 	func locationAuthorizationDenied(_ location: Location)
@@ -113,7 +113,7 @@ class Location : NSObject,  CLLocationManagerDelegate {
 			for location in locations {
 				delegate?.locationDidUpdateSpeed(
 					self,
-					speed: max(location.speed * 3.6, -1.0), // convert m/s -> km/h
+					speed: location.speed,
 					accuracy: location.speedAccuracy
 				)
 			}

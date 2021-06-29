@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// clock event delegate
+/// clock event delegate, called on timer thread
 protocol ClockDelegate {
 	func clockStarted(_ clock: Clock)
 	func clockStopped(_ clock: Clock)
@@ -49,7 +49,7 @@ class Clock {
 						leeway: .milliseconds(2))
 		_timer.setEventHandler {
 			let then = self._time
-			let now = NSDate().timeIntervalSince1970
+			let now = Date().timeIntervalSince1970
 			self._time = now
 			self.tick(now, delta: now - then)
 		}
@@ -68,22 +68,22 @@ class Clock {
 
 	/// returns current time in seconds
 	static func now() -> TimeInterval {
-		return NSDate().timeIntervalSince1970
+		return Date().timeIntervalSince1970
 	}
 
 	// MARK: Subclass
 
-	/// clock has started
+	/// clock has started, called on timer thread
 	func started() {
 		delegate?.clockStarted(self)
 	}
 
-	/// lock has stopped
+	/// lock has stopped, called on timer thread
 	func stopped() {
 		delegate?.clockStopped(self)
 	}
 
-	/// clock has ticked
+	/// clock has ticked, called on timer thread
 	func tick(_ time: TimeInterval, delta: TimeInterval) {
 		delegate?.clockDidTick(self, time: time, delta: delta)
 	}

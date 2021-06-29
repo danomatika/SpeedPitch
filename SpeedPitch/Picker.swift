@@ -11,6 +11,13 @@ import MediaPlayer
 
 /// picker manager event delegate
 protocol PickerDelegate {
+
+	/// receive picked urls,
+	/// call url.startAccessingSecurityScopedResource() before reading files
+	/// otherwise document picker url will fail due to access permissions:
+	///     let scoped = url.startAccessingSecurityScopedResource()
+	///     use url...
+	///     if scoped {url.stopAccessingSecurityScopedResource()}
 	func pickerDidPick(_picker: Picker, urls: [URL])
 }
 

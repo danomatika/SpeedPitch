@@ -12,6 +12,7 @@
 		7E22743A26861CC50024E9E3 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E22743926861CC50024E9E3 /* Line.swift */; };
 		7E22743C2686549C0024E9E3 /* Clock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E22743B2686549C0024E9E3 /* Clock.swift */; };
 		7E22743E268676A20024E9E3 /* Scheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E22743D268676A20024E9E3 /* Scheduler.swift */; };
+		7E2274422689D21F0024E9E3 /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2274412689D21F0024E9E3 /* Audio.swift */; };
 		7E570A5B267F4146002598A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E570A5A267F4146002598A0 /* AppDelegate.swift */; };
 		7E570A62267F4146002598A0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E570A60267F4146002598A0 /* Main.storyboard */; };
 		7E570A64267F4147002598A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E570A63267F4147002598A0 /* Assets.xcassets */; };
@@ -35,6 +36,7 @@
 		7E22743926861CC50024E9E3 /* Line.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		7E22743B2686549C0024E9E3 /* Clock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Clock.swift; sourceTree = "<group>"; };
 		7E22743D268676A20024E9E3 /* Scheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scheduler.swift; sourceTree = "<group>"; };
+		7E2274412689D21F0024E9E3 /* Audio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Audio.swift; sourceTree = "<group>"; };
 		7E570A57267F4146002598A0 /* SpeedPitch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpeedPitch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E570A5A267F4146002598A0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7E570A61267F4146002598A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 				7EF44C9626839317004BA79D /* Media.swift */,
 				7EF44C9826839317004BA79D /* Playlist.swift */,
 				7E227437268534A50024E9E3 /* Picker.swift */,
+				7E2274412689D21F0024E9E3 /* Audio.swift */,
 				7E22743926861CC50024E9E3 /* Line.swift */,
 				7E570A60267F4146002598A0 /* Main.storyboard */,
 				7E570A63267F4147002598A0 /* Assets.xcassets */,
@@ -193,6 +196,7 @@
 				7E22743C2686549C0024E9E3 /* Clock.swift in Sources */,
 				7E227438268534A50024E9E3 /* Picker.swift in Sources */,
 				7E22743E268676A20024E9E3 /* Scheduler.swift in Sources */,
+				7E2274422689D21F0024E9E3 /* Audio.swift in Sources */,
 				7E2274362684CB5A0024E9E3 /* Location.swift in Sources */,
 				7ED2286826837D4700960593 /* DashboardView.swift in Sources */,
 				7E22743A26861CC50024E9E3 /* Line.swift in Sources */,

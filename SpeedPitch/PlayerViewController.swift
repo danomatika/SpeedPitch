@@ -11,11 +11,13 @@ import UIKit
 class PlayerViewController: UIViewController, PickerDelegate, MediaDelegate, LocationDelegate {
 
 	var player: SongMedia? = nil
+	let audio = Audio()
 	let picker = Picker()
 	let location = Location()
 
 	var rate: Double = 0.05 // current playback rate
 	let rateLine = Line(0.05)
+	var rateTimestamp: TimeInterval = 0
 
 	@IBOutlet weak var dashboardView: DashboardView!
 	@IBOutlet weak var controlsView: ControlsView!
@@ -27,12 +29,17 @@ class PlayerViewController: UIViewController, PickerDelegate, MediaDelegate, Loc
 		picker.delegate = self
 		location.delegate = self
 		location.enable()
+		rateTimestamp = Clock.now()
 
 		// keep screen awake
 		UIApplication.shared.isIdleTimerDisabled = true
 
 		// start background clock
 		Scheduler.shared.start()
+
+		//Audio.activateSession()
+		audio.setup()
+		audio.start()
 	}
 
 	// toggle nav & controls visibility
@@ -119,16 +126,14 @@ class PlayerViewController: UIViewController, PickerDelegate, MediaDelegate, Loc
 		}
 		else {
 			// audio file
-			player = nil
-			controlsView.player = nil
+			audio.remove(media: Media())
 			player = SongMedia(url: url)
 			if player != nil {
 				printDebug("PlayerViewController: media url \(url)")
-				player?.delegate = self
-				controlsView.player = player
-				player?.loop = true
-				player?.play()
-				player?.rate = rate
+				if audio.add(media: player!) {
+					audio.player.play()
+					audio.varispeed.rate = Float(rate)
+				}
 			}
 			else {
 				print("PlayerViewController: media url nil")
@@ -177,29 +182,19 @@ class PlayerViewController: UIViewController, PickerDelegate, MediaDelegate, Loc
 	func locationDidUpdateSpeed(_ location: Location, speed: Double, accuracy: Double) {
 		printDebug("PlayerViewController: speed \(speed) accuracy \(accuracy)")
 		DispatchQueue.main.async {
-			//if accuracy >= 1 {return}
-			var newRate = max(speed.mappedSin(from: 0...20.25, to: 0.05...1), 0.05)
-			//var newRate = Double.random(in: 0.05...1)
-			newRate = Double.mavg(old:self.rate, new: newRate, windowSize: 5)
+			let maxspeed: Double = 20.25 / 3.6
+			let newRate = max(speed.mapped(from: 0...maxspeed, to: 0...1), 0.05) // scales over 1 automatically
+			//let newRate = Double.random(in: 0.05...2)
 
-			// set new rate directly
-			self.rate = newRate
-			if self.rate > 0 && self.player?.isPlaying ?? false {
-				self.player?.play()
-				self.player?.rate = self.rate
+			let delta = (Clock.now() - self.rateTimestamp).clamped(to: 0...5)
+			self.rateTimestamp = Clock.now()
+
+			// interpolate to new rate
+			self.rateLine.set(target: newRate, duration: delta) { value in
+				self.rate = value
+				self.audio.rate = self.rate
+				self.dashboardView.update(speed: speed, rate: self.rate)
 			}
-			self.dashboardView.update(speed: speed, rate: self.rate)
-
-			// interpolate to new rate (player live change not working)
-//			self.rateLine.set(target: newRate, duration: 0.5) { value in
-//				self.rate = value
-//				if self.rate > 0 && self.player?.isPlaying ?? false {
-//					self.player?.play()
-//					self.player?.rate = self.rate
-//				}
-//				self.dashboardView.update(speed: speed, rate: self.rate)
-//				//printDebug("rate \(self.rate)")
-//			}
 		}
 	}
 

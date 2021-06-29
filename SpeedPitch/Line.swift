@@ -86,7 +86,7 @@ class Line: ScheduledEvent {
 	override func tick(_ time: TimeInterval, delta: TimeInterval) {
 		let t = ((time - start) / duration).clamped(to: 0...1)
 		_value = Double.lerp(from: startValue, to: endValue, t: t)
-		handler?(_value)
+		DispatchQueue.main.async {self.handler?(self._value)}
 	}
 
 }
