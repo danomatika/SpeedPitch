@@ -17,18 +17,7 @@ class ControlsView: UIView {
 	@IBOutlet weak var nextButton: UIButton!
 	@IBOutlet weak var routePickerView: UIView!
 
-	weak var player: Media? {
-		didSet {
-			if player != nil {
-				playPauseButton.isEnabled = true
-				artistAndTitleLabel.text = player?.description
-			}
-			else {
-				playPauseButton.isEnabled = false
-				artistAndTitleLabel.text = ""
-			}
-		}
-	}
+	weak var playerViewController: PlayerViewController?
 
 	override func awakeFromNib() {
 		artistAndTitleLabel.text = "" // empty on start
@@ -39,25 +28,50 @@ class ControlsView: UIView {
 
 		prevButton.isEnabled = false
 		nextButton.isEnabled = false
-		playPauseButton.isEnabled = false
+		//playPauseButton.isEnabled = false
+		update()
 	}
 
 	@IBAction func prev(_ sender: Any) {
 		printDebug("ControlsView: prev")
+		if let playerViewController = playerViewController {
+			let wasPlaying = playerViewController.player.isPlaying
+			if playerViewController.prev() && wasPlaying {
+				playerViewController.play()
+			}
+		}
 	}
 
 	@IBAction func next(_ sender: Any) {
 		printDebug("ControlsView: next")
+		if let playerViewController = playerViewController {
+			let wasPlaying = playerViewController.player.isPlaying
+			if playerViewController.next() && wasPlaying {
+				playerViewController.play()
+			}
+		}
 	}
 
 	@IBAction func playPause(_ sender: Any) {
 		printDebug("ControlsView: playPause")
-		player?.toggle()
+		playerViewController?.togglePlay()
 	}
 
 	func update() {
+
+		// label
+		if let player = playerViewController?.player {
+			if player.isOpen {
+				artistAndTitleLabel.text = playerViewController?.playlist.current?.description ?? ""
+			}
+			else {
+				artistAndTitleLabel.text = ""
+			}
+		}
+
 		// play/pause button
-		let playing = player?.isPlaying ?? false
+		//playPauseButton.isEnabled = playerViewController?.player.isOpen ?? false
+		let playing = playerViewController?.player.isPlaying ?? false
 		var name = "play.fill"
 		if playing {
 			name = "pause.fill"
@@ -73,6 +87,12 @@ class ControlsView: UIView {
 		if image != nil {
 			playPauseButton.setImage(image, for: .normal)
 		}
+
+		// prev/next buttons
+//		if let playlist = playerViewController?.playlist {
+//			prevButton.isEnabled = !playlist.isEmpty
+//			nextButton.isEnabled = !playlist.isEmpty
+//		}
 	}
 
 }

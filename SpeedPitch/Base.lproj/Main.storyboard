@@ -24,7 +24,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.666667938232422"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Rbp-W0-msi">
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Rbp-W0-msi">
                                             <rect key="frame" x="20" y="15" width="25" height="14.333333333333334"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
@@ -48,28 +48,59 @@
                             <outlet property="delegate" destination="b2J-Ia-QWQ" id="aWc-gw-H7a"/>
                         </connections>
                     </tableView>
+                    <toolbarItems>
+                        <barButtonItem systemItem="trash" id="J1n-rD-jm4">
+                            <connections>
+                                <action selector="deleteSelected:" destination="b2J-Ia-QWQ" id="OEl-GH-nld"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="dgd-ZD-JqO"/>
+                        <barButtonItem title="Delete All" id="Agd-H1-4hp">
+                            <connections>
+                                <action selector="deleteAll:" destination="b2J-Ia-QWQ" id="sdS-VF-TU7"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" title="Playlist" id="lT8-Lg-Qmo">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="vyJ-6w-AeW">
+                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="vyJ-6w-AeW">
                             <connections>
                                 <action selector="cancel:" destination="b2J-Ia-QWQ" id="jRQ-Uh-wkM"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="xkq-9b-dr1"/>
+                        <barButtonItem key="rightBarButtonItem" title="Loop" image="repeat" catalog="system" id="zPX-Ng-dB1">
+                            <connections>
+                                <action selector="toggleLoop:" destination="b2J-Ia-QWQ" id="Fm9-vX-QO8"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="doneButton" destination="vyJ-6w-AeW" id="VKa-GP-hKi"/>
+                        <outlet property="loopButton" destination="zPX-Ng-dB1" id="0F0-Rm-HxW"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RA4-D0-hA3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="1z3-ed-mju">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <items/>
+                </toolbar>
             </objects>
             <point key="canvasLocation" x="1403" y="98"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="h6o-AI-Lyh">
             <objects>
-                <navigationController id="FLP-70-7Z1" sceneMemberID="viewController">
+                <navigationController toolbarHidden="NO" id="FLP-70-7Z1" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="L3L-ic-udV"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="0zv-Ej-cEL">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="klh-w2-MDx">
+                        <rect key="frame" x="0.0" y="672" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="b2J-Ia-QWQ" kind="relationship" relationship="rootViewController" id="pnP-Fr-D6p"/>
                     </connections>
@@ -274,7 +305,7 @@
                                 </connections>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H1o-ds-rBj" customClass="ControlsView" customModule="SpeedPitch" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="636" width="414" height="100"/>
+                                <rect key="frame" x="0.0" y="587" width="414" height="100"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artist - Track Name" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="av2-sB-HhY">
                                         <rect key="frame" x="10" y="0.0" width="394" height="24"/>
@@ -306,8 +337,22 @@
                                                     <action selector="playPause:" destination="Y1K-Xj-rgT" eventType="touchUpInside" id="Z2L-fp-KqV"/>
                                                 </connections>
                                             </button>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qbn-Do-vI7">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="76f-kh-Vit">
                                                 <rect key="frame" x="217" y="0.0" width="68.666666666666686" height="58"/>
+                                                <subviews>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qbn-Do-vI7">
+                                                        <rect key="frame" x="11.666666666666657" y="6.6666666666666288" width="45" height="45"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="45" id="Ehj-UO-LCO"/>
+                                                            <constraint firstAttribute="width" constant="45" id="HyR-jA-9AR"/>
+                                                        </constraints>
+                                                    </view>
+                                                </subviews>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstItem="qbn-Do-vI7" firstAttribute="centerX" secondItem="76f-kh-Vit" secondAttribute="centerX" id="9Ll-Qp-HyA"/>
+                                                    <constraint firstItem="qbn-Do-vI7" firstAttribute="centerY" secondItem="76f-kh-Vit" secondAttribute="centerY" id="Dg1-Yz-dCr"/>
+                                                </constraints>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mpC-5R-FM1">
                                                 <rect key="frame" x="325.66666666666669" y="0.0" width="68.333333333333314" height="58"/>
@@ -359,6 +404,7 @@
                             <outletCollection property="gestureRecognizers" destination="6Eq-8T-m6v" appends="YES" id="Ubg-SF-iJv"/>
                         </connections>
                     </view>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" title="SpeedPitch" id="JJG-cW-gtA">
                         <leftBarButtonItems>
                             <barButtonItem title="Media" image="music.note" catalog="system" id="h5f-2F-NXw">
@@ -380,11 +426,12 @@
                             </barButtonItem>
                             <barButtonItem title="Playlist" image="music.note.list" catalog="system" id="FaN-Yy-JnJ">
                                 <connections>
-                                    <segue destination="FLP-70-7Z1" kind="presentation" id="yal-0X-cdo"/>
+                                    <segue destination="FLP-70-7Z1" kind="presentation" identifier="ShowPlaylist" id="yal-0X-cdo"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="controlsView" destination="H1o-ds-rBj" id="H1j-Xb-jDi"/>
                         <outlet property="dashboardView" destination="bAl-Yl-nJn" id="hfg-zI-ZcW"/>
@@ -449,6 +496,7 @@
         <image name="music.note" catalog="system" width="97" height="128"/>
         <image name="music.note.list" catalog="system" width="128" height="115"/>
         <image name="play.fill" catalog="system" width="116" height="128"/>
+        <image name="repeat" catalog="system" width="128" height="99"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

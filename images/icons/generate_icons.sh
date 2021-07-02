@@ -53,4 +53,5 @@ convert-icon icons8/music_transcript 512 nav
 convert-icon icons8/music 512 nav
 convert-icon icons8/pause 512 control
 convert-icon icons8/play 512 control
+convert-icon icons8/repeat 512 control
 convert-icon icons8/rewind 512 control

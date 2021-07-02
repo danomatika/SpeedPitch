@@ -12,24 +12,30 @@ import MediaPlayer
 /// picker manager event delegate
 protocol PickerDelegate {
 
-	/// receive picked urls,
+	/// receive picked urls & metadata,
 	/// call url.startAccessingSecurityScopedResource() before reading files
 	/// otherwise document picker url will fail due to access permissions:
 	///     let scoped = url.startAccessingSecurityScopedResource()
 	///     use url...
 	///     if scoped {url.stopAccessingSecurityScopedResource()}
-	func pickerDidPick(_picker: Picker, urls: [URL])
+	func pickerDidPick(_picker: Picker, items: [PickedItem])
+}
+
+struct PickedItem {
+	let url: URL
+	let image: UIImage?
 }
 
 /// media & document picker manager
 class Picker: NSObject, MPMediaPickerControllerDelegate, UIDocumentPickerDelegate {
 
+	var allowMultiple = true //< allow picking multiple items?
 	var delegate: PickerDelegate?
 
 	/// present media picker from a view controller
 	func presentMediaPickerFrom(controller: UIViewController, sender: Any?) {
 		let picker = MPMediaPickerController(mediaTypes: .music)
-		picker.allowsPickingMultipleItems = false
+		picker.allowsPickingMultipleItems = allowMultiple
 		picker.popoverPresentationController?.sourceView = sender as? UIView
 		picker.delegate = self
 		controller.present(picker, animated: true)
@@ -46,7 +52,7 @@ class Picker: NSObject, MPMediaPickerControllerDelegate, UIDocumentPickerDelegat
 		else {
 			picker = UIDocumentPickerViewController(documentTypes: ["public.audio"], in: .open)
 		}
-		picker.allowsMultipleSelection = false
+		picker.allowsMultipleSelection = allowMultiple
 		picker.popoverPresentationController?.sourceView = sender as? UIView
 		picker.delegate = self
 		if #available(iOS 13.0, *) {
@@ -65,17 +71,21 @@ class Picker: NSObject, MPMediaPickerControllerDelegate, UIDocumentPickerDelegat
 		if mediaItemCollection.items.count == 0 {
 			return
 		}
-		var mediaUrls: [URL] = []
+		var items: [PickedItem] = []
 		for mediaItem in mediaItemCollection.items {
 			if let url = mediaItem.value(forProperty: MPMediaItemPropertyAssetURL) as? URL {
 				printDebug("Picker: media item url \(url)")
-				mediaUrls.append(url)
+				var image: UIImage? = nil
+				if let artwork = mediaItem.value(forProperty: MPMediaItemPropertyArtwork) as? MPMediaItemArtwork {
+					image = artwork.image(at: CGSize(width: 100, height: 100))
+				}
+				items.append(PickedItem(url: url, image: image))
 			}
 			else {
 				printDebug("Picker: media item missing url: \(mediaItem)")
 			}
 		}
-		delegate?.pickerDidPick(_picker: self, urls: mediaUrls)
+		delegate?.pickerDidPick(_picker: self, items: items)
 	}
 
 	func mediaPickerDidCancel(_ mediaPicker: MPMediaPickerController) {
@@ -91,7 +101,7 @@ class Picker: NSObject, MPMediaPickerControllerDelegate, UIDocumentPickerDelegat
 		if urls.count == 0 {
 			return
 		}
-		var mediaUrls: [URL] = []
+		var items: [PickedItem] = []
 		for url in urls {
 			printDebug("Picker: document url \(url)")
 			if url.hasDirectoryPath {
@@ -107,7 +117,7 @@ class Picker: NSObject, MPMediaPickerControllerDelegate, UIDocumentPickerDelegat
 					}
 					if found {
 						print("Picker: speedpitch directory")
-						mediaUrls.append(url)
+						//items.append(PickedItem(url: url, image: nil))
 					}
 					else {
 						print("Picker: ignoring, non-speedpitch directory")
@@ -119,14 +129,14 @@ class Picker: NSObject, MPMediaPickerControllerDelegate, UIDocumentPickerDelegat
 			}
 			else if url.lastPathComponent == "speedpitch.json" {
 				print("Picker: speedpitch file")
-				mediaUrls.append(url)
+				//items.append(PickedItem(url: url, image: nil))
 			}
 			else { // assume audio file
 				print("Picker: audio file")
-				mediaUrls.append(url)
+				items.append(PickedItem(url: url, image: nil))
 			}
 		}
-		delegate?.pickerDidPick(_picker: self, urls: mediaUrls)
+		delegate?.pickerDidPick(_picker: self, items: items)
 	}
 
 	func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {

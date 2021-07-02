@@ -8,16 +8,19 @@
 
 import UIKit
 
-class PlayerViewController: UIViewController, PickerDelegate, MediaDelegate, LocationDelegate {
+class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegate, LocationDelegate {
 
 	let audio = AudioEngine()
 	let player = AudioPlayer()
+	let playlist = Playlist()
 	let picker = Picker()
 	let location = Location()
 
+	var isPlaying = false
 	var rate: Double = 0.05 // current playback rate
 	let rateLine = Line(0.05)
 	var rateTimestamp: TimeInterval = 0
+	var speedlimit: Double = 20.25
 
 	@IBOutlet weak var dashboardView: DashboardView!
 	@IBOutlet weak var controlsView: ControlsView!
@@ -38,10 +41,21 @@ class PlayerViewController: UIViewController, PickerDelegate, MediaDelegate, Loc
 		Scheduler.shared.start()
 
 		// setup audio
+		player.delegate = self
+		controlsView.playerViewController = self
 		AudioEngine.activateSession()
 		audio.setup()
 		audio.attach(player: player)
 		audio.start()
+	}
+
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if segue.identifier == "ShowPlaylist",
+		   let scene = segue.destination as? UINavigationController,
+		   let controller = scene.viewControllers.first as? PlaylistViewController  {
+			controller.playerViewController = self
+			controller.playlist = playlist
+		}
 	}
 
 	// toggle nav & controls visibility
@@ -55,6 +69,96 @@ class PlayerViewController: UIViewController, PickerDelegate, MediaDelegate, Loc
 						  animations: {
 			self.controlsView.isHidden = !self.controlsView.isHidden
 		})
+	}
+
+	// MARK: Transport
+
+	func play() {
+		if !player.isOpen {
+			goto(index: 0)
+		}
+		player.play()
+		self.controlsView.update()
+	}
+
+	func pause() {
+		player.pause()
+		self.controlsView.update()
+	}
+
+	func togglePlay() {
+		if player.isPlaying {
+			pause()
+		}
+		else {
+			play()
+		}
+	}
+
+	func stop() {
+		player.stop()
+		self.controlsView.update()
+	}
+
+	// MARK: Playlist
+
+	@discardableResult func prev() -> Bool {
+		var file = playlist.prev()
+		if playlist.isFirst {
+			if playlist.isLooping {
+				printDebug("PlayerViewController: playlist prev loop")
+				// that was first file, loop the list?
+				file = playlist.goto(index: playlist.count-1)
+			}
+			else {
+				printDebug("PlayerViewController: playlist prev")
+				self.controlsView.update()
+				return false
+			}
+		}
+		else {
+			printDebug("PlayerViewController: playlist prev")
+		}
+		if file != nil {
+			player.open(file: file!)
+		}
+		self.controlsView.update()
+		return true
+	}
+
+	@discardableResult func next() -> Bool {
+		var file = playlist.next()
+		if playlist.isLast {
+			if playlist.isLooping {
+				printDebug("PlayerViewController: playlist next loop")
+				// that was last file, loop the list?
+				file = playlist.goto(index: 0)
+			}
+			else {
+				printDebug("PlayerViewController: playlist finished")
+				self.controlsView.update()
+				return false
+			}
+		}
+		else {
+			printDebug("PlayerViewController: playlist next")
+		}
+		if file != nil {
+			player.open(file: file!)
+		}
+		self.controlsView.update()
+		return true
+	}
+
+	@discardableResult func goto(index: Int) -> Bool {
+		var ret = false
+		let file = playlist.goto(index: index)
+		if file != nil {
+			player.open(file: file!)
+			ret = true
+		}
+		self.controlsView.update()
+		return ret
 	}
 
 	// MARK: Actions
@@ -116,46 +220,50 @@ class PlayerViewController: UIViewController, PickerDelegate, MediaDelegate, Loc
 
 	// MARK: PickerDelegate
 
-	func pickerDidPick(_picker: Picker, urls: [URL]) {
-		let url = urls[0] as URL
-		if url.isFileURL && url.hasDirectoryPath {
-			// speedpitch directory
-			printDebug("PlayerViewController: directory not implemented \(url)")
-		}
-		else if url.pathExtension == "json" {
-			// speedpitch json
-			printDebug("PlayerViewController: json not implemented \(url)")
-		}
-		else {
-			// audio file
-			player.close()
-			guard let file = AudioFile(url: url) else {
-				print("PlayerViewController: could not open \(url)")
-				return
+	func pickerDidPick(_picker: Picker, items: [PickedItem]) {
+		for item in items {
+			if item.url.isFileURL && item.url.hasDirectoryPath {
+				// speedpitch directory
+				printDebug("PlayerViewController: directory not implemented \(item.url)")
 			}
-			printDebug("PlayerViewController: media url \(url)")
-			if player.open(file: file) {
-				player.play()
-				audio.rate = rate
+			else if item.url.pathExtension == "json" {
+				// speedpitch json
+				printDebug("PlayerViewController: json not implemented \(item.url)")
+			}
+			else {
+				// audio file
+				player.close()
+				guard let file = AudioFile(url: item.url) else {
+					print("PlayerViewController: could not open \(item.url)")
+					return
+				}
+				printDebug("PlayerViewController: media url \(item.url)")
+				file.image = item.image
+				playlist.add(file: file)
 			}
 		}
 	}
 
-	// MARK: MediaDelegate
+	// MARK: AudioPlayerDelegate
 
-	func mediaDidStartPlaying(_ media: Media) {
+	func playerDidStartPlaying(_ player: AudioPlayer) {
 		printDebug("started playing")
-		controlsView.update()
+		DispatchQueue.main.async {self.controlsView.update()}
 	}
 
-	func mediaDidPausePlaying(_ media: Media) {
+	func playerDidPausePlaying(_ player: AudioPlayer) {
 		printDebug("paused")
-		controlsView.update()
+		DispatchQueue.main.async {self.controlsView.update()}
 	}
 
-	func mediaDidFinishPlaying(_ media: Media) {
-		printDebug("finished played")
-		controlsView.update()
+	func playerDidFinishPlaying(_ player: AudioPlayer) {
+		printDebug("finished playing")
+		DispatchQueue.main.async {
+			let wasPlaying = self.player.isPlaying
+			if self.next() && wasPlaying {
+				self.play()
+			}
+		}
 	}
 
 	// MARK: LocationDelegate
@@ -181,7 +289,7 @@ class PlayerViewController: UIViewController, PickerDelegate, MediaDelegate, Loc
 	func locationDidUpdateSpeed(_ location: Location, speed: Double, accuracy: Double) {
 		printDebug("PlayerViewController: speed \(speed) accuracy \(accuracy)")
 		DispatchQueue.main.async {
-			//let maxspeed: Double = 20.25 / 3.6
+			//let maxspeed: Double = self.speedlimit / 3.6
 			//let newRate = max(speed.mapped(from: 0...maxspeed, to: 0...1), 0.05) // scales over 1 automatically
 			let newRate = Double.random(in: 0.05...2)
 

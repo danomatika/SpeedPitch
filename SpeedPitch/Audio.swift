@@ -38,7 +38,7 @@ class AudioFile {
 	var title: String = "unknown"
 	var artist: String = "unknown"
 	var duration: Double = 0 //< duration in seconds
-	//var image: UIImage?
+	var image: UIImage?      //< optional thumbnail
 
 	init?(url: URL) {
 		self.url = url
@@ -75,12 +75,20 @@ class AudioFile {
 	}
 }
 
+/// media event delegate
+protocol AudioPlayerDelegate {
+	func playerDidStartPlaying(_ player: AudioPlayer)
+	func playerDidPausePlaying(_ player: AudioPlayer)
+	func playerDidFinishPlaying(_ player: AudioPlayer)
+}
+
 // audio file player
 class AudioPlayer {
 
 	let player = AVAudioPlayerNode() //< makes the sound...
 	private var buffer: AVAudioPCMBuffer? //< sample buffer
 
+	var delegate: AudioPlayerDelegate?
 	var isOpen: Bool { //< is the audio file open?
 		// don't use player.isPlaying which becomes false after a route change
 		get {return (buffer != nil)}
@@ -101,12 +109,19 @@ class AudioPlayer {
 
 	fileprivate var _isPlaying = false
 	fileprivate var _isLooping = false
+	fileprivate var _ignoreFinish = false
+
+	deinit {
+		stop()
+		close()
+	}
 
 	@discardableResult func open(file: AudioFile) -> Bool {
 		return open(url: file.url)
 	}
 
 	@discardableResult func open(url: URL) -> Bool {
+		stop()
 		close()
 		let file: AVAudioFile?
 		do {
@@ -159,13 +174,18 @@ class AudioPlayer {
 			player.scheduleBuffer(buffer!, at: nil,
 								options: options,
 								completionCallbackType: .dataPlayedBack) { type in
-				if self.player.engine?.isRunning ?? false {
-					printDebug("AudioPlayer: finished, engine running?")
+				if self.player.engine?.isRunning ?? false && !self._ignoreFinish {
+					printDebug("AudioPlayer: finished")
+					self.delegate?.playerDidFinishPlaying(self)
 				}
 			}
 			player.play()
 			player.engine?.prepare()
+			let wasPlaying = _isPlaying
 			_isPlaying = true
+			if !wasPlaying {
+				delegate?.playerDidStartPlaying(self)
+			}
 		}
 	}
 
@@ -173,12 +193,18 @@ class AudioPlayer {
 		if buffer != nil {
 			player.pause()
 		}
+		let wasPlaying = _isPlaying
 		_isPlaying = false
+		if wasPlaying {
+			delegate?.playerDidPausePlaying(self)
+		}
 	}
 
 	func stop() {
-		if buffer != nil {
+		if buffer != nil && player.isPlaying {
+			_ignoreFinish = true
 			player.stop()
+			_ignoreFinish = false
 		}
 		_isPlaying = false
 	}
