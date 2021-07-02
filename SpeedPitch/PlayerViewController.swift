@@ -56,6 +56,11 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 			controller.playerViewController = self
 			controller.playlist = playlist
 		}
+		else if segue.identifier == "ShowSpeed",
+		   let scene = segue.destination as? UINavigationController,
+		   let controller = scene.viewControllers.first as? SpeedViewController  {
+			controller.playerViewController = self
+		}
 	}
 
 	// toggle nav & controls visibility
@@ -182,6 +187,11 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 		let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
 			alert.dismiss(animated: true, completion: nil)
 		})
+		let speedAction = UIAlertAction(title: "Speed", style: .default, handler: { action in
+			printDebug("show speed")
+			alert.dismiss(animated: true, completion: nil)
+			self.performSegue(withIdentifier: "ShowSpeed", sender: self)
+		})
 		let infoAction = UIAlertAction(title: "Info", style: .default, handler: { action in
 			printDebug("show info")
 			alert.dismiss(animated: true, completion: nil)
@@ -198,6 +208,7 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 			settingsAction.setValue(UIImage.init(systemName: "gear"), forKey: "image")
 		}
 		alert.addAction(cancelAction)
+		alert.addAction(speedAction)
 		alert.addAction(infoAction)
 		alert.addAction(settingsAction)
 		alert.modalPresentationStyle = .popover
@@ -289,9 +300,9 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 	func locationDidUpdateSpeed(_ location: Location, speed: Double, accuracy: Double) {
 		printDebug("PlayerViewController: speed \(speed) accuracy \(accuracy)")
 		DispatchQueue.main.async {
-			//let maxspeed: Double = self.speedlimit / 3.6
-			//let newRate = max(speed.mapped(from: 0...maxspeed, to: 0...1), 0.05) // scales over 1 automatically
-			let newRate = Double.random(in: 0.05...2)
+			let maxspeed: Double = self.speedlimit / 3.6
+			let newRate = max(speed.mapped(from: 0...maxspeed, to: 0...1), 0.05) // scales over 1 automatically
+			//let newRate = Double.random(in: 0.05...2)
 
 			let delta = (Clock.now() - self.rateTimestamp).clamped(to: 0...5)
 			self.rateTimestamp = Clock.now()

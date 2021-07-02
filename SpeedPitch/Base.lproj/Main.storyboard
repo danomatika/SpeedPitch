@@ -151,6 +151,37 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="3I1-cu-bJs">
+                                        <rect key="frame" x="20" y="92.666667938232422" width="374" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="3I1-cu-bJs" id="ClE-PZ-Rkt">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Keep screen awake" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9rW-oe-OaZ">
+                                                    <rect key="frame" x="20" y="10.999999999999998" width="132" height="18.333333333333329"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="132" id="nLT-OB-jjG"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pkD-pL-pW3">
+                                                    <rect key="frame" x="305" y="6" width="51" height="32"/>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="9rW-oe-OaZ" firstAttribute="leading" secondItem="ClE-PZ-Rkt" secondAttribute="leadingMargin" id="XEw-62-KSB"/>
+                                                <constraint firstItem="9rW-oe-OaZ" firstAttribute="top" secondItem="ClE-PZ-Rkt" secondAttribute="topMargin" id="aGS-xY-VRR"/>
+                                                <constraint firstItem="pkD-pL-pW3" firstAttribute="trailing" secondItem="ClE-PZ-Rkt" secondAttribute="trailingMargin" id="dak-8b-Kka"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="9rW-oe-OaZ" secondAttribute="bottom" constant="3.6666679382324219" id="hd6-sU-LRo"/>
+                                                <constraint firstItem="9rW-oe-OaZ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ClE-PZ-Rkt" secondAttribute="leadingMargin" id="ndg-wa-h2F"/>
+                                                <constraint firstItem="pkD-pL-pW3" firstAttribute="centerY" secondItem="ClE-PZ-Rkt" secondAttribute="centerY" id="o4t-x1-vUg"/>
+                                                <constraint firstItem="pkD-pL-pW3" firstAttribute="top" secondItem="ClE-PZ-Rkt" secondAttribute="topMargin" constant="-5" id="yFM-lY-fIg"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -169,29 +200,75 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CVf-Tf-nga" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1403" y="854"/>
+            <point key="canvasLocation" x="738" y="854"/>
         </scene>
-        <!--Audio Route-->
-        <scene sceneID="mPr-Lb-iIq">
+        <!--Speed-->
+        <scene sceneID="gQL-ZG-qKy">
             <objects>
-                <viewController id="E3J-yh-meu" customClass="AudioRouteViewController" customModule="SpeedPitch" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="UC9-sU-O6H">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
+                <viewController id="1ZI-6h-Vbt" customClass="SpeedViewController" customModule="SpeedPitch" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="liP-2M-cDR">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="OuY-ej-nuu"/>
+                        <subviews>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="r5J-Ly-Jzf">
+                                <rect key="frame" x="8" y="556" width="398" height="31"/>
+                                <connections>
+                                    <action selector="speedSliderChanged:" destination="1ZI-6h-Vbt" eventType="valueChanged" id="lF3-fY-SZt"/>
+                                </connections>
+                            </slider>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fyr-HI-SlQ">
+                                <rect key="frame" x="0.0" y="104" width="414" height="332"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="12.34" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="E53-Ea-aDe">
+                                        <rect key="frame" x="10" y="105.33333333333334" width="394" height="65.666666666666657"/>
+                                        <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="48"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Speed Limit" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hVV-8T-3CF">
+                                        <rect key="frame" x="10" y="8" width="394" height="37.333333333333336"/>
+                                        <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="32"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="E53-Ea-aDe" firstAttribute="top" secondItem="hVV-8T-3CF" secondAttribute="bottom" constant="60" id="6eo-Eh-ChH"/>
+                                    <constraint firstItem="hVV-8T-3CF" firstAttribute="top" secondItem="fyr-HI-SlQ" secondAttribute="top" constant="8" id="CrM-1X-DBC"/>
+                                    <constraint firstAttribute="trailing" secondItem="hVV-8T-3CF" secondAttribute="trailing" constant="10" id="fuG-Gf-mAH"/>
+                                    <constraint firstItem="hVV-8T-3CF" firstAttribute="leading" secondItem="fyr-HI-SlQ" secondAttribute="leading" constant="10" id="nhb-fm-ONp"/>
+                                    <constraint firstItem="E53-Ea-aDe" firstAttribute="leading" secondItem="fyr-HI-SlQ" secondAttribute="leading" constant="10" id="tAS-8F-iGn"/>
+                                    <constraint firstAttribute="trailing" secondItem="E53-Ea-aDe" secondAttribute="trailing" constant="10" id="yIZ-cp-5G4"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="8PO-RT-NBw"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="fyr-HI-SlQ" firstAttribute="trailing" secondItem="8PO-RT-NBw" secondAttribute="trailing" id="0ES-Kv-OO0"/>
+                            <constraint firstItem="8PO-RT-NBw" firstAttribute="trailing" secondItem="r5J-Ly-Jzf" secondAttribute="trailing" constant="10" id="0b4-Fy-4wD"/>
+                            <constraint firstItem="8PO-RT-NBw" firstAttribute="bottom" secondItem="fyr-HI-SlQ" secondAttribute="bottom" constant="300" id="1Oh-ZE-eSW"/>
+                            <constraint firstItem="r5J-Ly-Jzf" firstAttribute="leading" secondItem="8PO-RT-NBw" secondAttribute="leading" constant="10" id="DZn-AE-fqP"/>
+                            <constraint firstItem="fyr-HI-SlQ" firstAttribute="top" secondItem="8PO-RT-NBw" secondAttribute="top" constant="60" id="TXq-j9-Z3J"/>
+                            <constraint firstItem="fyr-HI-SlQ" firstAttribute="leading" secondItem="8PO-RT-NBw" secondAttribute="leading" id="YzF-ge-Z7h"/>
+                            <constraint firstItem="r5J-Ly-Jzf" firstAttribute="top" secondItem="fyr-HI-SlQ" secondAttribute="bottom" constant="120" id="o43-ld-vzB"/>
+                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Audio Route" id="yge-wE-ph3">
-                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="eIA-XJ-ELH">
+                    <navigationItem key="navigationItem" title="Speed" id="e63-rg-Hme">
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="oTl-TR-xQU">
                             <connections>
-                                <action selector="done:" destination="E3J-yh-meu" id="157-C8-FZF"/>
+                                <action selector="done:" destination="1ZI-6h-Vbt" id="k92-hV-aZs"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="speedSlider" destination="r5J-Ly-Jzf" id="IWU-PM-fod"/>
+                        <outlet property="speedTextField" destination="E53-Ea-aDe" id="IPY-TC-oo5"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="HfE-cY-vLP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1C2-CG-oZ7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-833" y="854"/>
+            <point key="canvasLocation" x="-1062" y="854"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="636-at-dxG">
@@ -208,7 +285,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eRw-yh-qlq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="548" y="854"/>
+            <point key="canvasLocation" x="-116" y="854"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="PL0-B6-gVJ">
@@ -235,17 +312,49 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Info about the app, usage, attrinution, links..." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="yNA-cG-BUp">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yNA-cG-BUp">
                                 <rect key="frame" x="20" y="44" width="374" height="672"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <color key="textColor" systemColor="labelColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="SpeedPitch">
+                                        <attributes>
+                                            <color key="NSColor" systemColor="labelColor"/>
+                                            <font key="NSFont" size="14" name="Menlo-Italic"/>
+                                            <font key="NSOriginalFont" size="14" name="Menlo-Regular"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <mutableString key="content"> is a simple augmented sonic reality experiment that alters music playback speed based on your actual GPS ground speed. The faster you go, the higher the pitch and sudden stops lead to dragging audio samples. Natural motion leads to unnatural sound.
+
+Usage:
+1. Select files from the Music app or Files browser using the buttons in the main screen, upper right
+2. Start playback via pressing play or tapping a song in the playlist screen
+3. Ride you bike or take a walk and see what happens...
+
+You can adjust the speed limit for the pitch processing to set when songs are played back at a normal rate.
+
+Dan Wilcox 2021
+danomatika.com</mutableString>
+                                        <attributes>
+                                            <color key="NSColor" systemColor="labelColor"/>
+                                            <font key="NSFont" size="14" name="Menlo-Regular"/>
+                                            <font key="NSOriginalFont" size="14" name="Menlo-Regular"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="oGI-pn-sW4"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="yNA-cG-BUp" firstAttribute="bottom" secondItem="oGI-pn-sW4" secondAttribute="bottom" id="Rn4-yZ-fKP"/>
+                            <constraint firstItem="oGI-pn-sW4" firstAttribute="trailing" secondItem="yNA-cG-BUp" secondAttribute="trailing" constant="20" id="Tit-v8-NrO"/>
+                            <constraint firstItem="yNA-cG-BUp" firstAttribute="top" secondItem="uRV-Hx-Llh" secondAttribute="top" constant="44" id="fZv-jC-Kww"/>
+                            <constraint firstItem="yNA-cG-BUp" firstAttribute="leading" secondItem="oGI-pn-sW4" secondAttribute="leading" constant="20" id="tpI-c4-weB"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Info" id="8E2-4Q-z23">
                         <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="VqB-lK-PZI">
@@ -437,7 +546,7 @@
                         <outlet property="dashboardView" destination="bAl-Yl-nJn" id="hfg-zI-ZcW"/>
                         <segue destination="och-5t-mrT" kind="presentation" identifier="ShowInfo" id="pH4-bN-qZH"/>
                         <segue destination="NAy-Ak-gZa" kind="presentation" identifier="ShowSettings" id="XNW-5Q-6Ip"/>
-                        <segue destination="omI-sK-sqS" kind="presentation" identifier="ShowAudioRoute" id="YP6-dK-gVl"/>
+                        <segue destination="4Ms-Xk-hx0" kind="show" identifier="ShowSpeed" id="fna-2U-X6c"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mBH-ud-x5n" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -471,21 +580,21 @@
             <point key="canvasLocation" x="-1662" y="98"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="saz-O3-6fr">
+        <scene sceneID="Cef-zZ-zug">
             <objects>
-                <navigationController id="omI-sK-sqS" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="UgF-N9-keb"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="MxO-vT-coI">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                <navigationController id="4Ms-Xk-hx0" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="GKd-DP-9kr"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="gJO-V6-Ppy">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="E3J-yh-meu" kind="relationship" relationship="rootViewController" id="UEN-ls-ojw"/>
+                        <segue destination="1ZI-6h-Vbt" kind="relationship" relationship="rootViewController" id="QbH-sC-xhQ"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="EmO-lu-Qxn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XeT-cZ-KSa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1662" y="854"/>
+            <point key="canvasLocation" x="-1859" y="854"/>
         </scene>
     </scenes>
     <resources>
