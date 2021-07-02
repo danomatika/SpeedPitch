@@ -10,8 +10,8 @@ import UIKit
 
 class PlayerViewController: UIViewController, PickerDelegate, MediaDelegate, LocationDelegate {
 
-	var player: SongMedia? = nil
-	let audio = Audio()
+	let audio = AudioEngine()
+	let player = AudioPlayer()
 	let picker = Picker()
 	let location = Location()
 
@@ -37,8 +37,10 @@ class PlayerViewController: UIViewController, PickerDelegate, MediaDelegate, Loc
 		// start background clock
 		Scheduler.shared.start()
 
-		//Audio.activateSession()
+		// setup audio
+		AudioEngine.activateSession()
 		audio.setup()
+		audio.attach(player: player)
 		audio.start()
 	}
 
@@ -126,17 +128,15 @@ class PlayerViewController: UIViewController, PickerDelegate, MediaDelegate, Loc
 		}
 		else {
 			// audio file
-			audio.remove(media: Media())
-			player = SongMedia(url: url)
-			if player != nil {
-				printDebug("PlayerViewController: media url \(url)")
-				if audio.add(media: player!) {
-					audio.player.play()
-					audio.varispeed.rate = Float(rate)
-				}
+			player.close()
+			guard let file = AudioFile(url: url) else {
+				print("PlayerViewController: could not open \(url)")
+				return
 			}
-			else {
-				print("PlayerViewController: media url nil")
+			printDebug("PlayerViewController: media url \(url)")
+			if player.open(file: file) {
+				player.play()
+				audio.rate = rate
 			}
 		}
 	}
@@ -156,7 +156,6 @@ class PlayerViewController: UIViewController, PickerDelegate, MediaDelegate, Loc
 	func mediaDidFinishPlaying(_ media: Media) {
 		printDebug("finished played")
 		controlsView.update()
-		player?.rewind()
 	}
 
 	// MARK: LocationDelegate
@@ -182,9 +181,9 @@ class PlayerViewController: UIViewController, PickerDelegate, MediaDelegate, Loc
 	func locationDidUpdateSpeed(_ location: Location, speed: Double, accuracy: Double) {
 		printDebug("PlayerViewController: speed \(speed) accuracy \(accuracy)")
 		DispatchQueue.main.async {
-			let maxspeed: Double = 20.25 / 3.6
-			let newRate = max(speed.mapped(from: 0...maxspeed, to: 0...1), 0.05) // scales over 1 automatically
-			//let newRate = Double.random(in: 0.05...2)
+			//let maxspeed: Double = 20.25 / 3.6
+			//let newRate = max(speed.mapped(from: 0...maxspeed, to: 0...1), 0.05) // scales over 1 automatically
+			let newRate = Double.random(in: 0.05...2)
 
 			let delta = (Clock.now() - self.rateTimestamp).clamped(to: 0...5)
 			self.rateTimestamp = Clock.now()

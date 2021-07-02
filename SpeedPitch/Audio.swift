@@ -11,32 +11,234 @@
 
 import AVKit
 
-/// audio manager & file player
-class Audio {
-	let engine = AVAudioEngine()
-	let player = AVAudioPlayerNode()       //< makes the sound...
-	let varispeed = AVAudioUnitVarispeed() //< ...does the magic
+extension AVAudioFile {
 
-	var isRunning: Bool {get {engine.isRunning}}
-	var rate: Double {
+	var duration: TimeInterval {
+		return Double(length) / Double(processingFormat.sampleRate)
+	}
+
+}
+
+extension AVAudioPlayerNode {
+
+	var currentTime: TimeInterval {
+		if let nodeTime = lastRenderTime,
+		   let playerTime = playerTime(forNodeTime: nodeTime) {
+			return Double(playerTime.sampleTime) / playerTime.sampleRate
+		}
+		return 0
+	}
+
+}
+
+/// audio file with meta data
+class AudioFile {
+
+	var url: URL!
+	var title: String = "unknown"
+	var artist: String = "unknown"
+	var duration: Double = 0 //< duration in seconds
+	//var image: UIImage?
+
+	init?(url: URL) {
+		self.url = url
+		let scoped = url.startAccessingSecurityScopedResource()
+		let asset = AVAsset(url: url)
+		if scoped {url.stopAccessingSecurityScopedResource()}
+		if !asset.isPlayable {return nil}
+		duration = asset.duration.seconds
+		for item in asset.commonMetadata {
+			if(item.commonKey == AVMetadataKey.commonKeyTitle) {
+				if let t = item.value as? String {
+					title = t
+				}
+			}
+			else if(item.commonKey == AVMetadataKey.commonKeyArtist) {
+				if let a = item.value as? String {
+					artist = a
+				}
+			}
+		}
+	}
+
+	var description: String {
+		get {
+			if artist == "unknown" && title == "unknown" && url.isFileURL {
+				// show filename if no metadata
+				return url.lastPathComponent
+			}
+			else {
+				return "\(artist) - \(title)"
+			}
+		}
+		set {}
+	}
+}
+
+// audio file player
+class AudioPlayer {
+
+	let player = AVAudioPlayerNode() //< makes the sound...
+	private var buffer: AVAudioPCMBuffer? //< sample buffer
+
+	var isOpen: Bool { //< is the audio file open?
+		// don't use player.isPlaying which becomes false after a route change
+		get {return (buffer != nil)}
+	}
+	var isPlaying: Bool { //< is the audio file playing?
+		get {return _isPlaying}
+	}
+	var isLooping: Bool { //< is playback looping?
+		get {return _isLooping}
+		set {
+			if newValue == _isLooping {return}
+			_isLooping = newValue
+			if isPlaying {
+				play() // replay to set loop option
+			}
+		}
+	}
+
+	fileprivate var _isPlaying = false
+	fileprivate var _isLooping = false
+
+	@discardableResult func open(file: AudioFile) -> Bool {
+		return open(url: file.url)
+	}
+
+	@discardableResult func open(url: URL) -> Bool {
+		close()
+		let file: AVAudioFile?
+		do {
+			let scoped = url.startAccessingSecurityScopedResource()
+			file = try AVAudioFile(forReading: url)
+			if scoped {
+				url.stopAccessingSecurityScopedResource()
+			}
+		}
+		catch {
+			print("AudioPlayer: could not create audio file for \(url): \(error)")
+			return false
+		}
+		guard let buffer = AVAudioPCMBuffer(pcmFormat: file!.processingFormat,
+											frameCapacity: AVAudioFrameCount(file!.length)) else {
+			print("AudioPlayer: could not create audio buffer for \(url)")
+			return false
+		}
+		do {
+			try file!.read(into: buffer)
+			self.buffer = buffer
+		}
+		catch {
+			print("AudioPlayer: could not read into audio buffer: \(error)")
+			return false
+		}
+		if let engine = (player.engine ?? nil) {
+			engine.connect(player, to: engine.mainMixerNode, format: file!.processingFormat)
+			engine.prepare()
+		}
+		else {
+			print("AudioPlayer: not attached to audio engine")
+			return false
+		}
+		return true
+	}
+
+	func close() {
+		player.engine?.disconnectNodeOutput(player)
+		buffer = nil
+		_isPlaying = false
+	}
+
+	func play() {
+		if buffer != nil {
+			var options: AVAudioPlayerNodeBufferOptions = []
+			if isLooping {
+				options = [.loops]
+			}
+			player.scheduleBuffer(buffer!, at: nil,
+								options: options,
+								completionCallbackType: .dataPlayedBack) { type in
+				if self.player.engine?.isRunning ?? false {
+					printDebug("AudioPlayer: finished, engine running?")
+				}
+			}
+			player.play()
+			player.engine?.prepare()
+			_isPlaying = true
+		}
+	}
+
+	func pause() {
+		if buffer != nil {
+			player.pause()
+		}
+		_isPlaying = false
+	}
+
+	func stop() {
+		if buffer != nil {
+			player.stop()
+		}
+		_isPlaying = false
+	}
+
+	func toggle() {
+		if _isPlaying {
+			pause()
+		}
+		else {
+			play()
+		}
+	}
+
+	// ref: https://stackoverflow.com/questions/29954206/avaudioengine-seek-the-time-of-the-song
+//	func seek(to time: TimeInterval) {
+//		if buffer != nil {
+//			guard let renderTime = player.lastRenderTime else {return}
+//			guard let playerTime = player.playerTime(forNodeTime: renderTime) else {return}
+//			let newsampletime = AVAudioFramePosition(playerTime.sampleRate * time)
+//			//var length = Float(songDuration!) - time
+//			//var framestoplay = AVAudioFrameCount(Float(playerTime.sampleRate) * length)
+//			player.stop()
+//			player.scheduleSegment(file!, startingFrame: newsampletime, frameCount: 0, at: nil, completionHandler: nil)
+//			player.play()
+//		}
+//	}
+
+}
+
+/// audio manager
+/// graph: player(s) -> mixer -> varispeed -> output
+class AudioEngine {
+
+	private let engine = AVAudioEngine()
+	private let varispeed = AVAudioUnitVarispeed() //< ...does the magic
+	private var players: [AudioPlayer] = [] //< attached players
+
+	var isRunning: Bool {get {engine.isRunning}} //< is the engine running?
+	var rate: Double { //< playback rate: 0.25 - 4.0 (AVAudioUnitVarispeed docs)
 		get {return Double(varispeed.rate)}
 		set {varispeed.rate = Float(newValue)}
 	}
 
+	init() {
+		setupObservers()
+	}
+
 	deinit {
-		clear()
+		clearObservers()
 	}
 
 	@discardableResult static func activateSession() -> Bool {
 		let session = AVAudioSession.sharedInstance()
 		do {
-			try session.setCategory(.playback, mode: .default, options:[.mixWithOthers, .allowBluetooth])
-			// playback category implies: the following options .defaultToSpeaker, .allowBluetoothA2DP, .allowAirPlay
-			//try session.setCategory(.playAndRecord, mode: .default, options:[.mixWithOthers, .defaultToSpeaker, .allowBluetooth, .allowBluetoothA2DP, .allowAirPlay])
+			// playback category implies: .defaultToSpeaker, .allowBluetoothA2DP, .allowAirPlay
+			try session.setCategory(.playback, mode: .default, options:[.mixWithOthers])
 			try session.setActive(true)
 		}
 		catch {
-			print("Player: could not set up audio session: \(error)")
+			print("AudioEngine: could not set up audio session: \(error)")
 			return false
 		}
 		return true
@@ -48,63 +250,32 @@ class Audio {
 			try session.setActive(false)
 		}
 		catch {
-			print("Player: could not clear audio session: \(error)")
+			print("AudioEngine: could not clear audio session: \(error)")
 		}
 	}
 
-	@discardableResult func setup() -> Bool {
-		engine.reset()
-		// FIXME: implicit node creation to avoid nil exception later on :p
-		let _ = engine.outputNode
-		let _ = engine.mainMixerNode
-		engine.attach(player)
+	func setup() {
+		// implicit node creation to avoid nil exception later on :p
+		let output = engine.outputNode
+		let mixer = engine.mainMixerNode
 		engine.attach(varispeed)
-		engine.connect(varispeed, to: engine.outputNode, format: nil)
-		engine.connect(engine.mainMixerNode, to: varispeed, format: nil)
-		return true
+		engine.connect(varispeed, to: output, format: nil)
+		engine.connect(mixer, to: varispeed, format: nil)
 	}
 
-	func clear() {
-		engine.detach(player)
-		engine.detach(varispeed)
+	func attach(player: AudioPlayer) {
+		if players.contains(where: {$0 === player}) {return}
+		engine.attach(player.player)
+		players.append(player)
 	}
 
-	@discardableResult func add(media: Media) -> Bool {
-		guard let url = media.url else {return false}
-		let file: AVAudioFile?
-		do {
-			let scoped = url.startAccessingSecurityScopedResource()
-			file = try AVAudioFile(forReading: url)
-			if scoped {
-				url.stopAccessingSecurityScopedResource()
-			}
-		}
-		catch {
-			print("Player: could not create audio file for \(url): \(error)")
-			return false
-		}
-		guard let buffer = AVAudioPCMBuffer(pcmFormat: file!.processingFormat, frameCapacity: AVAudioFrameCount(file!.length)) else {
-			print("Player: could not create audio buffer for \(url)")
-			return false
-		}
-		do {
-			try file!.read(into: buffer)
-		}
-		catch {
-			print("Player: could not read into audio buffer: \(error)")
-			return false
-		}
-		engine.connect(player, to: engine.mainMixerNode, format: file!.processingFormat)
-		player.scheduleBuffer(buffer, at: nil, options: AVAudioPlayerNodeBufferOptions.loops, completionHandler: nil)
-		engine.prepare()
-		return true
-	}
-
-	func remove(media: Media) {
-		engine.disconnectNodeOutput(player)
+	func dettach(player: AudioPlayer) {
+		engine.detach(player.player)
+		players.removeAll(where: {$0 === player})
 	}
 
 	@discardableResult func start() -> Bool {
+		if engine.isRunning {return true}
 		do {
 			try engine.start()
 		}
@@ -121,5 +292,30 @@ class Audio {
 
 	func stop() {
 		engine.stop()
+	}
+
+	// MARK: Notifications
+
+	func setupObservers() {
+		NotificationCenter.default.addObserver(self, selector: #selector(handleConfigurationChange),
+											   name: .AVAudioEngineConfigurationChange, object: nil)
+	}
+
+	func clearObservers() {
+		NotificationCenter.default.removeObserver(self, name: .AVAudioEngineConfigurationChange, object: nil)
+	}
+
+	/// restart audio engine and players after a route change
+	@objc func handleConfigurationChange(_ notification: Notification) {
+		printDebug("AudioEngine: route change, restarting")
+		stop()
+		start()
+		for player: AudioPlayer in players {
+			engine.disconnectNodeOutput(player.player)
+			engine.connect(player.player, to: engine.mainMixerNode, format: nil)
+			if player.isPlaying {
+				player.play()
+			}
+		}
 	}
 }
