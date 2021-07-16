@@ -26,9 +26,6 @@ class ControlsView: UIView {
 		routePickerView.addSubview(AVRoutePickerView(frame: routePickerView.bounds))
 		routePickerView.backgroundColor = UIColor.clear
 
-		prevButton.isEnabled = false
-		nextButton.isEnabled = false
-		//playPauseButton.isEnabled = false
 		update()
 	}
 
@@ -36,6 +33,7 @@ class ControlsView: UIView {
 		printDebug("ControlsView: prev")
 		if let playerViewController = playerViewController {
 			let wasPlaying = playerViewController.player.isPlaying
+			playerViewController.stop()
 			if playerViewController.prev() && wasPlaying {
 				playerViewController.play()
 			}
@@ -46,6 +44,7 @@ class ControlsView: UIView {
 		printDebug("ControlsView: next")
 		if let playerViewController = playerViewController {
 			let wasPlaying = playerViewController.player.isPlaying
+			playerViewController.stop()
 			if playerViewController.next() && wasPlaying {
 				playerViewController.play()
 			}
@@ -70,7 +69,7 @@ class ControlsView: UIView {
 		}
 
 		// play/pause button
-		//playPauseButton.isEnabled = playerViewController?.player.isOpen ?? false
+		playPauseButton.isEnabled = !(playerViewController?.playlist.isEmpty ?? true)
 		let playing = playerViewController?.player.isPlaying ?? false
 		var name = "play.fill"
 		if playing {
@@ -89,10 +88,14 @@ class ControlsView: UIView {
 		}
 
 		// prev/next buttons
-//		if let playlist = playerViewController?.playlist {
-//			prevButton.isEnabled = !playlist.isEmpty
-//			nextButton.isEnabled = !playlist.isEmpty
-//		}
+		if let playlist = playerViewController?.playlist {
+			prevButton.isEnabled = (!playlist.isEmpty && !playlist.isFirst) || playlist.isLooping
+			nextButton.isEnabled = (!playlist.isEmpty && !playlist.isLast) || playlist.isLooping
+		}
+		else {
+			prevButton.isEnabled = false
+			nextButton.isEnabled = false
+		}
 	}
 
 }

@@ -38,6 +38,12 @@ class PlaylistViewController: UITableViewController {
 		}
 	}
 
+	// update prev/next buttons if
+	override func viewDidDisappear(_ animated: Bool) {
+		super.viewDidDisappear(animated)
+		playerViewController?.updateControls()
+	}
+
 	override func setEditing(_ editing: Bool, animated: Bool) {
 		super.setEditing(editing, animated: animated)
 		navigationController?.isToolbarHidden = !editing
@@ -56,6 +62,7 @@ class PlaylistViewController: UITableViewController {
 			playlist.isLooping = !playlist.isLooping
 		}
 		updateLoopButton(button)
+		playerViewController?.updateControls()
 	}
 
 	@IBAction func deleteSelected(_ sender: Any) {
@@ -176,6 +183,7 @@ class PlaylistViewController: UITableViewController {
 
 	// MARK: Private
 
+	// show loop state via tint
 	private func updateLoopButton(_ button: UIBarButtonItem) {
 		if let playlist = playlist {
 			if playlist.isLooping {

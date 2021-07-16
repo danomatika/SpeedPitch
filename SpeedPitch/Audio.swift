@@ -75,7 +75,7 @@ class AudioFile {
 	}
 }
 
-/// media event delegate
+/// player event delegate
 protocol AudioPlayerDelegate {
 	func playerDidStartPlaying(_ player: AudioPlayer)
 	func playerDidPausePlaying(_ player: AudioPlayer)
@@ -163,6 +163,7 @@ class AudioPlayer {
 		player.engine?.disconnectNodeOutput(player)
 		buffer = nil
 		_isPlaying = false
+		_ignoreFinish = false
 	}
 
 	func play() {
@@ -174,13 +175,16 @@ class AudioPlayer {
 			player.scheduleBuffer(buffer!, at: nil,
 								options: options,
 								completionCallbackType: .dataPlayedBack) { type in
-				if self.player.engine?.isRunning ?? false && !self._ignoreFinish {
+				// ignore finish event if triggered manually, ie. via stop()
+				if let engine = self.player.engine,
+				   engine.isRunning && !self._ignoreFinish {
 					printDebug("AudioPlayer: finished")
 					self.delegate?.playerDidFinishPlaying(self)
 				}
 			}
 			player.play()
 			player.engine?.prepare()
+			_ignoreFinish = false
 			let wasPlaying = _isPlaying
 			_isPlaying = true
 			if !wasPlaying {
@@ -192,6 +196,7 @@ class AudioPlayer {
 	func pause() {
 		if buffer != nil {
 			player.pause()
+			_ignoreFinish = true
 		}
 		let wasPlaying = _isPlaying
 		_isPlaying = false
@@ -201,7 +206,7 @@ class AudioPlayer {
 	}
 
 	func stop() {
-		if buffer != nil && player.isPlaying {
+		if buffer != nil && _isPlaying {
 			_ignoreFinish = true
 			player.stop()
 			_ignoreFinish = false

@@ -332,10 +332,26 @@ Usage:
 2. Start playback via pressing play or tapping a song in the playlist screen
 3. Ride you bike or take a walk and see what happens...
 
-You can adjust the speed limit for the pitch processing to set when songs are played back at a normal rate.
+You can adjust the speed limit for the pitch processing to set </mutableString>
+                                        <attributes>
+                                            <color key="NSColor" systemColor="labelColor"/>
+                                            <font key="NSFont" size="14" name="Menlo-Regular"/>
+                                            <font key="NSOriginalFont" size="14" name="Menlo-Regular"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="the speed songs">
+                                        <attributes>
+                                            <color key="NSColor" systemColor="labelColor"/>
+                                            <font key="NSFont" size="14" name="Menlo-Regular"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content"> are played back at a normal rate.
 
 Dan Wilcox 2021
-danomatika.com</mutableString>
+danomatika.com</string>
                                         <attributes>
                                             <color key="NSColor" systemColor="labelColor"/>
                                             <font key="NSFont" size="14" name="Menlo-Regular"/>

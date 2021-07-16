@@ -16,9 +16,12 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 	let picker = Picker()
 	let location = Location()
 
-	var isPlaying = false
-	var rate: Double = 0.05 // current playback rate
-	let rateLine = Line(0.05)
+	static var initRate: Double = 0.05
+	static var initLocation: Bool = true
+	static var randomRate: Bool = false
+
+	var rate: Double = initRate // current playback rate
+	let rateLine = Line(initRate)
 	var rateTimestamp: TimeInterval = 0
 	var speedlimit: Double = 20.25
 
@@ -31,7 +34,6 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 
 		picker.delegate = self
 		location.delegate = self
-		location.enable()
 		rateTimestamp = Clock.now()
 
 		// keep screen awake
@@ -47,6 +49,11 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 		audio.setup()
 		audio.attach(player: player)
 		audio.start()
+
+		// go
+		if(PlayerViewController.initLocation) {
+			location.enable()
+		}
 	}
 
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -76,6 +83,10 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 		})
 	}
 
+	func updateControls() {
+		DispatchQueue.main.async {self.controlsView.update()}
+	}
+
 	// MARK: Transport
 
 	func play() {
@@ -83,12 +94,12 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 			goto(index: 0)
 		}
 		player.play()
-		self.controlsView.update()
+		updateControls()
 	}
 
 	func pause() {
 		player.pause()
-		self.controlsView.update()
+		updateControls()
 	}
 
 	func togglePlay() {
@@ -102,13 +113,13 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 
 	func stop() {
 		player.stop()
-		self.controlsView.update()
+		updateControls()
 	}
 
 	// MARK: Playlist
 
 	@discardableResult func prev() -> Bool {
-		var file = playlist.prev()
+		var file = playlist.current
 		if playlist.isFirst {
 			if playlist.isLooping {
 				printDebug("PlayerViewController: playlist prev loop")
@@ -116,23 +127,24 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 				file = playlist.goto(index: playlist.count-1)
 			}
 			else {
-				printDebug("PlayerViewController: playlist prev")
-				self.controlsView.update()
-				return false
+				printDebug("PlayerViewController: playlist start")
+				updateControls()
+				return true
 			}
 		}
 		else {
 			printDebug("PlayerViewController: playlist prev")
+			file = playlist.prev()
 		}
 		if file != nil {
 			player.open(file: file!)
 		}
-		self.controlsView.update()
+		updateControls()
 		return true
 	}
 
 	@discardableResult func next() -> Bool {
-		var file = playlist.next()
+		var file = playlist.current
 		if playlist.isLast {
 			if playlist.isLooping {
 				printDebug("PlayerViewController: playlist next loop")
@@ -141,17 +153,18 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 			}
 			else {
 				printDebug("PlayerViewController: playlist finished")
-				self.controlsView.update()
+				updateControls()
 				return false
 			}
 		}
 		else {
 			printDebug("PlayerViewController: playlist next")
+			file = playlist.next()
 		}
 		if file != nil {
 			player.open(file: file!)
 		}
-		self.controlsView.update()
+		updateControls()
 		return true
 	}
 
@@ -162,7 +175,7 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 			player.open(file: file!)
 			ret = true
 		}
-		self.controlsView.update()
+		updateControls()
 		return ret
 	}
 
@@ -253,18 +266,19 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 				playlist.add(file: file)
 			}
 		}
+		self.updateControls()
 	}
 
 	// MARK: AudioPlayerDelegate
 
 	func playerDidStartPlaying(_ player: AudioPlayer) {
 		printDebug("started playing")
-		DispatchQueue.main.async {self.controlsView.update()}
+		self.updateControls()
 	}
 
 	func playerDidPausePlaying(_ player: AudioPlayer) {
 		printDebug("paused")
-		DispatchQueue.main.async {self.controlsView.update()}
+		self.updateControls()
 	}
 
 	func playerDidFinishPlaying(_ player: AudioPlayer) {
@@ -300,10 +314,16 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 	func locationDidUpdateSpeed(_ location: Location, speed: Double, accuracy: Double) {
 		printDebug("PlayerViewController: speed \(speed) accuracy \(accuracy)")
 		DispatchQueue.main.async {
-			let maxspeed: Double = self.speedlimit / 3.6
-			let newRate = max(speed.mapped(from: 0...maxspeed, to: 0...1), 0.05) // scales over 1 automatically
-			//let newRate = Double.random(in: 0.05...2)
 
+			// calc new rate
+			var newRate = self.rate
+			if PlayerViewController.randomRate {
+				newRate = Double.random(in: 0.05...2)
+			}
+			else {
+				let maxspeed: Double = self.speedlimit / 3.6
+				newRate = max(speed.mapped(from: 0...maxspeed, to: 0...1), 0.05)
+			}
 			let delta = (Clock.now() - self.rateTimestamp).clamped(to: 0...5)
 			self.rateTimestamp = Clock.now()
 
