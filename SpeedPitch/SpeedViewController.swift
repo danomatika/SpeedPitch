@@ -10,7 +10,7 @@ class SpeedViewController: UIViewController {
 
 	override func viewDidLoad() {
 		let speed = playerViewController?.speedlimit ?? 0
-		speedTextField.text = "\(Int(speed.rounded()))"
+		update(speed: speed)
 	}
 
 	// MARK: Actions
@@ -22,7 +22,18 @@ class SpeedViewController: UIViewController {
 	@IBAction func speedSliderChanged(_ sender: Any) {
 		let speed = Double(speedSlider.value).mapped(from: 0...1, to: 3...30)
 		playerViewController?.speedlimit = speed
-		speedTextField.text = "\(Int(speed.rounded()))"
+		update(speed: speed)
+	}
+
+	// update UI with speed in km/h
+	func update(speed: Double) {
+		let units = UserDefaults.standard.integer(forKey: "units")
+		switch units {
+		case 1: // miles
+			speedTextField.text = "\(Int((speed * 0.625).rounded()))\nmph"
+		default: // km
+			speedTextField.text = "\(Int(speed.rounded()))\nkm/h"
+		}
 	}
 
 }

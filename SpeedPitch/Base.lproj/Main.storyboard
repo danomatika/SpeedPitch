@@ -138,6 +138,9 @@
                                                         <segment title="Metric"/>
                                                         <segment title="Imperial"/>
                                                     </segments>
+                                                    <connections>
+                                                        <action selector="unitsChanged:" destination="eXY-uY-oFQ" eventType="valueChanged" id="hMV-U2-Xb9"/>
+                                                    </connections>
                                                 </segmentedControl>
                                             </subviews>
                                             <constraints>
@@ -169,6 +172,9 @@
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pkD-pL-pW3">
                                                     <rect key="frame" x="305" y="6" width="51" height="32"/>
+                                                    <connections>
+                                                        <action selector="keepAwakeChanged:" destination="eXY-uY-oFQ" eventType="valueChanged" id="2ik-fs-iVm"/>
+                                                    </connections>
                                                 </switch>
                                             </subviews>
                                             <constraints>
@@ -191,12 +197,16 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Settings" id="I89-8c-pFh">
-                        <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="4U5-G3-LeS">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="4U5-G3-LeS">
                             <connections>
                                 <action selector="cancel:" destination="eXY-uY-oFQ" id="ZIJ-or-iQG"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="keepAwakeSwitch" destination="pkD-pL-pW3" id="tTp-y1-ID1"/>
+                        <outlet property="unitsControl" destination="hed-b5-GVJ" id="wt6-Se-fIf"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CVf-Tf-nga" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

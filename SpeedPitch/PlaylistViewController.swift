@@ -38,7 +38,7 @@ class PlaylistViewController: UITableViewController {
 		}
 	}
 
-	// update prev/next buttons if
+	// update prev/next buttons if playlist was cleared
 	override func viewDidDisappear(_ animated: Bool) {
 		super.viewDidDisappear(animated)
 		playerViewController?.updateControls()

@@ -22,13 +22,24 @@ class DashboardView: UIView {
 
 	/// speed in m/s
 	func update(speed: Double, rate: Double) {
+		let units = UserDefaults.standard.integer(forKey: "units")
 		if speed < 0 {
-			speedLabel.text = "?\nkm/h"
+			switch units {
+			case 1: // miles
+				speedLabel.text = "?\nmph"
+			default: // km
+				speedLabel.text = "?\nkm/h"
+			}
 			rateLabel.text = ""
 		}
 		else {
 			let converted = speed * 3.6 // m/s -> km/h
-			speedLabel.text = "\(Int(converted.rounded()))\nkm/h"
+			switch units {
+			case 1: // miles
+				speedLabel.text = "\(Int((converted * 0.625).rounded()))\nmph"
+			default: // km
+				speedLabel.text = "\(Int(converted.rounded()))\nkm/h"
+			}
 			rateLabel.text = (rateFormatter.string(for: rate) ?? "1") + "x"
 		}
 	}

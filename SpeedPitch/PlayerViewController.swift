@@ -20,10 +20,12 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 	static var initLocation: Bool = true
 	static var randomRate: Bool = false
 
-	var rate: Double = initRate // current playback rate
-	let rateLine = Line(initRate)
-	var rateTimestamp: TimeInterval = 0
-	var speedlimit: Double = 20.25
+	var speed: Double = 0 //< current speed in m/s
+	var speedlimit: Double = 20.25 //< speed at playback rate 1.0
+
+	var rate: Double = initRate //< current playback rate
+	let rateLine = Line(initRate) //< rate change interpolator
+	var rateTimestamp: TimeInterval = 0 //< used to calc rate change time
 
 	@IBOutlet weak var dashboardView: DashboardView!
 	@IBOutlet weak var controlsView: ControlsView!
@@ -37,7 +39,9 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 		rateTimestamp = Clock.now()
 
 		// keep screen awake
-		UIApplication.shared.isIdleTimerDisabled = true
+		if UserDefaults.standard.bool(forKey: "keepAwake") {
+			UIApplication.shared.isIdleTimerDisabled = true
+		}
 
 		// start background clock
 		Scheduler.shared.start()
@@ -68,6 +72,11 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 		   let controller = scene.viewControllers.first as? SpeedViewController  {
 			controller.playerViewController = self
 		}
+		else if segue.identifier == "ShowSettings",
+		   let scene = segue.destination as? UINavigationController,
+		   let controller = scene.viewControllers.first as? SettingsViewController  {
+			controller.playerViewController = self
+		}
 	}
 
 	// toggle nav & controls visibility
@@ -83,8 +92,16 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 		})
 	}
 
+	func updateDashboard() {
+		DispatchQueue.main.async {
+			self.dashboardView.update(speed: self.speed, rate: self.rate)
+		}
+	}
+
 	func updateControls() {
-		DispatchQueue.main.async {self.controlsView.update()}
+		DispatchQueue.main.async {
+			self.controlsView.update()
+		}
 	}
 
 	// MARK: Transport
@@ -314,6 +331,7 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 	func locationDidUpdateSpeed(_ location: Location, speed: Double, accuracy: Double) {
 		printDebug("PlayerViewController: speed \(speed) accuracy \(accuracy)")
 		DispatchQueue.main.async {
+			self.speed = speed
 
 			// calc new rate
 			var newRate = self.rate
