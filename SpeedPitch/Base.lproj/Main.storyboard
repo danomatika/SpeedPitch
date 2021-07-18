@@ -162,7 +162,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Keep screen awake" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9rW-oe-OaZ">
-                                                    <rect key="frame" x="20" y="10.999999999999998" width="132" height="18.333333333333329"/>
+                                                    <rect key="frame" x="20" y="10.999999999999998" width="277" height="18.333333333333329"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="132" id="nLT-OB-jjG"/>
                                                     </constraints>
@@ -178,6 +178,7 @@
                                                 </switch>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="pkD-pL-pW3" firstAttribute="leading" secondItem="9rW-oe-OaZ" secondAttribute="trailing" constant="8" symbolic="YES" id="K4Q-Kn-jje"/>
                                                 <constraint firstItem="9rW-oe-OaZ" firstAttribute="leading" secondItem="ClE-PZ-Rkt" secondAttribute="leadingMargin" id="XEw-62-KSB"/>
                                                 <constraint firstItem="9rW-oe-OaZ" firstAttribute="top" secondItem="ClE-PZ-Rkt" secondAttribute="topMargin" id="aGS-xY-VRR"/>
                                                 <constraint firstItem="pkD-pL-pW3" firstAttribute="trailing" secondItem="ClE-PZ-Rkt" secondAttribute="trailingMargin" id="dak-8b-Kka"/>
@@ -185,6 +186,45 @@
                                                 <constraint firstItem="9rW-oe-OaZ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ClE-PZ-Rkt" secondAttribute="leadingMargin" id="ndg-wa-h2F"/>
                                                 <constraint firstItem="pkD-pL-pW3" firstAttribute="centerY" secondItem="ClE-PZ-Rkt" secondAttribute="centerY" id="o4t-x1-vUg"/>
                                                 <constraint firstItem="pkD-pL-pW3" firstAttribute="top" secondItem="ClE-PZ-Rkt" secondAttribute="topMargin" constant="-5" id="yFM-lY-fIg"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Playback Rate" id="jca-Pg-uw3">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="3o3-l0-1vg">
+                                        <rect key="frame" x="20" y="186.00000190734863" width="374" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="3o3-l0-1vg" id="1dy-D2-xqu">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Quantize" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jug-3T-Ikh">
+                                                    <rect key="frame" x="20" y="10.999999999999998" width="277" height="18.333333333333329"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="132" id="R3k-UQ-Ekj"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C2v-rA-yt9">
+                                                    <rect key="frame" x="305" y="6" width="51" height="32"/>
+                                                    <connections>
+                                                        <action selector="quantizeChanged:" destination="eXY-uY-oFQ" eventType="valueChanged" id="fVP-hf-8uS"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottomMargin" secondItem="Jug-3T-Ikh" secondAttribute="bottom" constant="3.6666679382324219" id="2as-uK-WpV"/>
+                                                <constraint firstItem="Jug-3T-Ikh" firstAttribute="top" secondItem="1dy-D2-xqu" secondAttribute="topMargin" id="GMY-Xa-quM"/>
+                                                <constraint firstItem="Jug-3T-Ikh" firstAttribute="leading" secondItem="1dy-D2-xqu" secondAttribute="leadingMargin" id="HFD-oN-lol"/>
+                                                <constraint firstItem="C2v-rA-yt9" firstAttribute="centerY" secondItem="1dy-D2-xqu" secondAttribute="centerY" id="L3S-Qc-QBE"/>
+                                                <constraint firstItem="Jug-3T-Ikh" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1dy-D2-xqu" secondAttribute="leadingMargin" id="RN0-Wl-UGR"/>
+                                                <constraint firstItem="C2v-rA-yt9" firstAttribute="top" secondItem="1dy-D2-xqu" secondAttribute="topMargin" constant="-5" id="a1f-jv-6cI"/>
+                                                <constraint firstItem="C2v-rA-yt9" firstAttribute="leading" secondItem="Jug-3T-Ikh" secondAttribute="trailing" constant="8" symbolic="YES" id="gc2-FG-nqA"/>
+                                                <constraint firstItem="C2v-rA-yt9" firstAttribute="trailing" secondItem="1dy-D2-xqu" secondAttribute="trailingMargin" id="skU-Sm-13z"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -205,12 +245,13 @@
                     </navigationItem>
                     <connections>
                         <outlet property="keepAwakeSwitch" destination="pkD-pL-pW3" id="tTp-y1-ID1"/>
+                        <outlet property="quantizeSwitch" destination="C2v-rA-yt9" id="MeP-6S-Jzx"/>
                         <outlet property="unitsControl" destination="hed-b5-GVJ" id="wt6-Se-fIf"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CVf-Tf-nga" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="738" y="854"/>
+            <point key="canvasLocation" x="737.68115942028987" y="853.53260869565224"/>
         </scene>
         <!--Speed-->
         <scene sceneID="gQL-ZG-qKy">
@@ -251,6 +292,20 @@
                                     <constraint firstAttribute="trailing" secondItem="E53-Ea-aDe" secondAttribute="trailing" constant="10" id="yIZ-cp-5G4"/>
                                 </constraints>
                             </view>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="2Jp-yR-gt8">
+                                <rect key="frame" x="20" y="685" width="374" height="32"/>
+                                <segments>
+                                    <segment title="Foot"/>
+                                    <segment title="Bike"/>
+                                    <segment title="Car"/>
+                                    <segment title="Plane"/>
+                                    <segment title="Rocket"/>
+                                </segments>
+                                <connections>
+                                    <action selector="rangeChanged:" destination="1ZI-6h-Vbt" eventType="valueChanged" id="7Qx-ga-4oO"/>
+                                    <action selector="rangeChanged:" destination="eXY-uY-oFQ" eventType="valueChanged" id="szF-9Z-1xP"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="8PO-RT-NBw"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -258,10 +313,13 @@
                             <constraint firstItem="fyr-HI-SlQ" firstAttribute="trailing" secondItem="8PO-RT-NBw" secondAttribute="trailing" id="0ES-Kv-OO0"/>
                             <constraint firstItem="8PO-RT-NBw" firstAttribute="trailing" secondItem="r5J-Ly-Jzf" secondAttribute="trailing" constant="10" id="0b4-Fy-4wD"/>
                             <constraint firstItem="8PO-RT-NBw" firstAttribute="bottom" secondItem="fyr-HI-SlQ" secondAttribute="bottom" constant="300" id="1Oh-ZE-eSW"/>
+                            <constraint firstItem="2Jp-yR-gt8" firstAttribute="leading" secondItem="8PO-RT-NBw" secondAttribute="leading" constant="20" id="9mC-pg-Etx"/>
+                            <constraint firstItem="8PO-RT-NBw" firstAttribute="trailing" secondItem="2Jp-yR-gt8" secondAttribute="trailing" constant="20" id="A5i-cp-p4e"/>
                             <constraint firstItem="r5J-Ly-Jzf" firstAttribute="leading" secondItem="8PO-RT-NBw" secondAttribute="leading" constant="10" id="DZn-AE-fqP"/>
                             <constraint firstItem="fyr-HI-SlQ" firstAttribute="top" secondItem="8PO-RT-NBw" secondAttribute="top" constant="60" id="TXq-j9-Z3J"/>
                             <constraint firstItem="fyr-HI-SlQ" firstAttribute="leading" secondItem="8PO-RT-NBw" secondAttribute="leading" id="YzF-ge-Z7h"/>
                             <constraint firstItem="r5J-Ly-Jzf" firstAttribute="top" secondItem="fyr-HI-SlQ" secondAttribute="bottom" constant="120" id="o43-ld-vzB"/>
+                            <constraint firstItem="8PO-RT-NBw" firstAttribute="bottom" secondItem="2Jp-yR-gt8" secondAttribute="bottom" constant="20" id="zng-Ez-M7K"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Speed" id="e63-rg-Hme">
@@ -272,13 +330,14 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="rangeControl" destination="2Jp-yR-gt8" id="eBY-zF-zFA"/>
                         <outlet property="speedSlider" destination="r5J-Ly-Jzf" id="IWU-PM-fod"/>
                         <outlet property="speedTextField" destination="E53-Ea-aDe" id="IPY-TC-oo5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1C2-CG-oZ7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1062" y="854"/>
+            <point key="canvasLocation" x="-1062.3188405797102" y="853.53260869565224"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="636-at-dxG">

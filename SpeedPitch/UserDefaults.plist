@@ -6,5 +6,11 @@
 	<integer>0</integer>
 	<key>keepAwake</key>
 	<true/>
+	<key>range</key>
+	<integer>1</integer>
+	<key>quantize</key>
+	<false/>
+	<key>speedLimit</key>
+	<integer>20</integer>
 </dict>
 </plist>

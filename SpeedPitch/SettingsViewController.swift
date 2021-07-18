@@ -12,8 +12,12 @@ class SettingsViewController: UITableViewController {
 
 	weak var playerViewController: PlayerViewController?
 
+	// display
 	@IBOutlet weak var unitsControl: UISegmentedControl!
 	@IBOutlet weak var keepAwakeSwitch: UISwitch!
+
+	// rate
+	@IBOutlet weak var quantizeSwitch: UISwitch!
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -22,6 +26,7 @@ class SettingsViewController: UITableViewController {
 		let defaults = UserDefaults.standard
 		unitsControl.selectedSegmentIndex = defaults.integer(forKey: "units")
 		keepAwakeSwitch.isOn = defaults.bool(forKey: "keepAwake")
+		quantizeSwitch.isOn = defaults.bool(forKey: "quantize")
 	}
 
 	// update dashboard if units changed
@@ -40,8 +45,10 @@ class SettingsViewController: UITableViewController {
 
 	@IBAction func keepAwakeChanged(_ sender: Any) {
 		UserDefaults.standard.set(keepAwakeSwitch.isOn, forKey: "keepAwake")
-		DispatchQueue.main.async {
-			UIApplication.shared.isIdleTimerDisabled = self.keepAwakeSwitch.isOn
-		}
+		UIApplication.shared.isIdleTimerDisabled = self.keepAwakeSwitch.isOn
+	}
+
+	@IBAction func quantizeChanged(_ sender: Any) {
+		UserDefaults.standard.set(quantizeSwitch.isOn, forKey: "quantize")
 	}
 }

@@ -16,15 +16,29 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 	let picker = Picker()
 	let location = Location()
 
-	static var initRate: Double = 0.05
-	static var initLocation: Bool = true
-	static var randomRate: Bool = false
+	// ranges
+	static var minRate: Double = 0.05 //< min playback rate
+	static var maxRate: Double = 4 //< max playback rate (from Apple docs)
+	static var quantizeSteps: Double = 32 //< quantization resolution
+	static var maxDelta: Double = 5 //< max delta slew in seconds
+
+	// max speeds in km/h for the chosen range by index: foot, bike, car, plane, jet, rocket
+	static var maxSpeeds: [Double] = [
+		35,   // foot - olympic sprinter
+		60,   // bike - downhill
+		200,  // car - autobahn+
+		1000, // jet - trans-atlantic cruise
+		28000 // rocket - 17k mph needed to reach low-earth orbit
+	]
+
+	// debug switches
+	static var enableRandomRate: Bool = false //< random rate? no speed calc
 
 	var speed: Double = 0 //< current speed in m/s
-	var speedlimit: Double = 20.25 //< speed at playback rate 1.0
+	var speedLimit: Double = 20 //< speed in km/h at playback rate 1.0
 
-	var rate: Double = initRate //< current playback rate
-	let rateLine = Line(initRate) //< rate change interpolator
+	var rate: Double = minRate //< current playback rate
+	let rateLine = Line(minRate) //< rate change interpolator
 	var rateTimestamp: TimeInterval = 0 //< used to calc rate change time
 
 	@IBOutlet weak var dashboardView: DashboardView!
@@ -38,10 +52,11 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 		location.delegate = self
 		rateTimestamp = Clock.now()
 
-		// keep screen awake
-		if UserDefaults.standard.bool(forKey: "keepAwake") {
-			UIApplication.shared.isIdleTimerDisabled = true
+		let defaults = UserDefaults.standard
+		if defaults.bool(forKey: "keepAwake") {
+			UIApplication.shared.isIdleTimerDisabled = true // keep screen awake
 		}
+		speedLimit = defaults.double(forKey: "speedLimit")
 
 		// start background clock
 		Scheduler.shared.start()
@@ -54,10 +69,8 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 		audio.attach(player: player)
 		audio.start()
 
-		// go
-		if(PlayerViewController.initLocation) {
-			location.enable()
-		}
+		// go, TODO: this could be disabled when playlist is empty
+		location.enable()
 	}
 
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -334,15 +347,29 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 			self.speed = speed
 
 			// calc new rate
+			let minRate = PlayerViewController.minRate
+			let maxRate = PlayerViewController.maxRate
 			var newRate = self.rate
-			if PlayerViewController.randomRate {
-				newRate = Double.random(in: 0.05...2)
+			if PlayerViewController.enableRandomRate {
+				// random for debugging
+				newRate = Double.random(in: minRate...2)
 			}
 			else {
-				let maxspeed: Double = self.speedlimit / 3.6
-				newRate = max(speed.mapped(from: 0...maxspeed, to: 0...1), 0.05)
+				// calc from speed
+				let maxspeed: Double = self.speedLimit / 3.6 // km/h -> m/s
+				newRate = max(speed.mapped(from: 0...maxspeed, to: 0...1), minRate)
 			}
-			let delta = (Clock.now() - self.rateTimestamp).clamped(to: 0...5)
+			if UserDefaults.standard.bool(forKey: "quantize") {
+				// quantize rate with a certain amount of steps
+				let steps = PlayerViewController.quantizeSteps
+				newRate = newRate.mapped(from: minRate...maxRate, to: 0...steps)
+				newRate = newRate.rounded()
+				newRate = newRate.mapped(from: 0...steps, to: minRate...maxRate)
+			}
+
+			// calc interpolation glissando time
+			let maxDelta = PlayerViewController.maxDelta
+			let delta = (Clock.now() - self.rateTimestamp).clamped(to: 0...maxDelta)
 			self.rateTimestamp = Clock.now()
 
 			// interpolate to new rate
