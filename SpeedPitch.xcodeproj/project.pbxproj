@@ -29,7 +29,6 @@
 		7ED22864268256C200960593 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ED22863268256C200960593 /* CoreLocation.framework */; };
 		7ED2286626833C7E00960593 /* UserDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7ED2286526833C7E00960593 /* UserDefaults.plist */; };
 		7ED2286826837D4700960593 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED2286726837D4600960593 /* DashboardView.swift */; };
-		7EF44C9926839317004BA79D /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF44C9626839317004BA79D /* Media.swift */; };
 		7EF44C9B26839317004BA79D /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF44C9826839317004BA79D /* Playlist.swift */; };
 /* End PBXBuildFile section */
 
@@ -58,7 +57,6 @@
 		7ED22863268256C200960593 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		7ED2286526833C7E00960593 /* UserDefaults.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = UserDefaults.plist; sourceTree = "<group>"; };
 		7ED2286726837D4600960593 /* DashboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
-		7EF44C9626839317004BA79D /* Media.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
 		7EF44C9826839317004BA79D /* Playlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -106,7 +104,6 @@
 				7E227443268F5CDF0024E9E3 /* SpeedViewController.swift */,
 				7E22743D268676A20024E9E3 /* Scheduler.swift */,
 				7E2274352684CB5A0024E9E3 /* Location.swift */,
-				7EF44C9626839317004BA79D /* Media.swift */,
 				7EF44C9826839317004BA79D /* Playlist.swift */,
 				7E227437268534A50024E9E3 /* Picker.swift */,
 				7E2274412689D21F0024E9E3 /* Audio.swift */,
@@ -215,7 +212,6 @@
 				7E570A5B267F4146002598A0 /* AppDelegate.swift in Sources */,
 				7E75F06126A4D11300605994 /* WaveformView.swift in Sources */,
 				7EC838FB2681507A00AA8D06 /* PlayerViewController.swift in Sources */,
-				7EF44C9926839317004BA79D /* Media.swift in Sources */,
 				7EC838F2267F451300AA8D06 /* Util.swift in Sources */,
 				7EC838F92681395D00AA8D06 /* InfoViewController.swift in Sources */,
 				7EF44C9B26839317004BA79D /* Playlist.swift in Sources */,
