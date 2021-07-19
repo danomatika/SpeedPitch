@@ -19,6 +19,7 @@
 		7E570A64267F4147002598A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E570A63267F4147002598A0 /* Assets.xcassets */; };
 		7E570A67267F4147002598A0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E570A65267F4147002598A0 /* LaunchScreen.storyboard */; };
 		7E75F05F26A24C1900605994 /* AppInfo.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7E75F05D26A24C1900605994 /* AppInfo.txt */; };
+		7E75F06126A4D11300605994 /* WaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E75F06026A4D11300605994 /* WaveformView.swift */; };
 		7EC838F2267F451300AA8D06 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC838F1267F451300AA8D06 /* Util.swift */; };
 		7EC838F62680E18200AA8D06 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC838F42680E18200AA8D06 /* SettingsViewController.swift */; };
 		7EC838F72680E18200AA8D06 /* PlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC838F52680E18200AA8D06 /* PlaylistViewController.swift */; };
@@ -47,6 +48,7 @@
 		7E570A66267F4147002598A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7E570A68267F4147002598A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7E75F05E26A24C1900605994 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text; name = Base; path = Base.lproj/AppInfo.txt; sourceTree = "<group>"; };
+		7E75F06026A4D11300605994 /* WaveformView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaveformView.swift; sourceTree = "<group>"; };
 		7EC838F1267F451300AA8D06 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		7EC838F42680E18200AA8D06 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		7EC838F52680E18200AA8D06 /* PlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistViewController.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 				7E227437268534A50024E9E3 /* Picker.swift */,
 				7E2274412689D21F0024E9E3 /* Audio.swift */,
 				7E22743926861CC50024E9E3 /* Line.swift */,
+				7E75F06026A4D11300605994 /* WaveformView.swift */,
 				7E570A60267F4146002598A0 /* Main.storyboard */,
 				7E570A63267F4147002598A0 /* Assets.xcassets */,
 				7E570A65267F4147002598A0 /* LaunchScreen.storyboard */,
@@ -210,6 +213,7 @@
 				7E22743A26861CC50024E9E3 /* Line.swift in Sources */,
 				7EC838FF26823A4300AA8D06 /* ControlsView.swift in Sources */,
 				7E570A5B267F4146002598A0 /* AppDelegate.swift in Sources */,
+				7E75F06126A4D11300605994 /* WaveformView.swift in Sources */,
 				7EC838FB2681507A00AA8D06 /* PlayerViewController.swift in Sources */,
 				7EF44C9926839317004BA79D /* Media.swift in Sources */,
 				7EC838F2267F451300AA8D06 /* Util.swift in Sources */,

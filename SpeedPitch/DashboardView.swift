@@ -14,6 +14,7 @@ class DashboardView: UIView {
 
 	@IBOutlet weak var speedLabel: UILabel! //< speed over ground
 	@IBOutlet weak var rateLabel: UILabel! //< playback rate
+	@IBOutlet weak var waveformView: WaveformView! //< waveform display
 
 	override func awakeFromNib() {
 		rateFormatter.usesSignificantDigits = true

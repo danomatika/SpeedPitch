@@ -12,5 +12,7 @@
 	<false/>
 	<key>speedLimit</key>
 	<integer>20</integer>
+	<key>drawWaveform</key>
+	<true/>
 </dict>
 </plist>

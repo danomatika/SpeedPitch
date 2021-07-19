@@ -15,6 +15,7 @@ class SettingsViewController: UITableViewController {
 	// display
 	@IBOutlet weak var unitsControl: UISegmentedControl!
 	@IBOutlet weak var keepAwakeSwitch: UISwitch!
+	@IBOutlet weak var drawWaveformSwitch: UISwitch!
 
 	// rate
 	@IBOutlet weak var quantizeSwitch: UISwitch!
@@ -26,6 +27,7 @@ class SettingsViewController: UITableViewController {
 		let defaults = UserDefaults.standard
 		unitsControl.selectedSegmentIndex = defaults.integer(forKey: "units")
 		keepAwakeSwitch.isOn = defaults.bool(forKey: "keepAwake")
+		drawWaveformSwitch.isOn = defaults.bool(forKey: "drawWaveform")
 		quantizeSwitch.isOn = defaults.bool(forKey: "quantize")
 	}
 
@@ -46,6 +48,11 @@ class SettingsViewController: UITableViewController {
 	@IBAction func keepAwakeChanged(_ sender: Any) {
 		UserDefaults.standard.set(keepAwakeSwitch.isOn, forKey: "keepAwake")
 		UIApplication.shared.isIdleTimerDisabled = self.keepAwakeSwitch.isOn
+	}
+
+	@IBAction func drawWaveformChanged(_ sender: Any) {
+		UserDefaults.standard.set(drawWaveformSwitch.isOn, forKey: "drawWaveform")
+		playerViewController?.updateWaveform()
 	}
 
 	@IBAction func quantizeChanged(_ sender: Any) {

@@ -67,6 +67,7 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 		AudioEngine.activateSession()
 		audio.setup()
 		audio.attach(player: player)
+		updateWaveform()
 		audio.start()
 
 		// go, TODO: this could be disabled when playlist is empty
@@ -114,6 +115,15 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 	func updateControls() {
 		DispatchQueue.main.async {
 			self.controlsView.update()
+		}
+	}
+
+	func updateWaveform() {
+		if UserDefaults.standard.bool(forKey: "drawWaveform") {
+			dashboardView.waveformView.tap(node: audio.varispeed)
+		}
+		else {
+			dashboardView.waveformView.untap()
 		}
 	}
 

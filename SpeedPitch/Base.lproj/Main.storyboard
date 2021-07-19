@@ -189,12 +189,47 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="z0F-DS-4Tt">
+                                        <rect key="frame" x="20" y="136.33333587646484" width="374" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="z0F-DS-4Tt" id="5Zx-Jb-8ic">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Draw audio waveform" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x1a-7X-aB1">
+                                                    <rect key="frame" x="20" y="10.999999999999998" width="277" height="18.333333333333329"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="132" id="Hvn-Fk-Pyn"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PSQ-eb-BMw">
+                                                    <rect key="frame" x="305" y="6" width="51" height="32"/>
+                                                    <connections>
+                                                        <action selector="drawWaveformChanged:" destination="eXY-uY-oFQ" eventType="valueChanged" id="9bY-GA-kmx"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="x1a-7X-aB1" firstAttribute="leading" secondItem="5Zx-Jb-8ic" secondAttribute="leadingMargin" id="8Fb-p8-9HL"/>
+                                                <constraint firstItem="PSQ-eb-BMw" firstAttribute="leading" secondItem="x1a-7X-aB1" secondAttribute="trailing" constant="8" symbolic="YES" id="JE9-X9-oGm"/>
+                                                <constraint firstItem="x1a-7X-aB1" firstAttribute="top" secondItem="5Zx-Jb-8ic" secondAttribute="topMargin" id="Osn-60-KVW"/>
+                                                <constraint firstItem="PSQ-eb-BMw" firstAttribute="centerY" secondItem="5Zx-Jb-8ic" secondAttribute="centerY" id="PTK-bz-g4v"/>
+                                                <constraint firstItem="x1a-7X-aB1" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="5Zx-Jb-8ic" secondAttribute="leadingMargin" id="c5z-Wz-Ju1"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="x1a-7X-aB1" secondAttribute="bottom" constant="3.6666679382324219" id="kc8-Xb-2Jh"/>
+                                                <constraint firstItem="PSQ-eb-BMw" firstAttribute="trailing" secondItem="5Zx-Jb-8ic" secondAttribute="trailingMargin" id="kgd-K2-bbR"/>
+                                                <constraint firstItem="PSQ-eb-BMw" firstAttribute="top" secondItem="5Zx-Jb-8ic" secondAttribute="topMargin" constant="-5" id="l9J-3T-fpj"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle="Playback Rate" id="jca-Pg-uw3">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="3o3-l0-1vg">
-                                        <rect key="frame" x="20" y="186.00000190734863" width="374" height="43.666667938232422"/>
+                                        <rect key="frame" x="20" y="229.66666984558105" width="374" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="3o3-l0-1vg" id="1dy-D2-xqu">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="43.666667938232422"/>
@@ -244,6 +279,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="drawWaveformSwitch" destination="PSQ-eb-BMw" id="7n0-YU-Cx0"/>
                         <outlet property="keepAwakeSwitch" destination="pkD-pL-pW3" id="tTp-y1-ID1"/>
                         <outlet property="quantizeSwitch" destination="C2v-rA-yt9" id="MeP-6S-Jzx"/>
                         <outlet property="unitsControl" destination="hed-b5-GVJ" id="wt6-Se-fIf"/>
@@ -423,6 +459,10 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bAl-Yl-nJn" customClass="DashboardView" customModule="SpeedPitch" customModuleProvider="target">
                                 <rect key="frame" x="20" y="148" width="374" height="400"/>
                                 <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mmx-Iv-vXB" customClass="WaveformView" customModule="SpeedPitch" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="400"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12 km/h" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="100" translatesAutoresizingMaskIntoConstraints="NO" id="UiW-29-lTP">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="320"/>
                                         <constraints>
@@ -444,8 +484,12 @@
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="mmx-Iv-vXB" secondAttribute="trailing" id="7xz-AG-vmg"/>
+                                    <constraint firstItem="mmx-Iv-vXB" firstAttribute="leading" secondItem="bAl-Yl-nJn" secondAttribute="leading" id="9dX-TJ-WaJ"/>
                                     <constraint firstAttribute="trailing" secondItem="9gL-JN-Mqv" secondAttribute="trailing" id="Fll-Kw-SlS"/>
+                                    <constraint firstItem="mmx-Iv-vXB" firstAttribute="top" secondItem="bAl-Yl-nJn" secondAttribute="top" id="LEy-fD-Pi8"/>
                                     <constraint firstAttribute="trailing" secondItem="UiW-29-lTP" secondAttribute="trailing" id="Poi-j6-F9K"/>
+                                    <constraint firstAttribute="bottom" secondItem="mmx-Iv-vXB" secondAttribute="bottom" id="RCr-G9-eO2"/>
                                     <constraint firstItem="9gL-JN-Mqv" firstAttribute="leading" secondItem="bAl-Yl-nJn" secondAttribute="leading" id="RFR-8M-FsX"/>
                                     <constraint firstItem="UiW-29-lTP" firstAttribute="top" secondItem="bAl-Yl-nJn" secondAttribute="top" id="V1V-Df-JMX"/>
                                     <constraint firstAttribute="height" constant="400" id="dcb-lY-Umz"/>
@@ -455,6 +499,7 @@
                                 <connections>
                                     <outlet property="rateLabel" destination="9gL-JN-Mqv" id="Yui-tu-rge"/>
                                     <outlet property="speedLabel" destination="UiW-29-lTP" id="koq-pe-JQW"/>
+                                    <outlet property="waveformView" destination="mmx-Iv-vXB" id="e3U-IY-rgO"/>
                                 </connections>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H1o-ds-rBj" customClass="ControlsView" customModule="SpeedPitch" customModuleProvider="target">

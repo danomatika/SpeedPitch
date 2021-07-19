@@ -243,9 +243,9 @@ class AudioPlayer {
 /// graph: player(s) -> mixer -> varispeed -> output
 class AudioEngine {
 
-	private let engine = AVAudioEngine()
-	private let varispeed = AVAudioUnitVarispeed() //< ...does the magic
-	private var players: [AudioPlayer] = [] //< attached players
+	let engine = AVAudioEngine()
+	let varispeed = AVAudioUnitVarispeed() //< ...does the magic
+	var players: [AudioPlayer] = [] //< attached players
 
 	var isRunning: Bool {get {engine.isRunning}} //< is the engine running?
 	var rate: Double { //< playback rate: 0.25 - 4.0 (AVAudioUnitVarispeed docs)
