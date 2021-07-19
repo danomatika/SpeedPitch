@@ -55,9 +55,9 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="dgd-ZD-JqO"/>
-                        <barButtonItem title="Delete All" id="Agd-H1-4hp">
+                        <barButtonItem title="Select All" id="Agd-H1-4hp">
                             <connections>
-                                <action selector="deleteAll:" destination="b2J-Ia-QWQ" id="sdS-VF-TU7"/>
+                                <action selector="selectAll:" destination="b2J-Ia-QWQ" id="sdS-VF-TU7"/>
                             </connections>
                         </barButtonItem>
                     </toolbarItems>

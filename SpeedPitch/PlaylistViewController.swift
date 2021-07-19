@@ -23,17 +23,13 @@ class PlaylistViewController: UITableViewController {
 		// Do any additional setup after loading the view.
 
 		tableView.allowsMultipleSelectionDuringEditing = true
-
 		navigationItem.rightBarButtonItems = [editButtonItem, loopButton]
+	}
+
+	override func viewWillAppear(_ animated: Bool) {
 		navigationController?.isToolbarHidden = true
 		updateLoopButton(loopButton)
-
-		if playlist != nil && !playlist!.isEmpty {
-			let indexPath = IndexPath(row: playlist!.currentIndex, section: 0)
-			tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
-			printDebug("PlaylistViewController: selected row \(indexPath.row)")
-		}
-		else {
+		if !selectCurrentPlaylistRow() {
 			editButtonItem.isEnabled = false
 		}
 	}
@@ -44,10 +40,25 @@ class PlaylistViewController: UITableViewController {
 		playerViewController?.updateControls()
 	}
 
+	// update UI based on edit mode, called automatically by the Edit button
 	override func setEditing(_ editing: Bool, animated: Bool) {
 		super.setEditing(editing, animated: animated)
 		navigationController?.isToolbarHidden = !editing
 		doneButton.isEnabled = !editing
+		if !editing {
+			selectCurrentPlaylistRow()
+		}
+	}
+
+	/// select row for current playlist item, returns false if no item
+	@discardableResult func selectCurrentPlaylistRow() -> Bool {
+		if let playlist = playlist, !playlist.isEmpty {
+			let indexPath = IndexPath(row: playlist.currentIndex, section: 0)
+			tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+			printDebug("PlaylistViewController: selected row \(indexPath.row)")
+			return true
+		}
+		return false
 	}
 
 	// MARK: Actions
@@ -81,14 +92,12 @@ class PlaylistViewController: UITableViewController {
 			}
 		}
 		tableView.reloadData()
-		return
 	}
 
-	@IBAction func deleteAll(_ sender: Any) {
-		playlist?.clear()
-		playerViewController?.player.close()
-		tableView.reloadData()
-		return
+	override func selectAll(_ sender: (Any)?) {
+		for r in 0...tableView.numberOfRows(inSection: 0) {
+			tableView.selectRow(at: IndexPath(row: r, section: 0), animated: true, scrollPosition: .none)
+		}
 	}
 
 	// MARK: UITableViewController
@@ -110,15 +119,6 @@ class PlaylistViewController: UITableViewController {
 				cell.textLabel?.text = file.description
 				cell.detailTextLabel?.text = ""
 			}
-			// show play indicator
-//			if indexPath.row == (tableView.indexPathForSelectedRow?.row ?? -1) {
-//				if #available(iOS 13.0, *) {
-//					if let image = UIImage(systemName: "play.fill") {
-//						cell.imageView?.image = image
-//					}
-//				}
-//			}
-//			else
 			if file.image != nil {
 				cell.imageView?.image = file.image
 			}
