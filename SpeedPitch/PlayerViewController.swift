@@ -49,6 +49,8 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 		super.viewDidLoad()
 		// Do any additional setup after loading the view.
 
+		let delegate = UIApplication.shared.delegate as! AppDelegate
+		delegate.playerViewController = self
 		picker.delegate = self
 		location.delegate = self
 		rateTimestamp = Clock.now()
