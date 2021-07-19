@@ -14,5 +14,7 @@
 	<integer>20</integer>
 	<key>drawWaveform</key>
 	<true/>
+	<key>loopPlaylist</key>
+	<false/>
 </dict>
 </plist>

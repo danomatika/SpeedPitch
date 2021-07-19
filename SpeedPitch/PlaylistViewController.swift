@@ -71,6 +71,7 @@ class PlaylistViewController: UITableViewController {
 		let button = sender as! UIBarButtonItem
 		if let playlist = playlist {
 			playlist.isLooping = !playlist.isLooping
+			UserDefaults.standard.set(playlist.isLooping, forKey: "loopPlaylist")
 		}
 		updateLoopButton(button)
 		playerViewController?.updateControls()

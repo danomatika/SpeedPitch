@@ -58,6 +58,7 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 			UIApplication.shared.isIdleTimerDisabled = true // keep screen awake
 		}
 		speedLimit = defaults.double(forKey: "speedLimit")
+		playlist.isLooping = defaults.bool(forKey: "loopPlaylist")
 
 		// start background clock
 		Scheduler.shared.start()
