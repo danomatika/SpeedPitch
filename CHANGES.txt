@@ -1,4 +1,22 @@
+0.2.0: 19 July 2021
+
+* fixed file player finished event triggered by stop()
+* no longer close current player when adding to playlist
+
+* added app icon and launch screen
+* added waveform display view
+* added speed ranges and playback rate quantization
+* added mph display units
+* all control buttons now working
+* settings view controls now work
+
+* speed limit now saved to user defaults
+* playlist current song selection now working
+* playlist delete all button now select all button
+* settings view cancel button now done button
+* updated app info
+* app info now loaded from txt file
+
 0.1.0: 03 Jul 2021
 
 initial alpha
-
