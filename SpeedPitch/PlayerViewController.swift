@@ -296,7 +296,6 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 			}
 			else {
 				// audio file
-				player.close()
 				guard let file = AudioFile(url: item.url) else {
 					print("PlayerViewController: could not open \(item.url)")
 					return
