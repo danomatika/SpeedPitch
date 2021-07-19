@@ -289,7 +289,7 @@
             </objects>
             <point key="canvasLocation" x="737.68115942028987" y="853.53260869565224"/>
         </scene>
-        <!--Speed-->
+        <!--Speed Limit-->
         <scene sceneID="gQL-ZG-qKy">
             <objects>
                 <viewController id="1ZI-6h-Vbt" customClass="SpeedViewController" customModule="SpeedPitch" customModuleProvider="target" sceneMemberID="viewController">
@@ -309,7 +309,7 @@
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="km/h" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="udr-KA-U5z">
-                                                <rect key="frame" x="0.0" y="73" width="163" height="63"/>
+                                                <rect key="frame" x="16.5" y="73" width="130.5" height="63"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="63" id="gTo-dI-AmZ"/>
                                                 </constraints>
@@ -323,8 +323,8 @@
                                             <constraint firstItem="udr-KA-U5z" firstAttribute="top" secondItem="E53-Ea-aDe" secondAttribute="bottom" constant="10" id="8xe-qT-l8m"/>
                                             <constraint firstAttribute="trailing" secondItem="E53-Ea-aDe" secondAttribute="trailing" id="B3E-Y6-xYX"/>
                                             <constraint firstItem="E53-Ea-aDe" firstAttribute="leading" secondItem="aC0-x4-F1N" secondAttribute="leading" id="ITA-jV-h0n"/>
-                                            <constraint firstAttribute="trailing" secondItem="udr-KA-U5z" secondAttribute="trailing" id="MxS-BI-cId"/>
-                                            <constraint firstItem="udr-KA-U5z" firstAttribute="leading" secondItem="aC0-x4-F1N" secondAttribute="leading" id="R54-fD-rFy"/>
+                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="udr-KA-U5z" secondAttribute="trailing" id="MxS-BI-cId"/>
+                                            <constraint firstItem="udr-KA-U5z" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="aC0-x4-F1N" secondAttribute="leading" id="R54-fD-rFy"/>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="120" id="XM7-uh-Hai"/>
                                             <constraint firstItem="udr-KA-U5z" firstAttribute="centerX" secondItem="aC0-x4-F1N" secondAttribute="centerX" id="YYp-wV-3c8"/>
                                             <constraint firstItem="E53-Ea-aDe" firstAttribute="top" secondItem="aC0-x4-F1N" secondAttribute="top" id="ndr-eg-E4A"/>
@@ -342,7 +342,7 @@
                                 </constraints>
                             </view>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="r5J-Ly-Jzf">
-                                <rect key="frame" x="18" y="439" width="339" height="31"/>
+                                <rect key="frame" x="18" y="457" width="339" height="31"/>
                                 <connections>
                                     <action selector="speedSliderChanged:" destination="1ZI-6h-Vbt" eventType="valueChanged" id="lF3-fY-SZt"/>
                                 </connections>
@@ -361,6 +361,12 @@
                                     <action selector="rangeChanged:" destination="eXY-uY-oFQ" eventType="valueChanged" id="szF-9Z-1xP"/>
                                 </connections>
                             </segmentedControl>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1x" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lj2-Q2-VGc">
+                                <rect key="frame" x="168" y="409" width="39" height="38"/>
+                                <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="32"/>
+                                <color key="textColor" systemColor="secondaryLabelColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="8PO-RT-NBw"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -369,14 +375,16 @@
                             <constraint firstItem="8PO-RT-NBw" firstAttribute="trailing" secondItem="ACC-Am-bEr" secondAttribute="trailing" constant="20" id="1Wh-XQ-jtK"/>
                             <constraint firstItem="2Jp-yR-gt8" firstAttribute="leading" secondItem="8PO-RT-NBw" secondAttribute="leading" constant="20" id="9mC-pg-Etx"/>
                             <constraint firstItem="8PO-RT-NBw" firstAttribute="trailing" secondItem="2Jp-yR-gt8" secondAttribute="trailing" constant="20" id="A5i-cp-p4e"/>
-                            <constraint firstItem="r5J-Ly-Jzf" firstAttribute="top" secondItem="ACC-Am-bEr" secondAttribute="bottom" constant="40" id="Abk-Ym-Bzh"/>
                             <constraint firstItem="r5J-Ly-Jzf" firstAttribute="leading" secondItem="8PO-RT-NBw" secondAttribute="leading" constant="20" id="DZn-AE-fqP"/>
+                            <constraint firstItem="lj2-Q2-VGc" firstAttribute="top" secondItem="ACC-Am-bEr" secondAttribute="bottom" constant="10" id="KCE-Xf-fhe"/>
+                            <constraint firstItem="lj2-Q2-VGc" firstAttribute="centerX" secondItem="liP-2M-cDR" secondAttribute="centerX" id="MEq-Hk-GI6"/>
                             <constraint firstItem="ACC-Am-bEr" firstAttribute="top" secondItem="8PO-RT-NBw" secondAttribute="top" constant="20" id="UeW-8z-bt8"/>
                             <constraint firstItem="ACC-Am-bEr" firstAttribute="leading" secondItem="8PO-RT-NBw" secondAttribute="leading" constant="20" id="V0p-OG-6PJ"/>
+                            <constraint firstItem="r5J-Ly-Jzf" firstAttribute="top" secondItem="lj2-Q2-VGc" secondAttribute="bottom" constant="10" id="pWO-jy-Qgk"/>
                             <constraint firstItem="8PO-RT-NBw" firstAttribute="bottom" secondItem="2Jp-yR-gt8" secondAttribute="bottom" constant="20" id="zng-Ez-M7K"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Speed" id="e63-rg-Hme">
+                    <navigationItem key="navigationItem" title="Speed Limit" id="e63-rg-Hme">
                         <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="oTl-TR-xQU">
                             <connections>
                                 <action selector="done:" destination="1ZI-6h-Vbt" id="k92-hV-aZs"/>
