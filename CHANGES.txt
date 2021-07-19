@@ -7,6 +7,7 @@
 * added waveform display view
 * added speed ranges and playback rate quantization
 * added mph display units
+* added headphone media button and Now Playing control center support
 * all control buttons now working
 * settings view controls now work
 

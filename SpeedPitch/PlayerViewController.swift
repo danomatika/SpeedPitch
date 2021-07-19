@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MediaPlayer
 
 class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegate, LocationDelegate {
 
@@ -72,6 +73,13 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 
 		// go, TODO: this could be disabled when playlist is empty
 		location.enable()
+
+		// set up Now Playing controls
+		setupNowPlayingEvents()
+	}
+
+	deinit {
+		clearNowPlayingEvents()
 	}
 
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -180,6 +188,7 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 			player.open(file: file!)
 		}
 		updateControls()
+		updateNowPlayingInfo()
 		return true
 	}
 
@@ -205,6 +214,7 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 			player.open(file: file!)
 		}
 		updateControls()
+		updateNowPlayingInfo()
 		return true
 	}
 
@@ -216,6 +226,7 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 			ret = true
 		}
 		updateControls()
+		updateNowPlayingInfo()
 		return ret
 	}
 
@@ -313,11 +324,13 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 	func playerDidStartPlaying(_ player: AudioPlayer) {
 		printDebug("started playing")
 		self.updateControls()
+		self.updateNowPlayingInfo()
 	}
 
 	func playerDidPausePlaying(_ player: AudioPlayer) {
 		printDebug("paused")
 		self.updateControls()
+		self.updateNowPlayingInfo()
 	}
 
 	func playerDidFinishPlaying(_ player: AudioPlayer) {
@@ -388,6 +401,87 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 				self.dashboardView.update(speed: speed, rate: self.rate)
 			}
 		}
+	}
+
+	// MARK: Private
+
+	/// set up to recieve remote Now Playing events
+	func setupNowPlayingEvents() {
+		let center = MPRemoteCommandCenter.shared()
+		center.togglePlayPauseCommand.isEnabled = true
+		center.togglePlayPauseCommand.addTarget(handler: { event in
+			self.togglePlay()
+			return .success
+		})
+		center.playCommand.isEnabled = true
+		center.playCommand.addTarget(handler: { event in
+			self.play()
+			return .success
+		})
+		center.pauseCommand.isEnabled = true
+		center.pauseCommand.addTarget(handler: { event in
+			self.pause()
+			return .success
+		})
+		center.stopCommand.isEnabled = true
+		center.stopCommand.addTarget(handler: { event in
+			self.stop()
+			return .success
+		})
+		center.previousTrackCommand.isEnabled = true
+		center.previousTrackCommand.addTarget(handler: { event in
+			if self.prev() {
+				return .success
+			}
+			else {
+				return .noSuchContent
+			}
+		})
+		center.nextTrackCommand.isEnabled = true
+		center.nextTrackCommand.addTarget(handler: { event in
+			if self.next() {
+				return .success
+			}
+			else {
+				return .noSuchContent
+			}
+		})
+	}
+
+	/// stop recieveing Now Playing events
+	func clearNowPlayingEvents() {
+		let center = MPRemoteCommandCenter.shared()
+		center.togglePlayPauseCommand.isEnabled = false
+		center.togglePlayPauseCommand.removeTarget(nil)
+		center.playCommand.isEnabled = false
+		center.playCommand.removeTarget(nil)
+		center.pauseCommand.isEnabled = false
+		center.pauseCommand.removeTarget(nil)
+		center.stopCommand.isEnabled = false
+		center.stopCommand.removeTarget(nil)
+		center.previousTrackCommand.isEnabled = false
+		center.previousTrackCommand.removeTarget(nil)
+		center.nextTrackCommand.isEnabled = false
+		center.nextTrackCommand.removeTarget(nil)
+	}
+
+	/// update Now Playing meta info
+	func updateNowPlayingInfo() {
+		let current = playlist.current
+		let center = MPNowPlayingInfoCenter.default()
+		var info = center.nowPlayingInfo ?? [String: Any]()
+		info[MPMediaItemPropertyTitle] = current?.title ?? ""
+		info[MPMediaItemPropertyArtist] = current?.title ?? ""
+		info[MPMediaItemPropertyArtwork] = nil
+		if let image = current?.image {
+			info[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(boundsSize: image.size, requestHandler: { size in
+				return image
+			})
+		}
+		info[MPMediaItemPropertyPlaybackDuration] = 0 // hide duration slider?
+		info[MPNowPlayingInfoPropertyElapsedPlaybackTime] = 0
+		info[MPNowPlayingInfoPropertyPlaybackRate] = (player.isPlaying ? 1 : 0)
+		center.nowPlayingInfo = info
 	}
 
 }

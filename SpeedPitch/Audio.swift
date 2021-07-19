@@ -265,7 +265,7 @@ class AudioEngine {
 		let session = AVAudioSession.sharedInstance()
 		do {
 			// playback category implies: .defaultToSpeaker, .allowBluetoothA2DP, .allowAirPlay
-			try session.setCategory(.playback, mode: .default, options:[.mixWithOthers])
+			try session.setCategory(.playback, mode: .default, options:[])
 			try session.setActive(true)
 		}
 		catch {
