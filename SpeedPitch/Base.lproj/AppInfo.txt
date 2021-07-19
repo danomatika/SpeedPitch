@@ -17,11 +17,15 @@ You can adjust the speed limit for the pitch processing to set the speed songs a
 
 Quantization
 
-Additionally, the playback rate calculation from the live speed updates can be quantized. This basically changes the rate in discrete steps instead of a smooth range which makes matching speed between multiple people much easier.
+The playback rate calculation from the live speed updates can be quantized. This basically changes the rate in discrete steps instead of a smooth range which makes matching speed between multiple people much easier.
 
 Keep Awake
 
-Live speed calculations require navigation-level GPS updates which only ocurr when the device is in active use. If the screen turns off, GPS updates to SpeedPitch will be paused therefore, by default, the "Keep screen awake" Display setting is set to on.
+Live speed calculations require navigation-level GPS updates which only ocurr when the device is in active use. If the screen turns off, GPS updates to SpeedPitch will be paused therefore, by default, the "Keep screen awake" SpeedPitch display setting is set to on.
+
+Minimal
+
+Long-press on the current speed to hide or show the navigation bar and playback controls.
 
 Acknowledgements
 
