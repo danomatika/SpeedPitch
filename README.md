@@ -42,6 +42,16 @@ Live speed calculations require navigation-level GPS updates which only ocurr wh
 
 Long-press on the current speed to hide or show the navigation bar and playback controls.
 
+Developing
+----------
+
+### Release steps
+
+1. Update version in Xcode project, AppInfo.txt, and changelog
+2. Update changelog with relevant changes
+3. Archive and distribute to App Store Connect
+4. Tag version
+
 Acknowledgments
 ---------------
 

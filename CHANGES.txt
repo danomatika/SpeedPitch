@@ -1,4 +1,4 @@
-0.2.0: 19 July 2021
+1.0.0: 19 July 2021
 
 * fixed file player finished event triggered by stop()
 * no longer close current player when adding to playlist
