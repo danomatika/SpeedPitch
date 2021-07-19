@@ -8,7 +8,7 @@
 	<true/>
 	<key>range</key>
 	<integer>1</integer>
-	<key>quantize</key>
+	<key>quantizeRate</key>
 	<false/>
 	<key>speedLimit</key>
 	<integer>20</integer>

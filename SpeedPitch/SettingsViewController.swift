@@ -18,7 +18,7 @@ class SettingsViewController: UITableViewController {
 	@IBOutlet weak var drawWaveformSwitch: UISwitch!
 
 	// rate
-	@IBOutlet weak var quantizeSwitch: UISwitch!
+	@IBOutlet weak var quantizeRateSwitch: UISwitch!
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -28,7 +28,7 @@ class SettingsViewController: UITableViewController {
 		unitsControl.selectedSegmentIndex = defaults.integer(forKey: "units")
 		keepAwakeSwitch.isOn = defaults.bool(forKey: "keepAwake")
 		drawWaveformSwitch.isOn = defaults.bool(forKey: "drawWaveform")
-		quantizeSwitch.isOn = defaults.bool(forKey: "quantize")
+		quantizeRateSwitch.isOn = defaults.bool(forKey: "quantizeRate")
 	}
 
 	// update dashboard if units changed
@@ -55,7 +55,7 @@ class SettingsViewController: UITableViewController {
 		playerViewController?.updateWaveform()
 	}
 
-	@IBAction func quantizeChanged(_ sender: Any) {
-		UserDefaults.standard.set(quantizeSwitch.isOn, forKey: "quantize")
+	@IBAction func quantizeRateChanged(_ sender: Any) {
+		UserDefaults.standard.set(quantizeRateSwitch.isOn, forKey: "quantizeRate")
 	}
 }

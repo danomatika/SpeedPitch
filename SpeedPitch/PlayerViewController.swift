@@ -368,7 +368,7 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 				let maxspeed: Double = self.speedLimit / 3.6 // km/h -> m/s
 				newRate = max(speed.mapped(from: 0...maxspeed, to: 0...1), minRate)
 			}
-			if UserDefaults.standard.bool(forKey: "quantize") {
+			if UserDefaults.standard.bool(forKey: "quantizeRate") {
 				// quantize rate with a certain amount of steps
 				let steps = PlayerViewController.quantizeSteps
 				newRate = newRate.mapped(from: minRate...maxRate, to: 0...steps)
