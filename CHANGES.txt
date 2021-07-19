@@ -21,4 +21,10 @@
 
 0.1.0: 03 Jul 2021
 
-initial alpha
+initial alpha for Nix Wie Raus! opening
+
+* audio engine working
+* media pickers implemented
+* playlist-based playback
+* speed limit control
+* app info view
