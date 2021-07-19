@@ -10,12 +10,12 @@ BSD Simplified License.
 For information on usage and redistribution, and for a DISCLAIMER OF ALL
 WARRANTIES, see the file, "LICENSE.txt," in this distribution.
 
-This project has been developed as part of the Nix Wie Raus! Fahrrad Kunst Sommer exhibition, Karlsruhe Germany 2021.
-
 Description
 -----------
 
-_SpeedPitch_ is a simple augmented sonic reality experiment that alters music playback speed based on your actual GPS ground speed. The faster you go, the higher the pitch and sudden stops lead to dragging audio samples. Natural motion leads to unnatural sound.
+_SpeedPitch_ is a simple augmented sonic reality experiment that alters music playback rate based on your actual GPS ground speed. The faster you go, the higher the pitch and sudden stops lead to dragging audio samples. Natural motion leads to unnatural sound.
+
+http://danomatika.com/code/speedpitch
 
 User Guide
 ----------
@@ -45,6 +45,6 @@ Long-press on the current speed to hide or show the navigation bar and playback 
 Acknowledgments
 ---------------
 
-This project has been developed as part of the Nix Wie Raus! Fahrrad Kunst Sommer exhibition, Karlsruhe Germany 2021.
+This project has been developed as part of the Nix Wie Raus! Fahrrad Kunst Sommer exhibition at the BBK in Karlsruhe Germany 2021.
 
 https://www.bbk-karlsruhe.de/fahrrad-kunst-sommer/
