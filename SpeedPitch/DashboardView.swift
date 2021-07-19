@@ -16,9 +16,17 @@ class DashboardView: UIView {
 	@IBOutlet weak var rateLabel: UILabel! //< playback rate
 	@IBOutlet weak var waveformView: WaveformView! //< waveform display
 
+	@IBOutlet weak var rateLabelBottom: NSLayoutConstraint! //< bottom constraint
+
 	override func awakeFromNib() {
 		rateFormatter.usesSignificantDigits = true
 		rateFormatter.maximumSignificantDigits = 2
+
+		// push rate label up on iPhone 5 - SE 1 so as not to
+		// overlap title/artist, default constant is 10
+		if UIScreen.main.bounds.size.height <= 568 {
+			rateLabelBottom.constant = 50
+		}
 	}
 
 	/// speed in m/s

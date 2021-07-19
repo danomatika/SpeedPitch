@@ -20,6 +20,7 @@
 		7E570A67267F4147002598A0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E570A65267F4147002598A0 /* LaunchScreen.storyboard */; };
 		7E75F05F26A24C1900605994 /* AppInfo.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7E75F05D26A24C1900605994 /* AppInfo.txt */; };
 		7E75F06126A4D11300605994 /* WaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E75F06026A4D11300605994 /* WaveformView.swift */; };
+		7E75F06326A5176800605994 /* SpeedLimitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E75F06226A5176800605994 /* SpeedLimitView.swift */; };
 		7EC838F2267F451300AA8D06 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC838F1267F451300AA8D06 /* Util.swift */; };
 		7EC838F62680E18200AA8D06 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC838F42680E18200AA8D06 /* SettingsViewController.swift */; };
 		7EC838F72680E18200AA8D06 /* PlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC838F52680E18200AA8D06 /* PlaylistViewController.swift */; };
@@ -48,6 +49,7 @@
 		7E570A68267F4147002598A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7E75F05E26A24C1900605994 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text; name = Base; path = Base.lproj/AppInfo.txt; sourceTree = "<group>"; };
 		7E75F06026A4D11300605994 /* WaveformView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaveformView.swift; sourceTree = "<group>"; };
+		7E75F06226A5176800605994 /* SpeedLimitView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpeedLimitView.swift; sourceTree = "<group>"; };
 		7EC838F1267F451300AA8D06 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		7EC838F42680E18200AA8D06 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		7EC838F52680E18200AA8D06 /* PlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistViewController.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 				7E227437268534A50024E9E3 /* Picker.swift */,
 				7E2274412689D21F0024E9E3 /* Audio.swift */,
 				7E22743926861CC50024E9E3 /* Line.swift */,
+				7E75F06226A5176800605994 /* SpeedLimitView.swift */,
 				7E75F06026A4D11300605994 /* WaveformView.swift */,
 				7E570A60267F4146002598A0 /* Main.storyboard */,
 				7E570A63267F4147002598A0 /* Assets.xcassets */,
@@ -203,6 +206,7 @@
 				7E22743C2686549C0024E9E3 /* Clock.swift in Sources */,
 				7E227438268534A50024E9E3 /* Picker.swift in Sources */,
 				7E22743E268676A20024E9E3 /* Scheduler.swift in Sources */,
+				7E75F06326A5176800605994 /* SpeedLimitView.swift in Sources */,
 				7E227444268F5CDF0024E9E3 /* SpeedViewController.swift in Sources */,
 				7E2274422689D21F0024E9E3 /* Audio.swift in Sources */,
 				7E2274362684CB5A0024E9E3 /* Location.swift in Sources */,

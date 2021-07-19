@@ -5,8 +5,9 @@ class SpeedViewController: UIViewController {
 
 	weak var playerViewController: PlayerViewController?
 
-	@IBOutlet weak var speedSlider: UISlider!
 	@IBOutlet weak var speedTextField: UITextField!
+	@IBOutlet weak var unitsLabel: UILabel!
+	@IBOutlet weak var speedSlider: UISlider!
 	@IBOutlet weak var rangeControl: UISegmentedControl!
 
 	override func viewDidLoad() {
@@ -22,9 +23,11 @@ class SpeedViewController: UIViewController {
 		let units = UserDefaults.standard.integer(forKey: "units")
 		switch units {
 		case 1: // miles
-			speedTextField.text = "\(Int((speed * 0.625).rounded()))\nmph"
+			speedTextField.text = "\(Int((speed * 0.625).rounded()))"
+			unitsLabel.text = "mph"
 		default: // km
-			speedTextField.text = "\(Int(speed.rounded()))\nkm/h"
+			speedTextField.text = "\(Int(speed.rounded()))"
+			unitsLabel.text = "km/h"
 		}
 	}
 

@@ -11,6 +11,7 @@
 * settings view controls now work
 
 * speed limit now saved to user defaults
+* speed view now stylized as speed limit sign
 * playlist current song selection now working
 * playlist delete all button now select all button
 * settings view cancel button now done button
