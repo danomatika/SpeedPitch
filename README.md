@@ -62,3 +62,7 @@ Acknowledgments
 This project has been developed as part of the Nix Wie Raus! Fahrrad Kunst Sommer exhibition at the BBK in Karlsruhe Germany 2021.
 
 https://www.bbk-karlsruhe.de/fahrrad-kunst-sommer/
+
+Originally prototyped using [PdParty](http://danomatika.com/code/pdparty) and a Pure Data patch, 2016-2017.
+
+Playback rate quantization suggested by Ben Miller.
