@@ -1,7 +1,7 @@
 SpeedPitch
 ==========
 
-![SpeedPitch icon](images/appicon/speedpitch-1024.png|width=512)
+![SpeedPitch icon](images/appicon/speedpitch-1024.png | width=512)
 
 Copyright (c) [Dan Wilcox](danomatika.com) 2021
 
