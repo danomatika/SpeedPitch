@@ -1,7 +1,7 @@
 SpeedPitch
 ==========
 
-![SpeedPitch icon](images/appicon/speedpitch-1024.png)
+![SpeedPitch icon](images/appicon/speedpitch-1024.png|width=512)
 
 Copyright (c) [Dan Wilcox](danomatika.com) 2021
 
@@ -16,6 +16,8 @@ Description
 _SpeedPitch_ is a simple augmented sonic reality experiment that alters music playback rate based on your actual GPS ground speed. The faster you go, the higher the pitch and sudden stops lead to dragging audio samples. Natural motion leads to unnatural sound.
 
 http://danomatika.com/code/speedpitch
+
+[SpeedPitch on the iOS App Store](https://itunes.apple.com/app/id1577262763)
 
 User Guide
 ----------
