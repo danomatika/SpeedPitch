@@ -1,7 +1,9 @@
 SpeedPitch
 ==========
 
-![SpeedPitch icon](images/appicon/speedpitch-1024.png){:width="512px"}
+<p align="center">
+	<img src="http://danomatika.com/code/speedpitch/speedpitch-launch.png" width="320" alt="SpeedPitch icon">
+</p>
 
 Copyright (c) [Dan Wilcox](danomatika.com) 2021
 
