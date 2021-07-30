@@ -27,6 +27,7 @@ class PlaylistViewController: UITableViewController {
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
+		playerViewController?.playlistViewController = self
 		navigationController?.isToolbarHidden = true
 		updateLoopButton(loopButton)
 		if !selectCurrentPlaylistRow() {
@@ -38,6 +39,7 @@ class PlaylistViewController: UITableViewController {
 	override func viewDidDisappear(_ animated: Bool) {
 		super.viewDidDisappear(animated)
 		playerViewController?.updateControls()
+		playerViewController?.playlistViewController = nil
 	}
 
 	// update UI based on edit mode, called automatically by the Edit button
@@ -178,7 +180,7 @@ class PlaylistViewController: UITableViewController {
 		return tableView.isEditing
 	}
 
-	// custom loop swipe actions for individual tracks
+	// custom loop swipe actions for individual files
 	override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
 
 		// delete
@@ -197,7 +199,7 @@ class PlaylistViewController: UITableViewController {
 			let title = (file.loop ? "Unloop" : "Loop")
 			let loop = UITableViewRowAction(style: .default, title: title) { (action:UITableViewRowAction, indexPath:IndexPath) in
 				file.loop = !file.loop
-				self.tableView.reloadData() // reload to see title loop symbol
+				self.tableView.reloadRows(at: [indexPath], with: .automatic) // reload to see title loop symbol
 			}
 			loop.backgroundColor = (file.loop ? UIColor.systemBlue : UIColor.systemGray)
 			return [delete, loop]

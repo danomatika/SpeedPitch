@@ -42,6 +42,8 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 	let rateLine = Line(minRate) //< rate change interpolator
 	var rateTimestamp: TimeInterval = 0 //< used to calc rate change time
 
+	weak var playlistViewController: PlaylistViewController? //< non-nil if presented
+
 	@IBOutlet weak var dashboardView: DashboardView!
 	@IBOutlet weak var controlsView: ControlsView!
 
@@ -345,6 +347,7 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 			let wasPlaying = self.player.isPlaying
 			if self.next() && wasPlaying {
 				self.play()
+				self.playlistViewController?.selectCurrentPlaylistRow()
 			}
 		}
 	}
