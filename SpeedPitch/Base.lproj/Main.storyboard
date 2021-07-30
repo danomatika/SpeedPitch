@@ -447,6 +447,7 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yNA-cG-BUp">
                                 <rect key="frame" x="20" y="44" width="335" height="603"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <dataDetectorType key="dataDetectorTypes" link="YES"/>
                             </textView>
@@ -546,7 +547,7 @@
                                         <rect key="frame" x="10" y="32" width="355" height="58"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W1I-48-BGa">
-                                                <rect key="frame" x="0.0" y="0.0" width="59" height="58"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="39" height="58"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="48"/>
                                                 <state key="normal" image="backward.fill" catalog="system"/>
                                                 <connections>
@@ -554,20 +555,11 @@
                                                     <action selector="prev:" destination="H1o-ds-rBj" eventType="touchUpInside" id="Z61-QZ-MKs"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RnA-MA-Xtl">
-                                                <rect key="frame" x="99" y="0.0" width="58.5" height="58"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="48"/>
-                                                <state key="normal" image="play.fill" catalog="system"/>
-                                                <connections>
-                                                    <action selector="playPause:" destination="H1o-ds-rBj" eventType="touchUpInside" id="2CH-fq-XSF"/>
-                                                    <action selector="playPause:" destination="Y1K-Xj-rgT" eventType="touchUpInside" id="Z2L-fp-KqV"/>
-                                                </connections>
-                                            </button>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="76f-kh-Vit">
-                                                <rect key="frame" x="197.5" y="0.0" width="59" height="58"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="76f-kh-Vit" userLabel="Route Picker Button">
+                                                <rect key="frame" x="79" y="0.0" width="39" height="58"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qbn-Do-vI7">
-                                                        <rect key="frame" x="7" y="6.5" width="45" height="45"/>
+                                                        <rect key="frame" x="-3" y="6.5" width="45" height="45"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="45" id="Ehj-UO-LCO"/>
                                                             <constraint firstAttribute="width" constant="45" id="HyR-jA-9AR"/>
@@ -580,8 +572,26 @@
                                                     <constraint firstItem="qbn-Do-vI7" firstAttribute="centerY" secondItem="76f-kh-Vit" secondAttribute="centerY" id="Dg1-Yz-dCr"/>
                                                 </constraints>
                                             </view>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RnA-MA-Xtl">
+                                                <rect key="frame" x="158" y="0.0" width="39" height="58"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="48"/>
+                                                <state key="normal" image="play.fill" catalog="system"/>
+                                                <connections>
+                                                    <action selector="playPause:" destination="H1o-ds-rBj" eventType="touchUpInside" id="2CH-fq-XSF"/>
+                                                    <action selector="playPause:" destination="Y1K-Xj-rgT" eventType="touchUpInside" id="Z2L-fp-KqV"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MSm-Tc-G1n">
+                                                <rect key="frame" x="237" y="0.0" width="39" height="58"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="48"/>
+                                                <state key="normal" image="repeat.1" catalog="system"/>
+                                                <connections>
+                                                    <action selector="loop:" destination="H1o-ds-rBj" eventType="touchUpInside" id="MGe-uC-Ztj"/>
+                                                    <action selector="loop:" destination="Y1K-Xj-rgT" eventType="touchUpInside" id="Wp6-1n-KP0"/>
+                                                </connections>
+                                            </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mpC-5R-FM1">
-                                                <rect key="frame" x="296.5" y="0.0" width="58.5" height="58"/>
+                                                <rect key="frame" x="316" y="0.0" width="39" height="58"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="48"/>
                                                 <state key="normal" image="forward.fill" catalog="system"/>
                                                 <connections>
@@ -607,6 +617,7 @@
                                 </constraints>
                                 <connections>
                                     <outlet property="artistAndTitleLabel" destination="av2-sB-HhY" id="lrN-fV-wKR"/>
+                                    <outlet property="loopButton" destination="MSm-Tc-G1n" id="aZc-GZ-wgr"/>
                                     <outlet property="nextButton" destination="mpC-5R-FM1" id="X1q-ap-fky"/>
                                     <outlet property="playPauseButton" destination="RnA-MA-Xtl" id="goc-7V-51o"/>
                                     <outlet property="prevButton" destination="W1I-48-BGa" id="DiS-b2-Qqw"/>
@@ -723,6 +734,7 @@
         <image name="music.note.list" catalog="system" width="128" height="115"/>
         <image name="play.fill" catalog="system" width="116" height="128"/>
         <image name="repeat" catalog="system" width="128" height="99"/>
+        <image name="repeat.1" catalog="system" width="128" height="99"/>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

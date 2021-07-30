@@ -88,7 +88,6 @@ class AudioPlayer {
 
 	let player = AVAudioPlayerNode() //< makes the sound...
 	private var buffer: AVAudioPCMBuffer? //< sample buffer
-	private var url: URL? //< URL of currently open file in buffer
 
 	var delegate: AudioPlayerDelegate?
 	var isOpen: Bool { //< is the audio file open?
@@ -103,7 +102,7 @@ class AudioPlayer {
 		set {
 			if newValue == _isLooping {return}
 			_isLooping = newValue
-			if isPlaying {
+			if _isPlaying {
 				play() // replay to set loop option
 			}
 		}
@@ -123,9 +122,6 @@ class AudioPlayer {
 	}
 
 	@discardableResult func open(url: URL) -> Bool {
-		if self.url != nil && url == self.url {
-			return (self.buffer != nil) // don't reopen URL
-		}
 		stop()
 		close()
 		let file: AVAudioFile?
@@ -148,7 +144,6 @@ class AudioPlayer {
 		do {
 			try file!.read(into: buffer)
 			self.buffer = buffer
-			self.url = url
 		}
 		catch {
 			print("AudioPlayer: could not read into audio buffer: \(error)")
@@ -170,18 +165,28 @@ class AudioPlayer {
 			player.engine?.disconnectNodeOutput(player)
 		}
 		buffer = nil
-		url = nil
 		_isPlaying = false
 		_ignoreFinish = false
 	}
 
 	func play() {
 		if buffer != nil {
+			let time: AVAudioTime? = nil
+			if isPlaying {
+				// stop existing scheduled events
+				// FIXME: restart at current position, not working yet
+//				time = player.lastRenderTime
+//				if time != nil {
+//					time = player.playerTime(forNodeTime: time!)
+//				}
+				_ignoreFinish = true
+				player.stop()
+			}
 			var options: AVAudioPlayerNodeBufferOptions = []
 			if isLooping {
 				options = [.loops]
 			}
-			player.scheduleBuffer(buffer!, at: nil,
+			player.scheduleBuffer(buffer!, at: time,
 								options: options,
 								completionCallbackType: .dataPlayedBack) { type in
 				// ignore finish event if triggered manually, ie. via stop()

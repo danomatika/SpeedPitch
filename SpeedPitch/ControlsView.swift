@@ -15,6 +15,7 @@ class ControlsView: UIView {
 	@IBOutlet weak var playPauseButton: UIButton!
 	@IBOutlet weak var prevButton: UIButton!
 	@IBOutlet weak var nextButton: UIButton!
+	@IBOutlet weak var loopButton: UIButton!
 	@IBOutlet weak var routePickerView: UIView!
 
 	weak var playerViewController: PlayerViewController?
@@ -56,6 +57,16 @@ class ControlsView: UIView {
 		playerViewController?.togglePlay()
 	}
 
+	// make sure player loop state is also updated
+	@IBAction func loop(_ sender: Any) {
+		guard let file = playerViewController?.playlist.current else {return}
+		file.loop = !file.loop
+		loopButton.tintColor = (file.loop ? self.tintColor : .systemGray)
+		if let player = playerViewController?.player {
+			player.isLooping = file.loop
+		}
+	}
+
 	func update() {
 
 		// label
@@ -95,6 +106,15 @@ class ControlsView: UIView {
 		else {
 			prevButton.isEnabled = false
 			nextButton.isEnabled = false
+		}
+
+		// loop button
+		if let file = playerViewController?.playlist.current {
+			loopButton.isEnabled = true
+			loopButton.tintColor = (file.loop ? self.tintColor : .systemGray)
+		}
+		else {
+			loopButton.isEnabled = false
 		}
 	}
 

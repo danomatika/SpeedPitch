@@ -348,7 +348,9 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 			if self.next() && wasPlaying {
 				self.play()
 				self.playlistViewController?.selectCurrentPlaylistRow()
+				return
 			}
+			self.stop()
 		}
 	}
 
