@@ -57,7 +57,6 @@ class Picker: NSObject, MPMediaPickerControllerDelegate, UIDocumentPickerDelegat
 		picker.delegate = self
 		if #available(iOS 13.0, *) {
 			picker.shouldShowFileExtensions = true
-			picker.directoryURL = URL.documents // start in Documents
 		}
 		controller.present(picker, animated: true)
 	}
