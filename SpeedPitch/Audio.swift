@@ -87,6 +87,7 @@ class AudioPlayer {
 
 	let player = AVAudioPlayerNode() //< makes the sound...
 	private var buffer: AVAudioPCMBuffer? //< sample buffer
+	private var url: URL? //< URL of currently open file in buffer
 
 	var delegate: AudioPlayerDelegate?
 	var isOpen: Bool { //< is the audio file open?
@@ -121,6 +122,9 @@ class AudioPlayer {
 	}
 
 	@discardableResult func open(url: URL) -> Bool {
+		if self.url != nil && url == self.url {
+			return (self.buffer != nil) // don't reopen URL
+		}
 		stop()
 		close()
 		let file: AVAudioFile?
@@ -143,6 +147,7 @@ class AudioPlayer {
 		do {
 			try file!.read(into: buffer)
 			self.buffer = buffer
+			self.url = url
 		}
 		catch {
 			print("AudioPlayer: could not read into audio buffer: \(error)")
@@ -162,6 +167,7 @@ class AudioPlayer {
 	func close() {
 		player.engine?.disconnectNodeOutput(player)
 		buffer = nil
+		url = nil
 		_isPlaying = false
 		_ignoreFinish = false
 	}
