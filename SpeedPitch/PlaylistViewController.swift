@@ -112,12 +112,13 @@ class PlaylistViewController: UITableViewController {
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: "PlaylistCell", for: indexPath)
 		if let file = playlist?.at(index: indexPath.row) {
+			let prefix = (file.loop ? "🔂" : "") // show loop state
 			if file.artist != "unknown" && file.title != "unknown" {
-				cell.textLabel?.text = file.title
+				cell.textLabel?.text = prefix + file.title
 				cell.detailTextLabel?.text = file.artist
 			}
 			else {
-				cell.textLabel?.text = file.description
+				cell.textLabel?.text = prefix + file.description
 				cell.detailTextLabel?.text = ""
 			}
 			if file.image != nil {
@@ -175,6 +176,34 @@ class PlaylistViewController: UITableViewController {
 	// enable row reordering in edit mode
 	override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
 		return tableView.isEditing
+	}
+
+	// custom loop swipe actions for individual tracks
+	override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+
+		// delete
+		let delete = UITableViewRowAction(style: .default, title: "Delete") { (action:UITableViewRowAction, indexPath:IndexPath) in
+			guard let playlist = self.playlist else {return}
+			if playlist.currentIndex == indexPath.row {
+				self.playerViewController?.player.close()
+			}
+			playlist.remove(at: indexPath.row)
+			self.tableView.reloadData()
+		}
+		delete.backgroundColor = .systemRed
+
+		// loop/unloop
+		if let file = playlist?.at(index: indexPath.row) {
+			let title = (file.loop ? "Unloop" : "Loop")
+			let loop = UITableViewRowAction(style: .default, title: title) { (action:UITableViewRowAction, indexPath:IndexPath) in
+				file.loop = !file.loop
+				self.tableView.reloadData() // reload to see title loop symbol
+			}
+			loop.backgroundColor = (file.loop ? UIColor.systemBlue : UIColor.systemGray)
+			return [delete, loop]
+		}
+
+		return [delete]
 	}
 
 	// perform move after reordering

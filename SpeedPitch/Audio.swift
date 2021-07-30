@@ -39,6 +39,7 @@ class AudioFile {
 	var artist: String = "unknown"
 	var duration: Double = 0 //< duration in seconds
 	var image: UIImage?      //< optional thumbnail
+	var loop: Bool = false   //< should file loop in place?
 
 	init?(url: URL) {
 		self.url = url
@@ -165,7 +166,9 @@ class AudioPlayer {
 	}
 
 	func close() {
-		player.engine?.disconnectNodeOutput(player)
+		if buffer != nil {
+			player.engine?.disconnectNodeOutput(player)
+		}
 		buffer = nil
 		url = nil
 		_isPlaying = false

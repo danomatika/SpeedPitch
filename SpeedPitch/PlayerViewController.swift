@@ -189,6 +189,7 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 		}
 		if file != nil {
 			player.open(file: file!)
+			player.isLooping = file!.loop
 		}
 		updateControls()
 		updateNowPlayingInfo()
@@ -215,6 +216,7 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 		}
 		if file != nil {
 			player.open(file: file!)
+			player.isLooping = file!.loop
 		}
 		updateControls()
 		updateNowPlayingInfo()
@@ -226,6 +228,7 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 		let file = playlist.goto(index: index)
 		if file != nil {
 			player.open(file: file!)
+			player.isLooping = file!.loop
 			ret = true
 		}
 		updateControls()

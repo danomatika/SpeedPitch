@@ -19,7 +19,7 @@ class WaveformView : UIView {
 
 	var node: AVAudioNode? //< tapped node
 	var samples: [Float] = [] //< current sample buffer
-	var isTapped: Bool {return !(node == nil)} //< tapped?
+	var isTapped: Bool {return node != nil} //< tapped?
 
 	/// tap into a node's output
 	func tap(node: AVAudioNode) {
