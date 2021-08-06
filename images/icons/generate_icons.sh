@@ -46,6 +46,7 @@ DEST=$(pwd)/$DEST
 mkdir -p $DEST
 
 # icons8
+convert-icon icons8/document_filled 512 browser
 convert-icon icons8/fast_forward 512 control
 convert-icon icons8/folder 512 nav
 convert-icon icons8/menu 512 nav
