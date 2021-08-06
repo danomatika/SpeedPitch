@@ -120,7 +120,7 @@ class PlaylistViewController: UITableViewController {
 		if let file = playlist?.at(index: indexPath.row) {
 
 			// file info
-			let prefix = (file.loop ? "🔂" : "") // show loop state
+			let prefix = (file.loop ? "🔂 " : "") // show loop state
 			if file.artist != "unknown" && file.title != "unknown" {
 				cell.textLabel?.text = prefix + file.title
 				cell.detailTextLabel?.text = file.artist
