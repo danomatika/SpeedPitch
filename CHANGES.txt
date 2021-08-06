@@ -1,4 +1,21 @@
-1.0.0: 19 July 2021
+1.1.0: 07 Aug 2021
+
+* fixed controls not updated at playlist end
+* fixed documents picker not starting in the previous location
+* fixed playlist ghost images due to cell reuse
+
+* added individual file looping, controlled by:
+  - controls view loop button
+  - playlist loop/unloop swipe action
+  - playlist edit mode file loop toggle button
+* added default playlist file icon
+* added iTunes/Files app sharing support
+
+* now hide empty playlist rows
+
+* disable prelim directory and json picking for now (not implemented yet)
+
+1.0.0: 19 Jul 2021
 
 * fixed file player finished event triggered by stop()
 * no longer close current player when adding to playlist
@@ -15,8 +32,7 @@
 * speed view now stylized as speed limit sign
 * playlist current song selection now working
 * playlist delete all button now select all button
-* playlist now shows default icon for files without artwork
-* playlist no longer shows empty rows
+
 * settings view cancel button now done button
 * updated app info
 * app info now loaded from txt file
