@@ -47,7 +47,8 @@ class Picker: NSObject, MPMediaPickerControllerDelegate, UIDocumentPickerDelegat
 	func presentDocumentPickerFrom(controller: UIViewController, sender: Any?) {
 		var picker: UIDocumentPickerViewController
 		if #available(iOS 14.0, *) {
-			picker = UIDocumentPickerViewController(forOpeningContentTypes: [UTType.audio, UTType.directory, UTType.json])
+			picker = UIDocumentPickerViewController(forOpeningContentTypes: [UTType.audio])
+			//[UTType.audio, UTType.directory, UTType.json]
 		}
 		else {
 			picker = UIDocumentPickerViewController(documentTypes: ["public.audio"], in: .open)
