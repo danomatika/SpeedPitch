@@ -46,6 +46,10 @@ Live speed calculations require navigation-level GPS updates which only ocurr wh
 
 Long-press on the current speed to hide or show the navigation bar and playback controls.
 
+### Looping
+
+Both the playlist and individual files can be looped automatically. To enable playlist looping, press the loop symbol button on the top of the playlist view. To loop individual files, either swipe left on the file in the playlist and tap the loop button or tap the loop 1 button on the main screen when the file is playing. When enabled, the current file will loop during playback until another is chosen, ie. by pressing the next button.
+
 Developing
 ----------
 

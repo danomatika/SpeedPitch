@@ -21,12 +21,18 @@ extension AVAudioFile {
 
 extension AVAudioPlayerNode {
 
-	var currentTime: TimeInterval {
-		if let nodeTime = lastRenderTime,
-		   let playerTime = playerTime(forNodeTime: nodeTime) {
+	var time: TimeInterval {
+		if let playerTime = sampleTime {
 			return Double(playerTime.sampleTime) / playerTime.sampleRate
 		}
 		return 0
+	}
+
+	var sampleTime: AVAudioTime? {
+		if let nodeTime = lastRenderTime {
+		   return playerTime(forNodeTime: nodeTime)
+		}
+		return nil
 	}
 
 }
@@ -97,19 +103,9 @@ class AudioPlayer {
 	var isPlaying: Bool { //< is the audio file playing?
 		get {return _isPlaying}
 	}
-	var isLooping: Bool { //< is playback looping?
-		get {return _isLooping}
-		set {
-			if newValue == _isLooping {return}
-			_isLooping = newValue
-			if _isPlaying {
-				play() // replay to set loop option
-			}
-		}
-	}
+	var isLooping: Bool = false //< is playback looping?
 
 	fileprivate var _isPlaying = false
-	fileprivate var _isLooping = false
 	fileprivate var _ignoreFinish = false
 
 	deinit {
@@ -171,14 +167,8 @@ class AudioPlayer {
 
 	func play() {
 		if buffer != nil {
-			let time: AVAudioTime? = nil
 			if isPlaying {
 				// stop existing scheduled events
-				// FIXME: restart at current position, not working yet
-//				time = player.lastRenderTime
-//				if time != nil {
-//					time = player.playerTime(forNodeTime: time!)
-//				}
 				_ignoreFinish = true
 				player.stop()
 			}
@@ -186,14 +176,24 @@ class AudioPlayer {
 			if isLooping {
 				options = [.loops]
 			}
-			player.scheduleBuffer(buffer!, at: time,
+			player.scheduleBuffer(buffer!, at: nil,
 								options: options,
 								completionCallbackType: .dataPlayedBack) { type in
 				// ignore finish event if triggered manually, ie. via stop()
 				if let engine = self.player.engine,
 				   engine.isRunning && !self._ignoreFinish {
-					printDebug("AudioPlayer: finished")
-					self.delegate?.playerDidFinishPlaying(self)
+					if self.isLooping {
+						// restart playback as isLooping probably changed
+						printDebug("AudioPlayer: restarting for loop")
+						// set _isPlaying to avoid play() calling player.stop()
+						// which leads to a crash for some reason...
+						self._isPlaying = false
+						self.play()
+					}
+					else {
+						printDebug("AudioPlayer: finished")
+						self.delegate?.playerDidFinishPlaying(self)
+					}
 				}
 			}
 			player.play()
@@ -236,20 +236,6 @@ class AudioPlayer {
 			play()
 		}
 	}
-
-	// ref: https://stackoverflow.com/questions/29954206/avaudioengine-seek-the-time-of-the-song
-//	func seek(to time: TimeInterval) {
-//		if buffer != nil {
-//			guard let renderTime = player.lastRenderTime else {return}
-//			guard let playerTime = player.playerTime(forNodeTime: renderTime) else {return}
-//			let newsampletime = AVAudioFramePosition(playerTime.sampleRate * time)
-//			//var length = Float(songDuration!) - time
-//			//var framestoplay = AVAudioFrameCount(Float(playerTime.sampleRate) * length)
-//			player.stop()
-//			player.scheduleSegment(file!, startingFrame: newsampletime, frameCount: 0, at: nil, completionHandler: nil)
-//			player.play()
-//		}
-//	}
 
 }
 
