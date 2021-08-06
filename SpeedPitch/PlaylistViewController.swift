@@ -114,6 +114,8 @@ class PlaylistViewController: UITableViewController {
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: "PlaylistCell", for: indexPath)
 		if let file = playlist?.at(index: indexPath.row) {
+
+			// file info
 			let prefix = (file.loop ? "🔂" : "") // show loop state
 			if file.artist != "unknown" && file.title != "unknown" {
 				cell.textLabel?.text = prefix + file.title
@@ -123,8 +125,18 @@ class PlaylistViewController: UITableViewController {
 				cell.textLabel?.text = prefix + file.description
 				cell.detailTextLabel?.text = ""
 			}
+
+			// image
 			if file.image != nil {
 				cell.imageView?.image = file.image
+			}
+			else {
+				if #available(iOS 13.0, *) {
+					cell.imageView?.image = UIImage(systemName: "music.note")
+				}
+				else {
+					cell.imageView?.image = UIImage(named: "music.note")
+				}
 			}
 		}
 		return cell
