@@ -73,7 +73,7 @@ class PlaylistViewController: UITableViewController {
 		dismiss(animated: true, completion: nil)
 	}
 
-	@IBAction func toggleLoop(_ sender: Any) {
+	@IBAction func togglePlaylistLoop(_ sender: Any) {
 		let button = sender as! UIBarButtonItem
 		if let playlist = playlist {
 			playlist.isLooping = !playlist.isLooping
@@ -96,6 +96,16 @@ class PlaylistViewController: UITableViewController {
 					playerViewController?.player.close()
 				}
 				playlist.remove(at: indexPath.row)
+			}
+		}
+		tableView.reloadData()
+	}
+
+	@IBAction func toggleFileLoop(_ sender: Any) {
+		guard let playlist = playlist else {return}
+		for indexPath in tableView.indexPathsForSelectedRows! {
+			if let file = playlist.at(index: indexPath.row) {
+				file.loop = !file.loop
 			}
 		}
 		tableView.reloadData()

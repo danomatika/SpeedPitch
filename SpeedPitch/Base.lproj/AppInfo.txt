@@ -23,7 +23,7 @@ The playback rate calculation from the live speed updates can be quantized. This
 
 Keep Awake
 
-Live speed calculations require navigation-level GPS updates which only ocurr when the device is in active use. If the screen turns off, GPS updates to SpeedPitch will be paused therefore, by default, the "Keep screen awake" SpeedPitch display setting is set to on.
+Live speed calculations require navigation-level GPS updates which only occur when the device is in active use. If the screen turns off, GPS updates to SpeedPitch will be paused therefore, by default, the "Keep screen awake" SpeedPitch display setting is set to on.
 
 Minimal
 
@@ -31,7 +31,7 @@ Long-press on the current speed to hide or show the navigation bar and playback 
 
 Looping
 
-Both the playlist and individual files can be looped automatically. To enable playlist looping, press the loop symbol button on the top of the playlist view. To loop individual files, either swipe left on the file in the playlist and tap the loop button or tap the loop 1 button on the main screen when the file is playing. When enabled, the current file will loop during playback until another is chosen, ie. by pressing the next button.
+Both the playlist and individual files can be looped automatically. To enable playlist looping, press the loop symbol button on the top of the playlist view. To loop individual files, either swipe left on the file in the playlist and tap the loop button or use the edit mode loop toggle button. Additionally, when the file is playing, tap the loop 1 button on the main screen. When enabled, the current file will loop during playback until another is chosen, ie. by pressing the next button.
 
 Acknowledgements
 

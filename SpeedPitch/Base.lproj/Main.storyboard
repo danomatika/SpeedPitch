@@ -54,6 +54,12 @@
                                 <action selector="deleteSelected:" destination="b2J-Ia-QWQ" id="OEl-GH-nld"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="3cm-nl-fvD"/>
+                        <barButtonItem title="Loop" image="repeat.1" catalog="system" id="dSe-hy-KJn">
+                            <connections>
+                                <action selector="toggleFileLoop:" destination="b2J-Ia-QWQ" id="EYu-rB-tpI"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="dgd-ZD-JqO"/>
                         <barButtonItem title="Select All" id="Agd-H1-4hp">
                             <connections>
@@ -69,7 +75,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Loop" image="repeat" catalog="system" id="zPX-Ng-dB1">
                             <connections>
-                                <action selector="toggleLoop:" destination="b2J-Ia-QWQ" id="Fm9-vX-QO8"/>
+                                <action selector="togglePlaylistLoop:" destination="b2J-Ia-QWQ" id="Fm9-vX-QO8"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
