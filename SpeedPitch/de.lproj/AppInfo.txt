@@ -1,0 +1,40 @@
+SpeedPitch ist ein einfaches Augmented-Sound-Reality-Experiment, das die Geschwindigkeit der Musikwiedergabe an die aktuelle GPS-Geschwindigkeit anpasst. Je schneller Sie fahren, desto höher ist die Tonhöhe, und plötzliche Stopps führen zu schleppenden Audiosamples. Natürliche Bewegung führt zu unnatürlichem Klang.
+
+http://danomatika.com/code/speedpitch
+
+Version 1.1.0
+
+Dan Wilcox 2021
+danomatika.com
+
+Verwendung
+
+1. Wählen Sie Dateien aus der Musik-App oder dem Dateibrowser mit den Schaltflächen auf dem Hauptbildschirm oben rechts aus.
+2. Starten Sie die Wiedergabe durch Drücken der Wiedergabetaste oder durch Antippen eines Titels in der Wiedergabeliste.
+3. Fahren Sie mit dem Fahrrad oder gehen Sie spazieren und sehen Sie, was passiert...
+
+Geschwindigkeit
+
+Sie können das Geschwindigkeitslimit für die Tonhöhenverarbeitung einstellen, um die Geschwindigkeit festzulegen, mit der Lieder in normaler Geschwindigkeit wiedergegeben werden: Menütaste, oben rechts -> Geschwindigkeit. Die Geschwindigkeitsbereiche orientieren sich an der Art der Bewegung, die Sie je nach Fahrzeug ausführen werden.
+
+Quantisierung
+
+Die aus den Live-Geschwindigkeitsupdates berechnete Wiedergaberate kann quantisiert werden. Dadurch wird die Geschwindigkeit in diskreten Schritten anstelle eines gleichmäßigen Bereichs geändert, was die Anpassung der Geschwindigkeit zwischen mehreren Personen erheblich erleichtert.
+
+Bildschirm an lassen
+
+Live-Geschwindigkeitsberechnungen erfordern GPS-Updates auf Navigationsebene, die nur erfolgen, wenn das Gerät aktiv ist. Wenn sich der Bildschirm ausschaltet, werden die GPS-Updates für SpeedPitch unterbrochen. Daher ist die SpeedPitch-Anzeigeeinstellung "Bildschirm wach halten" standardmäßig aktiviert.
+
+Minimal
+
+Drücken Sie lange auf die aktuelle Geschwindigkeit, um die Navigationsleiste und die Wiedergabesteuerung ein- oder auszublenden.
+
+Schleife (Loop)
+
+Sowohl die Wiedergabeliste als auch einzelne Dateien können automatisch in einer Schleife abgespielt werden. Um die Wiedergabeliste zu aktivieren, drücken Sie die Schaltfläche mit dem Wiedergabesymbol oben in der Wiedergabeliste. Um einzelne Dateien in einer Schleife wiederzugeben, streichen Sie entweder nach links über die Datei in der Wiedergabeliste und tippen Sie auf die Schaltfläche für die Schleife oder verwenden Sie die Schaltfläche zum Umschalten zwischen den Bearbeitungsmodi. Tippen Sie während der Wiedergabe einer Datei auf dem Hauptbildschirm auf die Schaltfläche Schleife 1. Wenn diese Funktion aktiviert ist, wird die aktuelle Datei während der Wiedergabe in einer Schleife abgespielt, bis eine andere Datei ausgewählt wird, z. B. durch Drücken der Schaltfläche "Weiter".
+
+Danksagung
+
+Dieses Projekt wurde im Rahmen der Nix Wie Raus! Fahrrad Kunst Sommer Ausstellung im BBK in Karlsruhe Deutschland 2021.
+
+https://www.bbk-karlsruhe.de/fahrrad-kunst-sommer/

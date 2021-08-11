@@ -1,0 +1,27 @@
+/* 
+  Localizable.strings
+  SpeedPitch
+
+  Created by Dan Wilcox on 8/8/21.
+  
+*/
+
+// actions
+
+"Cancel" = "Abbrechen";
+
+"Speed" = "Geschwindigkeit";
+
+"Info" = "Infos";
+
+"Settings" = "Einstellungen";
+
+// alerts
+
+"Alert.LocationRestricted.title" = "Standortdienst Zugriffsbeschränkung";
+
+"Alert.LocationRestricted.message" = "Um dies zu aktivieren, gehen Sie bitte zu den Einstellungen und aktivieren Sie den Standortdienst für SpeedPitch.";
+
+"Alert.LocationDenied.title" = "Standortdienst Zugriff verweigert";
+
+"Alert.LocationDenied.message" = "Um dies zu aktivieren, gehen Sie bitte zu den Einstellungen und aktivieren Sie den Standortdienst für SpeedPitch.";

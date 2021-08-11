@@ -21,6 +21,7 @@ class DashboardView: UIView {
 	override func awakeFromNib() {
 		rateFormatter.usesSignificantDigits = true
 		rateFormatter.maximumSignificantDigits = 2
+		rateFormatter.locale = Locale.current // localize decimal separator
 
 		// push rate label up on iPhone 5 - SE 1 so as not to
 		// overlap title/artist, default constant is 10

@@ -1,0 +1,99 @@
+
+/* Class = "UISegmentedControl"; 2Jp-yR-gt8.segmentTitles[0] = "Foot"; ObjectID = "2Jp-yR-gt8"; */
+"2Jp-yR-gt8.segmentTitles[0]" = "Laufen";
+
+/* Class = "UISegmentedControl"; 2Jp-yR-gt8.segmentTitles[1] = "Bike"; ObjectID = "2Jp-yR-gt8"; */
+"2Jp-yR-gt8.segmentTitles[1]" = "Fahrrad";
+
+/* Class = "UISegmentedControl"; 2Jp-yR-gt8.segmentTitles[2] = "Car"; ObjectID = "2Jp-yR-gt8"; */
+"2Jp-yR-gt8.segmentTitles[2]" = "Auto";
+
+/* Class = "UISegmentedControl"; 2Jp-yR-gt8.segmentTitles[3] = "Plane"; ObjectID = "2Jp-yR-gt8"; */
+"2Jp-yR-gt8.segmentTitles[3]" = "Flugzeug";
+
+/* Class = "UISegmentedControl"; 2Jp-yR-gt8.segmentTitles[4] = "Rocket"; ObjectID = "2Jp-yR-gt8"; */
+"2Jp-yR-gt8.segmentTitles[4]" = "Rakete";
+
+/* Class = "UINavigationItem"; title = "Info"; ObjectID = "8E2-4Q-z23"; */
+"8E2-4Q-z23.title" = "Infos";
+
+/* Class = "UITableViewSection"; headerTitle = "Display"; ObjectID = "91T-83-bPW"; */
+"91T-83-bPW.headerTitle" = "Bildschirm";
+
+/* Class = "UILabel"; text = "1.25x"; ObjectID = "9gL-JN-Mqv"; */
+"9gL-JN-Mqv.text" = "1.25x";
+
+/* Class = "UILabel"; text = "Keep screen awake"; ObjectID = "9rW-oe-OaZ"; */
+"9rW-oe-OaZ.text" = "Bildschirm wach halten";
+
+/* Class = "UIBarButtonItem"; title = "Select All"; ObjectID = "Agd-H1-4hp"; */
+"Agd-H1-4hp.title" = "Alle auswählen";
+
+/* Class = "UITextField"; text = "12.34"; ObjectID = "E53-Ea-aDe"; */
+"E53-Ea-aDe.text" = "12.34";
+
+/* Class = "UIBarButtonItem"; title = "Playlist"; ObjectID = "FaN-Yy-JnJ"; */
+"FaN-Yy-JnJ.title" = "Wiedergabeliste";
+
+/* Class = "UIBarButtonItem"; title = "More"; ObjectID = "Hda-fJ-zzE"; */
+"Hda-fJ-zzE.title" = "Mehr";
+
+/* Class = "UINavigationItem"; title = "Settings"; ObjectID = "I89-8c-pFh"; */
+"I89-8c-pFh.title" = "Einstellungen";
+
+/* Class = "UINavigationItem"; title = "SpeedPitch"; ObjectID = "JJG-cW-gtA"; */
+"JJG-cW-gtA.title" = "SpeedPitch";
+
+/* Class = "UILabel"; text = "Quantize"; ObjectID = "Jug-3T-Ikh"; */
+"Jug-3T-Ikh.text" = "Quantisieren";
+
+/* Class = "UILabel"; text = "Units"; ObjectID = "LXM-Gk-8a3"; */
+"LXM-Gk-8a3.text" = "Einheiten";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "Rbp-W0-msi"; */
+"Rbp-W0-msi.text" = "Titel";
+
+/* Class = "UILabel"; text = "12 km/h"; ObjectID = "UiW-29-lTP"; */
+"UiW-29-lTP.text" = "12 km/h";
+
+/* Class = "UILabel"; text = "Subtitle"; ObjectID = "Y1Y-QA-JYz"; */
+"Y1Y-QA-JYz.text" = "Untertitel";
+
+/* Class = "UILabel"; text = "Artist - Track Name"; ObjectID = "av2-sB-HhY"; */
+"av2-sB-HhY.text" = "Künstler - Titelname";
+
+/* Class = "UIBarButtonItem"; title = "Documents"; ObjectID = "bjJ-N9-nuY"; */
+"bjJ-N9-nuY.title" = "Dokumente";
+
+/* Class = "UIBarButtonItem"; title = "Loop"; ObjectID = "dSe-hy-KJn"; */
+"dSe-hy-KJn.title" = "Schleife";
+
+/* Class = "UINavigationItem"; title = "Speed Limit"; ObjectID = "e63-rg-Hme"; */
+"e63-rg-Hme.title" = "Geschwindigkeitsgrenze";
+
+/* Class = "UIBarButtonItem"; title = "Media"; ObjectID = "h5f-2F-NXw"; */
+"h5f-2F-NXw.title" = "Medien";
+
+/* Class = "UISegmentedControl"; hed-b5-GVJ.segmentTitles[0] = "Metric"; ObjectID = "hed-b5-GVJ"; */
+"hed-b5-GVJ.segmentTitles[0]" = "Metrisch";
+
+/* Class = "UISegmentedControl"; hed-b5-GVJ.segmentTitles[1] = "Imperial"; ObjectID = "hed-b5-GVJ"; */
+"hed-b5-GVJ.segmentTitles[1]" = "Britisch";
+
+/* Class = "UITableViewSection"; headerTitle = "Playback Rate"; ObjectID = "jca-Pg-uw3"; */
+"jca-Pg-uw3.headerTitle" = "Wiedergaberate";
+
+/* Class = "UINavigationItem"; title = "Playlist"; ObjectID = "lT8-Lg-Qmo"; */
+"lT8-Lg-Qmo.title" = "Wiedergabeliste";
+
+/* Class = "UILabel"; text = "1x"; ObjectID = "lj2-Q2-VGc"; */
+"lj2-Q2-VGc.text" = "1x";
+
+/* Class = "UILabel"; text = "km/h"; ObjectID = "udr-KA-U5z"; */
+"udr-KA-U5z.text" = "km/h";
+
+/* Class = "UILabel"; text = "Draw audio waveform"; ObjectID = "x1a-7X-aB1"; */
+"x1a-7X-aB1.text" = "Audio-Wellenform zeichnen";
+
+/* Class = "UIBarButtonItem"; title = "Loop"; ObjectID = "zPX-Ng-dB1"; */
+"zPX-Ng-dB1.title" = "Schleife";

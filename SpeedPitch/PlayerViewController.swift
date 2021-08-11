@@ -256,20 +256,20 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 	@IBAction func showMoreActions(_ sender: Any) {
 		printDebug("PlayerViewController: showMoreActions")
 		let alert = UIAlertController()
-		let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
+		let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: "Cancel action"), style: .cancel, handler: { action in
 			alert.dismiss(animated: true, completion: nil)
 		})
-		let speedAction = UIAlertAction(title: "Speed", style: .default, handler: { action in
+		let speedAction = UIAlertAction(title: NSLocalizedString("Speed", comment: "Speed action"), style: .default, handler: { action in
 			printDebug("show speed")
 			alert.dismiss(animated: true, completion: nil)
 			self.performSegue(withIdentifier: "ShowSpeed", sender: self)
 		})
-		let infoAction = UIAlertAction(title: "Info", style: .default, handler: { action in
+		let infoAction = UIAlertAction(title: NSLocalizedString("Info", comment: "Info action"), style: .default, handler: { action in
 			printDebug("show info")
 			alert.dismiss(animated: true, completion: nil)
 			self.performSegue(withIdentifier: "ShowInfo", sender: self)
 		})
-		let settingsAction = UIAlertAction(title: "Settings", style: .default, handler: { action in
+		let settingsAction = UIAlertAction(title: NSLocalizedString("Settings", comment: "Settings action"), style: .default, handler: { action in
 			printDebug("show settings")
 			self.performSegue(withIdentifier: "ShowSettings", sender: self)
 			alert.dismiss(animated: true, completion: nil)
@@ -358,8 +358,10 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 
 	func locationAuthorizationRestricted(_ location: Location) {
 		let alert = UIAlertController(
-			title: "Location Service Access Restricted",
-			message: "To enable, please go to Settings and turn on Location Service for SpeedPitch.",
+			title: NSLocalizedString("Alert.LocationRestricted.title",
+									 comment:  "Location restricted alert title"),
+			message: NSLocalizedString("Alert.LocationRestricted.message",
+									   comment: "Location restricted alert message"),
 			preferredStyle: .alert
 		)
 		show(alert, sender: nil)
@@ -367,8 +369,10 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 
 	func locationAuthorizationDenied(_ location: Location) {
 		let alert = UIAlertController(
-			title: "Location Service Access Denied",
-			message: "To enable, please go to Settings and turn on Location Service for SpeedPitch.",
+			title: NSLocalizedString("Alert.LocationDenied.title",
+									 comment: "Location denied alert title"),
+			message: NSLocalizedString("Alert.LocationDenied.message",
+									   comment: "Locaiton denied alert message"),
 			preferredStyle: .alert
 		)
 		show(alert, sender: nil)
