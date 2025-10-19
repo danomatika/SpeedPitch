@@ -1,6 +1,6 @@
 //
 //  Util.swift
-//  ZirkVideoPlayer
+//  SpeedPitch
 //
 //  Created by Dan Wilcox on 6/20/21.
 //  Copyright © 2021 Dan Wilcox. All rights reserved.
