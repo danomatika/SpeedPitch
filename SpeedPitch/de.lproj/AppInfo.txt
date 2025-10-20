@@ -4,7 +4,7 @@ http://danomatika.com/code/speedpitch
 
 Version 1.1.0
 
-Dan Wilcox 2021
+Dan Wilcox 2021-2025
 danomatika.com
 
 Verwendung

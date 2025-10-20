@@ -5,7 +5,7 @@ SpeedPitch
 	<img src="http://danomatika.com/code/speedpitch/speedpitch-launch.png" width="320" alt="SpeedPitch icon">
 </p>
 
-Copyright (c) [Dan Wilcox](danomatika.com) 2021
+Copyright (c) [Dan Wilcox](danomatika.com) 2021-2025
 
 BSD Simplified License.
 
