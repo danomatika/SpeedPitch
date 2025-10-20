@@ -76,11 +76,16 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 		updateWaveform()
 		audio.start()
 
-		// go, TODO: this could be disabled when playlist is empty
-		location.enable()
-
 		// set up Now Playing controls
 		setupNowPlayingEvents()
+	}
+
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+
+		// go
+		// TODO: disable when playlist is empty?
+		location.enable()
 	}
 
 	deinit {
@@ -359,12 +364,15 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 	func locationAuthorizationRestricted(_ location: Location) {
 		let alert = UIAlertController(
 			title: NSLocalizedString("Alert.LocationRestricted.title",
-									 comment:  "Location restricted alert title"),
+									 comment: "Location restricted alert title"),
 			message: NSLocalizedString("Alert.LocationRestricted.message",
 									   comment: "Location restricted alert message"),
 			preferredStyle: .alert
 		)
-		show(alert, sender: nil)
+		alert.addAction(UIAlertAction(
+			title: NSLocalizedString("Ok", comment: "Default alert action"),
+			style: .default, handler: nil))
+		present(alert, animated: true, completion: nil)
 	}
 
 	func locationAuthorizationDenied(_ location: Location) {
@@ -372,13 +380,17 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 			title: NSLocalizedString("Alert.LocationDenied.title",
 									 comment: "Location denied alert title"),
 			message: NSLocalizedString("Alert.LocationDenied.message",
-									   comment: "Locaiton denied alert message"),
+									   comment: "Location denied alert message"),
 			preferredStyle: .alert
 		)
-		show(alert, sender: nil)
+		alert.addAction(UIAlertAction(
+			title: NSLocalizedString("Ok", comment: "Default alert action"),
+			style: .default, handler: nil))
+		present(alert, animated: true, completion:nil)
 	}
 
 	func locationDidUpdateSpeed(_ location: Location, speed: Double, accuracy: Double) {
+		if accuracy < 0 {return} // ignore invalid speeds
 		printDebug("PlayerViewController: speed \(speed) accuracy \(accuracy)")
 		DispatchQueue.main.async {
 			self.speed = speed
@@ -420,7 +432,7 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 
 	// MARK: Private
 
-	/// set up to recieve remote Now Playing events
+	/// set up to receive remote Now Playing events
 	func setupNowPlayingEvents() {
 		let center = MPRemoteCommandCenter.shared()
 		center.togglePlayPauseCommand.isEnabled = true
@@ -463,7 +475,7 @@ class PlayerViewController: UIViewController, PickerDelegate, AudioPlayerDelegat
 		})
 	}
 
-	/// stop recieveing Now Playing events
+	/// stop receiving Now Playing events
 	func clearNowPlayingEvents() {
 		let center = MPRemoteCommandCenter.shared()
 		center.togglePlayPauseCommand.isEnabled = false

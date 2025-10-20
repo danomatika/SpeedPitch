@@ -37,67 +37,58 @@ class Location : NSObject,  CLLocationManagerDelegate {
 		manager.allowsBackgroundLocationUpdates = true
 	}
 
-	@discardableResult func enable() -> Bool {
+	func enable() {
 		_isEnabled = false
-		if CLLocationManager.locationServicesEnabled() {
-			_initialLocation = true
-			if CLLocationManager.authorizationStatus() == .denied {
-				print("Location: denied")
-				delegate?.locationAuthorizationDenied(self)
-			}
-			else if CLLocationManager.authorizationStatus() == .restricted {
-				print("Location: restricted")
-				delegate?.locationAuthorizationRestricted(self)
-			}
-			else {
-				print("Location: enabled")
-				manager.startUpdatingLocation()
-				manager.requestWhenInUseAuthorization()
-				_isEnabled = true
-			}
+		_initialLocation = true
+		if CLLocationManager.authorizationStatus() == .denied {
+			print("Location: denied")
+			delegate?.locationAuthorizationDenied(self)
+		}
+		else if CLLocationManager.authorizationStatus() == .restricted {
+			print("Location: restricted")
+			delegate?.locationAuthorizationRestricted(self)
 		}
 		else {
-			print("Location: disabled or not available on this device")
+			print("Location: enabled")
+			manager.startUpdatingLocation()
+			manager.requestWhenInUseAuthorization()
+			_isEnabled = true
 		}
-		return _isEnabled
 	}
 
-	@discardableResult func disable() -> Bool {
-		if CLLocationManager.locationServicesEnabled() {
-			manager.stopUpdatingLocation()
-		}
+	func disable() {
+		manager.stopUpdatingLocation()
 		_isEnabled = false
-		return _isEnabled
 	}
 
 	// MARK: CLLocationManagerDelegate
 
 	func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-		var statusString: String
 		switch status {
 		case .restricted:
-			statusString = "restricted"
+			print("Location: authorization restricted")
 			break
 		case .denied:
-			statusString = "denied"
-			if CLLocationManager.locationServicesEnabled() {
-				manager.stopUpdatingLocation()
-			}
+			print("Location: authorization denied")
 			break
 		case .authorizedWhenInUse:
-			statusString = "when in use"
-			break
+			print("Location: authorization when in use")
+			manager.startUpdatingLocation()
+			_isEnabled = true
+			return
 		case .authorizedAlways:
-			statusString = "always"
-			break
+			print("Location: authorization always")
+			manager.startUpdatingLocation()
+			_isEnabled = true
+			return
 		case .notDetermined:
-			statusString = "not determined"
+			print("Location: authorization not determined")
 			break
 		default:
-			statusString = "unknown"
+			print("Location: authorization unknown")
 			break
 		}
-		print("Location: authorization \(statusString)")
+		_isEnabled = false
 	}
 
 	func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -126,10 +117,6 @@ class Location : NSObject,  CLLocationManagerDelegate {
 
 	func locationManagerDidResumeLocationUpdates(_ manager: CLLocationManager) {
 		print("Location: updates resumed")
-	}
-
-	func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-		print("Location: failed with error \(error)")
 	}
 
 }
