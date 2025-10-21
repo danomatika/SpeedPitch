@@ -2,7 +2,7 @@ SpeedPitch is a simple augmented sonic reality experiment that alters music play
 
 http://danomatika.com/code/speedpitch
 
-Version 1.1.0
+Version 1.2.0
 
 Dan Wilcox 2021-2025
 danomatika.com
