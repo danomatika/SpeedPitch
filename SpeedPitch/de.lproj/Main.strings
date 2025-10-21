@@ -33,7 +33,7 @@
 "E53-Ea-aDe.text" = "12.34";
 
 /* Class = "UIBarButtonItem"; title = "Playlist"; ObjectID = "FaN-Yy-JnJ"; */
-"FaN-Yy-JnJ.title" = "Wiedergabeliste";
+"FaN-Yy-JnJ.title" = "Playliste";
 
 /* Class = "UIBarButtonItem"; title = "More"; ObjectID = "Hda-fJ-zzE"; */
 "Hda-fJ-zzE.title" = "Mehr";
@@ -84,7 +84,7 @@
 "jca-Pg-uw3.headerTitle" = "Wiedergaberate";
 
 /* Class = "UINavigationItem"; title = "Playlist"; ObjectID = "lT8-Lg-Qmo"; */
-"lT8-Lg-Qmo.title" = "Wiedergabeliste";
+"lT8-Lg-Qmo.title" = "Playliste";
 
 /* Class = "UILabel"; text = "1x"; ObjectID = "lj2-Q2-VGc"; */
 "lj2-Q2-VGc.text" = "1x";
