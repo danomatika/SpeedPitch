@@ -56,9 +56,7 @@ class Picker: NSObject, MPMediaPickerControllerDelegate, UIDocumentPickerDelegat
 		picker.allowsMultipleSelection = allowMultiple
 		picker.popoverPresentationController?.sourceView = sender as? UIView
 		picker.delegate = self
-		if #available(iOS 13.0, *) {
-			picker.shouldShowFileExtensions = true
-		}
+		picker.shouldShowFileExtensions = true
 		controller.present(picker, animated: true)
 	}
 

@@ -86,14 +86,7 @@ class ControlsView: UIView {
 		if playing {
 			name = "pause.fill"
 		}
-		var image: UIImage?
-		if #available(iOS 13.0, *) {
-			image = UIImage(systemName: name)
-		}
-		else {
-			// use fallback icon
-			image = UIImage(named: name)
-		}
+		let image = UIImage(systemName: name)
 		if image != nil {
 			playPauseButton.setImage(image, for: .normal)
 		}
