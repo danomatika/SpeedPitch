@@ -197,31 +197,39 @@ class PlaylistViewController: UITableViewController {
 	}
 
 	// custom loop swipe actions for individual files
-	override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+	override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+
+		// loop/unloop
+		if let file = playlist?.at(index: indexPath.row) {
+			let title = (file.loop ? "Unloop" : "Loop")
+			let loop = UIContextualAction(style: .normal, title: title, handler: {  (contextualAction, view, boolValue) in
+				file.loop = !file.loop
+				self.tableView.reloadRows(at: [indexPath], with: .automatic) // reload to see title loop symbol
+			})
+			loop.backgroundColor = (file.loop ? .systemBlue : .systemGray)
+			loop.image = UIImage(systemName: "repeat.1")
+			return UISwipeActionsConfiguration(actions: [loop])
+		}
+
+		return nil
+	}
+
+	// remove individual files by swiping
+	override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 
 		// delete
-		let delete = UITableViewRowAction(style: .default, title: "Delete") { (action:UITableViewRowAction, indexPath:IndexPath) in
+		let delete = UIContextualAction(style: .destructive, title: "Delete", handler: {  (contextualAction, view, boolValue) in
 			guard let playlist = self.playlist else {return}
 			if playlist.currentIndex == indexPath.row {
 				self.playerViewController?.player.close()
 			}
 			playlist.remove(at: indexPath.row)
 			self.tableView.reloadData()
-		}
+		})
 		delete.backgroundColor = .systemRed
+		delete.image = UIImage(systemName: "trash")
 
-		// loop/unloop
-		if let file = playlist?.at(index: indexPath.row) {
-			let title = (file.loop ? "Unloop" : "Loop")
-			let loop = UITableViewRowAction(style: .default, title: title) { (action:UITableViewRowAction, indexPath:IndexPath) in
-				file.loop = !file.loop
-				self.tableView.reloadRows(at: [indexPath], with: .automatic) // reload to see title loop symbol
-			}
-			loop.backgroundColor = (file.loop ? UIColor.systemBlue : UIColor.systemGray)
-			return [delete, loop]
-		}
-
-		return [delete]
+		return UISwipeActionsConfiguration(actions: [delete])
 	}
 
 	// perform move after reordering
