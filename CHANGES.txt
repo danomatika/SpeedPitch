@@ -1,6 +1,15 @@
-1.1.1: TBD
+1.2.0: TBD
+
+* fixed warning by refactoring out .locationServicesEnabled usage
+* fixed location status alerts not appearing or messing up player view on start
+* fixed warning by adding explicit system blue accent color
+* now ignore invalid speed values
 
 * added German localization
+
+* min deployment target now ios 13
+* updated for project xcode 16
+* migrated to uikit scene-based life cycle
 
 1.1.0: 07 Aug 2021
 
