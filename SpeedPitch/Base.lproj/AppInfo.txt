@@ -1,8 +1,8 @@
 SpeedPitch is a simple augmented sonic reality experiment that alters music playback rate based on your actual GPS ground speed. The faster you go, the higher the pitch and sudden stops lead to dragging audio samples. Natural motion leads to unnatural sound.
 
-http://danomatika.com/code/speedpitch
+https://danomatika.com/code/speedpitch
 
-Version 1.2.0
+Version 1.2.1
 
 Dan Wilcox 2021-2025
 danomatika.com
