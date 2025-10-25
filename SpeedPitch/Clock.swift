@@ -31,7 +31,7 @@ class Clock {
 	static let queueLabel = "com.danomatika.SpeedPitch.clock"
 	static let defaultGrain = 0.002 //< 20 ms tick duration
 
-	fileprivate var _timer: DispatchSourceTimer! //< source timer
+	fileprivate var _timer: DispatchSourceTimer? //< source timer
 	fileprivate var _time: TimeInterval = 0 //< last tick timestamp
 	fileprivate var _isRunning = false
 
@@ -45,6 +45,7 @@ class Clock {
 		let queue = DispatchQueue(label: Clock.queueLabel,
 								  qos: .userInteractive)
 		_timer = DispatchSource.makeTimerSource(flags: .strict, queue: queue)
+		guard let _timer = _timer else {return}
 		_timer.schedule(deadline: .now(), repeating: Clock.defaultGrain,
 						leeway: .milliseconds(2))
 		_timer.setEventHandler {
@@ -60,7 +61,7 @@ class Clock {
 	/// stop the clock
 	func stop() {
 		if !_isRunning {return}
-		_timer.suspend()
+		_timer?.suspend()
 		_timer = nil
 		_isRunning = false
 		stopped()

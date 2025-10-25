@@ -74,7 +74,7 @@ class PlaylistViewController: UITableViewController {
 	}
 
 	@IBAction func togglePlaylistLoop(_ sender: Any) {
-		let button = sender as! UIBarButtonItem
+		guard let button = sender as? UIBarButtonItem else {return}
 		if let playlist = playlist {
 			playlist.isLooping = !playlist.isLooping
 			UserDefaults.standard.set(playlist.isLooping, forKey: "loopPlaylist")
@@ -91,11 +91,13 @@ class PlaylistViewController: UITableViewController {
 			playerViewController?.player.close()
 		}
 		else {
-			for indexPath in tableView.indexPathsForSelectedRows! {
-				if playlist.currentIndex == indexPath.row {
-					playerViewController?.player.close()
+			if let paths = tableView.indexPathsForSelectedRows {
+				for indexPath in paths {
+					if playlist.currentIndex == indexPath.row {
+						playerViewController?.player.close()
+					}
+					playlist.remove(at: indexPath.row)
 				}
-				playlist.remove(at: indexPath.row)
 			}
 		}
 		tableView.reloadData()
