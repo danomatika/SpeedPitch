@@ -102,8 +102,9 @@ class PlaylistViewController: UITableViewController {
 	}
 
 	@IBAction func toggleFileLoop(_ sender: Any) {
-		guard let playlist = playlist else {return}
-		for indexPath in tableView.indexPathsForSelectedRows! {
+		guard let playlist = playlist,
+		      let paths = tableView.indexPathsForSelectedRows else {return}
+		for indexPath in paths {
 			if let file = playlist.at(index: indexPath.row) {
 				file.loop = !file.loop
 			}
