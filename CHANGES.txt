@@ -1,3 +1,8 @@
+1.2.1: 25 Oct 2025
+
+* fixed crash when toggling repeat in playlist view without files selected
+* fixed other possible crashes due to force casting
+
 1.2.0: 21 Oct 2025
 
 * fixed warning by refactoring out .locationServicesEnabled usage
